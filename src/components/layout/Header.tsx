@@ -82,13 +82,6 @@ export function Header() {
             <Mountain className="h-8 w-8" />
             <span className="text-xl font-bold">Petersthal</span>
           </Link>
-          <nav className="flex items-center">
-            <Button variant="ghost" asChild className="text-lg">
-              <Link href="/admin">
-                Admin
-              </Link>
-            </Button>
-          </nav>
         </div>
       </div>
     </header>
