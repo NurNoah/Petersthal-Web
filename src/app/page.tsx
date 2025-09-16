@@ -156,15 +156,15 @@ export default function Home() {
               <WeatherWidget />
               <Card>
                 <CardHeader>
-                  <CardTitle>Entdecken Sie unsere Vereine</CardTitle>
+                  <CardTitle>Entdecken Sie unsere Gastronomie</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Vom Sportverein bis zur Musikkapelle – lernen Sie das vielfältige Vereinsleben in Petersthal kennen.
+                    Entdecken Sie die kulinarische Vielfalt unseres Dorfes. Von traditionell bayerischer Küche bis hin zu internationalen Spezialitäten.
                   </p>
                   <Button variant="secondary" className="w-full" asChild>
-                    <Link href="/vereine">
-                      Zu den Vereinen
+                    <Link href="/gastronomie">
+                      Zur Gastronomie
                     </Link>
                   </Button>
                 </CardContent>
