@@ -9,14 +9,6 @@ import { ArrowRight, Calendar, CloudSun } from 'lucide-react';
 import { events } from '@/lib/data';
 import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
-import Autoplay from "embla-carousel-autoplay"
 
 const upcomingEvents = events
   .filter(event => new Date(event.date) >= new Date())
@@ -38,43 +30,7 @@ function WeatherWidget() {
   );
 }
 
-const carouselImages = [
-    {
-      src: "https://picsum.photos/seed/carousel1/600/400",
-      alt: "Impressionen vom Dorffest",
-      hint: "village festival"
-    },
-    {
-      src: "https://picsum.photos/seed/carousel2/600/400",
-      alt: "Wanderweg in der Nähe von Petersthal",
-      hint: "hiking trail"
-    },
-    {
-      src: "https://picsum.photos/seed/carousel3/600/400",
-      alt: "Die Musikkapelle Petersthal beim Auftritt",
-      hint: "brass band"
-    },
-    {
-      src: "https://picsum.photos/seed/carousel4/600/400",
-      alt: "Der See bei Petersthal im Sommer",
-      hint: "lake summer"
-    },
-    {
-      src: "https://picsum.photos/seed/carousel5/600/400",
-      alt: "Winterlandschaft in Petersthal",
-      hint: "winter landscape"
-    },
-    {
-      src: "https://picsum.photos/seed/carousel6/600/400",
-      alt: "Traditioneller Almabtrieb",
-      hint: "cattle drive"
-    }
-  ];
-
 export default function Home() {
-  const plugin = React.useRef(
-    Autoplay({ delay: 5000, stopOnInteraction: true })
-  )
 
   return (
     <div className="flex flex-col items-center">
@@ -88,7 +44,7 @@ export default function Home() {
           data-ai-hint="village landscape"
         />
         <div className="absolute inset-0 bg-black/50 flex flex-col justify-center items-center p-4">
-          <h1 className="text-4xl md:text-6xl font-bold font-headline drop-shadow-lg">
+          <h1 className="text-4xl md:text-6xl font-bold drop-shadow-lg">
             Willkommen in Petersthal
           </h1>
           <p className="mt-4 max-w-2xl text-lg md:text-xl drop-shadow-md">
@@ -99,52 +55,16 @@ export default function Home() {
 
       <div className="container mx-auto px-4 py-12">
         <section className="text-center">
-          <h2 className="text-3xl font-bold font-headline">Ein Dorf voller Leben</h2>
+          <h2 className="text-3xl font-bold">Ein Dorf voller Leben</h2>
           <p className="mt-4 max-w-3xl mx-auto text-muted-foreground">
             Eingebettet in die malerische Landschaft des Allgäus, bietet Petersthal eine einzigartige Mischung aus Tradition und modernem Dorfleben. Entdecken Sie unsere aktiven Vereine, genießen Sie die lokale Gastronomie und erleben Sie unvergessliche Veranstaltungen.
           </p>
         </section>
 
-        <section className="mt-12">
-            <Carousel
-                plugins={[plugin.current]}
-                opts={{
-                    align: "start",
-                    loop: true,
-                }}
-                className="w-full"
-                onMouseEnter={plugin.current.stop}
-                onMouseLeave={plugin.current.reset}
-            >
-                <CarouselContent>
-                    {carouselImages.map((image, index) => (
-                    <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                        <div className="p-1">
-                        <Card>
-                            <CardContent className="flex aspect-video items-center justify-center p-0 rounded-lg overflow-hidden">
-                                <Image 
-                                    src={image.src}
-                                    alt={image.alt}
-                                    width={600}
-                                    height={400}
-                                    className="w-full h-full object-cover"
-                                    data-ai-hint={image.hint}
-                                />
-                            </CardContent>
-                        </Card>
-                        </div>
-                    </CarouselItem>
-                    ))}
-                </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
-            </Carousel>
-        </section>
-
         <section className="mt-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2">
-              <h3 className="text-2xl font-bold font-headline flex items-center mb-4">
+              <h3 className="text-2xl font-bold flex items-center mb-4">
                 <Calendar className="mr-2" /> Nächste Termine
               </h3>
               <div className="space-y-4">
@@ -175,7 +95,7 @@ export default function Home() {
               </Button>
             </div>
             <div className="space-y-6">
-              <h3 className="text-2xl font-bold font-headline">Aktuelles</h3>
+              <h3 className="text-2xl font-bold">Aktuelles</h3>
               <WeatherWidget />
               <Card>
                 <CardHeader>

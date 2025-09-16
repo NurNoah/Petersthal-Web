@@ -22,15 +22,15 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center">
+      <div className="container flex h-20 items-center">
         <div className="mr-4 hidden md:flex">
-          <Link href="/" className="mr-6 flex items-center space-x-2">
-            <Mountain className="h-6 w-6" />
-            <span className="hidden font-bold sm:inline-block">
+          <Link href="/" className="mr-8 flex items-center space-x-2">
+            <Mountain className="h-8 w-8" />
+            <span className="text-xl font-bold">
               Petersthal
             </span>
           </Link>
-          <nav className="flex items-center space-x-6 text-sm font-medium">
+          <nav className="flex items-center space-x-6 text-lg font-medium">
             {navLinks.map(({ href, label }) => (
               <Link
                 key={href}
@@ -38,7 +38,7 @@ export function Header() {
                 className={cn(
                   'transition-colors hover:text-foreground/80 relative',
                   pathname === href
-                    ? 'text-foreground font-semibold after:absolute after:bottom-[-2px] after:left-0 after:h-[2px] after:w-full after:bg-primary'
+                    ? 'text-foreground font-semibold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-primary'
                     : 'text-foreground/60'
                 )}
               >
@@ -52,14 +52,14 @@ export function Header() {
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
-                  <Menu className="h-5 w-5" />
+                  <Menu className="h-6 w-6" />
                   <span className="sr-only">Menü öffnen</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="left">
                 <Link href="/" className="mr-6 flex items-center space-x-2 mb-6">
-                    <Mountain className="h-6 w-6" />
-                    <span className="font-bold">Petersthal</span>
+                    <Mountain className="h-8 w-8" />
+                    <span className="text-xl font-bold">Petersthal</span>
                 </Link>
                 <nav className="grid gap-2">
                     {navLinks.map(({ href, label }) => (
@@ -67,7 +67,7 @@ export function Header() {
                             key={href}
                             href={href}
                             className={cn(
-                                'flex items-center py-2 text-lg font-semibold',
+                                'flex items-center py-2 text-xl font-semibold',
                                 pathname === href ? 'text-foreground' : 'text-muted-foreground'
                             )}
                         >
@@ -79,11 +79,11 @@ export function Header() {
             </Sheet>
           </div>
           <Link href="/" className="flex items-center space-x-2 md:hidden">
-            <Mountain className="h-6 w-6" />
-            <span className="font-bold">Petersthal</span>
+            <Mountain className="h-8 w-8" />
+            <span className="text-xl font-bold">Petersthal</span>
           </Link>
           <nav className="flex items-center">
-            <Button variant="ghost" asChild>
+            <Button variant="ghost" asChild className="text-lg">
               <Link href="/admin">
                 Admin
               </Link>
