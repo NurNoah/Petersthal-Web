@@ -9,6 +9,14 @@ import { ArrowRight, Calendar, CloudSun } from 'lucide-react';
 import { events } from '@/lib/data';
 import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+import Autoplay from 'embla-carousel-autoplay';
 
 const upcomingEvents = events
   .filter(event => new Date(event.date) >= new Date())
@@ -30,7 +38,19 @@ function WeatherWidget() {
   );
 }
 
+const carouselImages = [
+  { src: 'https://picsum.photos/seed/carousel1/600/400', alt: 'Alpenpanorama bei Petersthal', hint: 'mountain landscape' },
+  { src: 'https://picsum.photos/seed/carousel2/600/400', alt: 'Traditioneller Trachtenumzug', hint: 'traditional festival' },
+  { src: 'https://picsum.photos/seed/carousel3/600/400', alt: 'Segelboote auf dem See', hint: 'lake sailing' },
+  { src: 'https://picsum.photos/seed/carousel4/600/400', alt: 'Wanderweg im Sommer', hint: 'hiking trail' },
+  { src: 'https://picsum.photos/seed/carousel5/600/400', alt: 'Dorfansicht im Winter', hint: 'village winter' },
+  { src: 'https://picsum.photos/seed/carousel6/600/400', alt: 'Musikkapelle beim Dorffest', hint: 'brass band' },
+];
+
 export default function Home() {
+  const plugin = React.useRef(
+    Autoplay({ delay: 5000, stopOnInteraction: true })
+  );
 
   return (
     <div className="flex flex-col items-center">
@@ -59,6 +79,42 @@ export default function Home() {
           <p className="mt-4 max-w-3xl mx-auto text-muted-foreground">
             Eingebettet in die malerische Landschaft des Allgäus, bietet Petersthal eine einzigartige Mischung aus Tradition und modernem Dorfleben. Entdecken Sie unsere aktiven Vereine, genießen Sie die lokale Gastronomie und erleben Sie unvergessliche Veranstaltungen.
           </p>
+        </section>
+        
+        <section className="w-full max-w-6xl mx-auto mt-16">
+          <Carousel
+            plugins={[plugin.current]}
+            className="w-full"
+            onMouseEnter={plugin.current.stop}
+            onMouseLeave={plugin.current.reset}
+            opts={{
+              align: 'start',
+              loop: true,
+            }}
+          >
+            <CarouselContent>
+              {carouselImages.map((image, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  <div className="p-1">
+                    <Card className="overflow-hidden">
+                      <CardContent className="p-0 flex aspect-video items-center justify-center">
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          width={600}
+                          height={400}
+                          className="object-cover w-full h-full"
+                          data-ai-hint={image.hint}
+                        />
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </section>
 
         <section className="mt-16">
