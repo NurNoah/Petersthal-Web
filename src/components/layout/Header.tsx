@@ -34,6 +34,30 @@ const navLinks: NavLink[] = [
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
+  const [isHovering, setIsHovering] = React.useState(false);
+  const openTimeout = React.useRef<NodeJS.Timeout | null>(null);
+  const closeTimeout = React.useRef<NodeJS.Timeout | null>(null);
+
+
+  const handleMouseEnter = () => {
+    if (closeTimeout.current) {
+      clearTimeout(closeTimeout.current);
+      closeTimeout.current = null;
+    }
+    openTimeout.current = setTimeout(() => {
+        setOpen(true);
+    }, 50);
+  };
+
+  const handleMouseLeave = () => {
+    if (openTimeout.current) {
+        clearTimeout(openTimeout.current);
+        openTimeout.current = null;
+    }
+    closeTimeout.current = setTimeout(() => {
+        setOpen(false);
+    }, 200);
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -65,6 +89,7 @@ export function Header() {
             ))}
             <DropdownMenu open={open} onOpenChange={setOpen}>
               <DropdownMenuTrigger asChild>
+                <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                  <Link
                   href="/vereine"
                    className={cn(
@@ -74,8 +99,6 @@ export function Header() {
                       ? 'text-foreground font-semibold'
                       : 'text-foreground/60'
                   )}
-                  onMouseEnter={() => setOpen(true)}
-                  onMouseLeave={() => setOpen(false)}
                   onClick={() => setOpen(false)}
                 >
                    <span className={cn(pathname?.startsWith('/vereine') ? 'underline decoration-primary decoration-2 underline-offset-4' : '')}>
@@ -83,8 +106,9 @@ export function Header() {
                    </span>
                    <ChevronDown className="h-4 w-4" />
                 </Link>
+                </div>
               </DropdownMenuTrigger>
-              <DropdownMenuContent onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+              <DropdownMenuContent onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} align="start">
                 <DropdownMenuItem asChild>
                     <Link href="/vereine">Alle Vereine</Link>
                 </DropdownMenuItem>
