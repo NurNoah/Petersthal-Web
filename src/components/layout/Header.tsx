@@ -114,9 +114,6 @@ export function Header() {
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} align="start">
-                <DropdownMenuItem asChild>
-                    <Link href="/vereine">Alle Vereine</Link>
-                </DropdownMenuItem>
                 {clubs.map((club) => (
                   <DropdownMenuItem key={club.id} asChild>
                     <Link href={`/vereine/${club.slug}`}>{club.name}</Link>
