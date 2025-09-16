@@ -6,6 +6,13 @@ import { ArrowRight, Calendar, CloudSun } from 'lucide-react';
 import { events } from '@/lib/data';
 import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 const upcomingEvents = events
   .filter(event => new Date(event.date) >= new Date())
@@ -26,6 +33,39 @@ function WeatherWidget() {
     </Card>
   );
 }
+
+const carouselImages = [
+    {
+      src: "https://picsum.photos/seed/carousel1/600/400",
+      alt: "Impressionen vom Dorffest",
+      hint: "village festival"
+    },
+    {
+      src: "https://picsum.photos/seed/carousel2/600/400",
+      alt: "Wanderweg in der Nähe von Petersthal",
+      hint: "hiking trail"
+    },
+    {
+      src: "https://picsum.photos/seed/carousel3/600/400",
+      alt: "Die Musikkapelle Petersthal beim Auftritt",
+      hint: "brass band"
+    },
+    {
+      src: "https://picsum.photos/seed/carousel4/600/400",
+      alt: "Der See bei Petersthal im Sommer",
+      hint: "lake summer"
+    },
+    {
+      src: "https://picsum.photos/seed/carousel5/600/400",
+      alt: "Winterlandschaft in Petersthal",
+      hint: "winter landscape"
+    },
+    {
+      src: "https://picsum.photos/seed/carousel6/600/400",
+      alt: "Traditioneller Almabtrieb",
+      hint: "cattle drive"
+    }
+  ];
 
 export default function Home() {
   return (
@@ -55,6 +95,39 @@ export default function Home() {
           <p className="mt-4 max-w-3xl mx-auto text-muted-foreground">
             Eingebettet in die malerische Landschaft des Allgäus, bietet Petersthal eine einzigartige Mischung aus Tradition und modernem Dorfleben. Entdecken Sie unsere aktiven Vereine, genießen Sie die lokale Gastronomie und erleben Sie unvergessliche Veranstaltungen.
           </p>
+        </section>
+
+        <section className="mt-12">
+            <Carousel
+                opts={{
+                    align: "start",
+                    loop: true,
+                }}
+                className="w-full"
+            >
+                <CarouselContent>
+                    {carouselImages.map((image, index) => (
+                    <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                        <div className="p-1">
+                        <Card>
+                            <CardContent className="flex aspect-video items-center justify-center p-0 rounded-lg overflow-hidden">
+                                <Image 
+                                    src={image.src}
+                                    alt={image.alt}
+                                    width={600}
+                                    height={400}
+                                    className="w-full h-full object-cover"
+                                    data-ai-hint={image.hint}
+                                />
+                            </CardContent>
+                        </Card>
+                        </div>
+                    </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+            </Carousel>
         </section>
 
         <section className="mt-16">
