@@ -82,7 +82,7 @@ export default function Home() {
           </p>
         </section>
         
-        <section className="w-full max-w-7xl mx-auto mt-16">
+        <section className="w-full max-w-screen-xl mx-auto mt-16">
           <Carousel
             plugins={[plugin.current]}
             className="w-full"
@@ -178,7 +178,8 @@ export default function Home() {
                 <Users className="mr-3" /> Unser Vereinsleben
             </h2>
             <Carousel
-              className="w-full max-w-6xl mx-auto"
+              plugins={[plugin.current]}
+              className="w-full max-w-screen-xl mx-auto"
               opts={{
                 align: 'start',
                 loop: true,
@@ -186,7 +187,7 @@ export default function Home() {
             >
               <CarouselContent>
                 {clubs.map((club) => (
-                  <CarouselItem key={club.id} className="md:basis-1/2 lg:basis-1/3">
+                  <CarouselItem key={club.id} className="basis-1/2 md:basis-1/3 lg:basis-1/4">
                     <div className="p-2 h-full">
                       <ClubCard club={club} />
                     </div>
