@@ -37,7 +37,7 @@ export function Header() {
                 key={href}
                 href={href}
                 className={cn(
-                  buttonVariants({ variant: 'ghost', size: 'lg' }),
+                  buttonVariants({ variant: 'ghost' }),
                   'transition-colors relative text-base',
                   pathname === href
                     ? 'text-foreground font-semibold border-b-2 border-primary'
