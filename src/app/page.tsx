@@ -5,8 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Calendar, CloudSun } from 'lucide-react';
-import { events } from '@/lib/data';
+import { ArrowRight, Calendar, CloudSun, Users } from 'lucide-react';
+import { events, clubs } from '@/lib/data';
 import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
 import {
@@ -17,6 +17,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
+import { ClubCard } from '@/components/shared/ClubCard';
 
 const upcomingEvents = events
   .filter(event => new Date(event.date) >= new Date())
@@ -171,6 +172,23 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <section className="mt-24 text-center">
+            <h2 className="text-3xl font-bold flex items-center justify-center mb-8">
+                <Users className="mr-3" /> Unser Vereinsleben
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {clubs.slice(0, 3).map((club) => (
+                    <ClubCard key={club.id} club={club} />
+                ))}
+            </div>
+            <Button className="mt-12" asChild size="lg">
+                <Link href="/vereine">
+                    Alle Vereine entdecken <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+            </Button>
+        </section>
+
       </div>
     </div>
   );
