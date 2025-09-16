@@ -34,7 +34,6 @@ const navLinks: NavLink[] = [
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
-  const [isHovering, setIsHovering] = React.useState(false);
   const openTimeout = React.useRef<NodeJS.Timeout | null>(null);
   const closeTimeout = React.useRef<NodeJS.Timeout | null>(null);
 
@@ -43,6 +42,9 @@ export function Header() {
     if (closeTimeout.current) {
       clearTimeout(closeTimeout.current);
       closeTimeout.current = null;
+    }
+    if (openTimeout.current) {
+        clearTimeout(openTimeout.current);
     }
     openTimeout.current = setTimeout(() => {
         setOpen(true);
@@ -53,6 +55,9 @@ export function Header() {
     if (openTimeout.current) {
         clearTimeout(openTimeout.current);
         openTimeout.current = null;
+    }
+    if (closeTimeout.current) {
+        clearTimeout(closeTimeout.current);
     }
     closeTimeout.current = setTimeout(() => {
         setOpen(false);
