@@ -177,11 +177,25 @@ export default function Home() {
             <h2 className="text-3xl font-bold flex items-center justify-center mb-8">
                 <Users className="mr-3" /> Unser Vereinsleben
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {clubs.slice(0, 3).map((club) => (
-                    <ClubCard key={club.id} club={club} />
+            <Carousel
+              className="w-full max-w-4xl mx-auto"
+              opts={{
+                align: 'start',
+                loop: true,
+              }}
+            >
+              <CarouselContent>
+                {clubs.map((club) => (
+                  <CarouselItem key={club.id} className="md:basis-1/2 lg:basis-1/3">
+                    <div className="p-2 h-full">
+                      <ClubCard club={club} />
+                    </div>
+                  </CarouselItem>
                 ))}
-            </div>
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
             <Button className="mt-12" asChild size="lg">
                 <Link href="/vereine">
                     Alle Vereine entdecken <ArrowRight className="ml-2 h-4 w-4" />
