@@ -36,8 +36,10 @@ export function Header() {
                 key={href}
                 href={href}
                 className={cn(
-                  'transition-colors hover:text-foreground/80',
-                  pathname === href ? 'text-foreground' : 'text-foreground/60'
+                  'transition-colors hover:text-foreground/80 relative',
+                  pathname === href
+                    ? 'text-foreground font-semibold after:absolute after:bottom-[-2px] after:left-0 after:h-[2px] after:w-full after:bg-primary'
+                    : 'text-foreground/60'
                 )}
               >
                 {label}
