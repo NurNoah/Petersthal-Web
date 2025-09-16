@@ -188,7 +188,7 @@ export default function Home() {
               <CarouselContent>
                 {clubs.map((club) => (
                   <CarouselItem key={club.id} className="basis-1/2 md:basis-1/3 lg:basis-1/4">
-                    <div className="p-2 h-full">
+                    <div className="p-1 h-full">
                       <ClubCard club={club} />
                     </div>
                   </CarouselItem>
