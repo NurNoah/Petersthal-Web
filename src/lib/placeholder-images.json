@@ -1,3 +1,88 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "restaurant-1",
+      "description": "Cozy interior of a traditional restaurant.",
+      "imageUrl": "https://picsum.photos/seed/res1/600/400",
+      "imageHint": "traditional restaurant"
+    },
+    {
+      "id": "restaurant-2",
+      "description": "Modern restaurant with a view.",
+      "imageUrl": "https://picsum.photos/seed/res2/600/400",
+      "imageHint": "modern restaurant"
+    },
+    {
+      "id": "restaurant-3",
+      "description": "Outdoor seating area of a cafe.",
+      "imageUrl": "https://picsum.photos/seed/res3/600/400",
+      "imageHint": "cafe terrace"
+    },
+    {
+      "id": "accommodation-1",
+      "description": "Comfortable hotel room with a double bed.",
+      "imageUrl": "https://picsum.photos/seed/acc1/600/400",
+      "imageHint": "hotel room"
+    },
+    {
+      "id": "accommodation-2",
+      "description": "Vacation apartment with a small kitchen.",
+      "imageUrl": "https://picsum.photos/seed/acc2/600/400",
+      "imageHint": "vacation apartment"
+    },
+    {
+      "id": "accommodation-3",
+      "description": "Charming guesthouse with a balcony.",
+      "imageUrl": "https://picsum.photos/seed/acc3/600/400",
+      "imageHint": "guesthouse exterior"
+    },
+    {
+      "id": "accommodation-4",
+      "description": "Farmhouse offering bed and breakfast.",
+      "imageUrl": "https://picsum.photos/seed/acc4/600/400",
+      "imageHint": "farmhouse stay"
+    },
+    {
+      "id": "club-tsv",
+      "description": "Soccer field with players.",
+      "imageUrl": "https://picsum.photos/seed/club1/800/500",
+      "imageHint": "soccer game"
+    },
+    {
+      "id": "club-kljb",
+      "description": "Group of young people at a community event.",
+      "imageUrl": "https://picsum.photos/seed/club2/800/500",
+      "imageHint": "youth group"
+    },
+    {
+      "id": "club-trachtenverein",
+      "description": "People in traditional german attire dancing.",
+      "imageUrl": "https://picsum.photos/seed/club3/800/500",
+      "imageHint": "traditional dance"
+    },
+    {
+      "id": "club-musikkapelle",
+      "description": "Brass band performing outdoors.",
+      "imageUrl": "https://picsum.photos/seed/club4/800/500",
+      "imageHint": "brass band"
+    },
+    {
+      "id": "club-feuerwehr",
+      "description": "Firefighters with a fire truck.",
+      "imageUrl": "https://picsum.photos/seed/club5/800/500",
+      "imageHint": "firefighters team"
+    },
+    {
+      "id": "club-jodlergruppe",
+      "description": "Group of people singing in the mountains.",
+      "imageUrl": "https://picsum.photos/seed/club6/800/500",
+      "imageHint": "choir singing"
+    },
+    {
+      "id": "map-placeholder",
+      "description": "Stylized map of a small town.",
+      "imageUrl": "https://picsum.photos/seed/map/1200/500",
+      "imageHint": "town map"
+    }
+  ]
 }
