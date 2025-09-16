@@ -38,13 +38,15 @@ export function Header() {
                 href={href}
                 className={cn(
                   buttonVariants({ variant: 'ghost' }),
-                  'transition-colors relative text-base',
+                  'transition-colors relative text-base py-2 px-3',
                   pathname === href
-                    ? 'text-foreground font-semibold border-b-2 border-primary'
+                    ? 'text-foreground font-semibold'
                     : 'text-foreground/60'
                 )}
               >
-                {label}
+                <span className={cn(pathname === href ? 'underline decoration-primary decoration-2 underline-offset-4' : '')}>
+                    {label}
+                </span>
               </Link>
             ))}
           </nav>
