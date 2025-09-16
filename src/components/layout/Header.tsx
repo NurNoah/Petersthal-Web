@@ -40,7 +40,7 @@ export function Header() {
                   buttonVariants({ variant: 'ghost', size: 'lg' }),
                   'transition-colors relative text-base',
                   pathname === href
-                    ? 'text-foreground font-semibold'
+                    ? 'text-foreground font-semibold border-b-2 border-primary'
                     : 'text-foreground/60'
                 )}
               >
