@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import type { NavLink } from '@/lib/types';
+import { buttonVariants } from '@/components/ui/button';
 
 const navLinks: NavLink[] = [
   { href: '/veranstaltungen', label: 'Veranstaltungen' },
@@ -30,15 +31,16 @@ export function Header() {
               Petersthal
             </span>
           </Link>
-          <nav className="flex items-center space-x-6 text-lg font-medium">
+          <nav className="flex items-center space-x-1 text-lg font-medium">
             {navLinks.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
                 className={cn(
-                  'transition-colors hover:text-foreground/80 relative',
+                  buttonVariants({ variant: 'ghost', size: 'lg' }),
+                  'transition-colors relative text-base',
                   pathname === href
-                    ? 'text-foreground font-semibold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-primary'
+                    ? 'text-foreground font-semibold'
                     : 'text-foreground/60'
                 )}
               >
