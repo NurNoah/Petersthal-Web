@@ -55,7 +55,7 @@ export default function VeranstaltungenPage() {
     <div className="container mx-auto px-4 py-12">
       <h1 className="text-4xl font-bold font-headline mb-8 text-center">Veranstaltungen in Petersthal</h1>
       
-      <Tabs defaultValue="month" className="w-full">
+      <Tabs defaultValue="list" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="month">Monatsansicht</TabsTrigger>
           <TabsTrigger value="list">Listenansicht</TabsTrigger>
