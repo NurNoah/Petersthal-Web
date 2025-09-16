@@ -1,3 +1,6 @@
+'use client';
+
+import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -13,6 +16,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import Autoplay from "embla-carousel-autoplay"
 
 const upcomingEvents = events
   .filter(event => new Date(event.date) >= new Date())
@@ -68,6 +72,10 @@ const carouselImages = [
   ];
 
 export default function Home() {
+  const plugin = React.useRef(
+    Autoplay({ delay: 5000, stopOnInteraction: true })
+  )
+
   return (
     <div className="flex flex-col items-center">
       <section className="relative w-full h-[50vh] min-h-[300px] max-h-[500px] text-center text-white">
@@ -99,11 +107,14 @@ export default function Home() {
 
         <section className="mt-12">
             <Carousel
+                plugins={[plugin.current]}
                 opts={{
                     align: "start",
                     loop: true,
                 }}
                 className="w-full"
+                onMouseEnter={plugin.current.stop}
+                onMouseLeave={plugin.current.reset}
             >
                 <CarouselContent>
                     {carouselImages.map((image, index) => (
