@@ -14,7 +14,7 @@ const upcomingEvents = events
 
 function WeatherWidget() {
   return (
-    <Card className="bg-accent/50">
+    <Card className="bg-secondary/50">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">Wetter in Petersthal</CardTitle>
         <CloudSun className="h-4 w-4 text-muted-foreground" />
