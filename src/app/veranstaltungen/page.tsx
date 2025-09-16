@@ -57,9 +57,26 @@ export default function VeranstaltungenPage() {
       
       <Tabs defaultValue="list" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="month">Monatsansicht</TabsTrigger>
           <TabsTrigger value="list">Listenansicht</TabsTrigger>
+          <TabsTrigger value="month">Monatsansicht</TabsTrigger>
         </TabsList>
+        <TabsContent value="list">
+            <div className="mt-6 space-y-4">
+               {sortedEvents.map((event) => (
+                    <Card key={event.id}>
+                    <CardHeader>
+                        <CardTitle>{event.title}</CardTitle>
+                        <CardDescription>
+                        {format(new Date(event.date), "EEEE, dd. MMMM yyyy", { locale: de })} um {event.time} Uhr - {event.location}
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <p>{event.description}</p>
+                    </CardContent>
+                    </Card>
+                ))}
+            </div>
+        </TabsContent>
         <TabsContent value="month">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
             <div className="md:col-span-1 flex justify-center">
@@ -87,23 +104,6 @@ export default function VeranstaltungenPage() {
               <EventList eventsToShow={eventsForSelectedDay} />
             </div>
           </div>
-        </TabsContent>
-        <TabsContent value="list">
-            <div className="mt-6 space-y-4">
-               {sortedEvents.map((event) => (
-                    <Card key={event.id}>
-                    <CardHeader>
-                        <CardTitle>{event.title}</CardTitle>
-                        <CardDescription>
-                        {format(new Date(event.date), "EEEE, dd. MMMM yyyy", { locale: de })} um {event.time} Uhr - {event.location}
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <p>{event.description}</p>
-                    </CardContent>
-                    </Card>
-                ))}
-            </div>
         </TabsContent>
       </Tabs>
     </div>
