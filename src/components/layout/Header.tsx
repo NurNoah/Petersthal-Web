@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronDown, Menu, Mountain } from 'lucide-react';
+import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -32,6 +33,7 @@ const navLinks: NavLink[] = [
 
 export function Header() {
   const pathname = usePathname();
+  const [open, setOpen] = React.useState(false);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -61,9 +63,9 @@ export function Header() {
                 </span>
               </Link>
             ))}
-            <DropdownMenu>
+            <DropdownMenu open={open} onOpenChange={setOpen}>
               <DropdownMenuTrigger asChild>
-                <Link
+                 <Link
                   href="/vereine"
                    className={cn(
                     buttonVariants({ variant: 'ghost' }),
@@ -72,6 +74,9 @@ export function Header() {
                       ? 'text-foreground font-semibold'
                       : 'text-foreground/60'
                   )}
+                  onMouseEnter={() => setOpen(true)}
+                  onMouseLeave={() => setOpen(false)}
+                  onClick={() => setOpen(false)}
                 >
                    <span className={cn(pathname?.startsWith('/vereine') ? 'underline decoration-primary decoration-2 underline-offset-4' : '')}>
                     Vereine
@@ -79,7 +84,7 @@ export function Header() {
                    <ChevronDown className="h-4 w-4" />
                 </Link>
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
+              <DropdownMenuContent onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
                 <DropdownMenuItem asChild>
                     <Link href="/vereine">Alle Vereine</Link>
                 </DropdownMenuItem>
