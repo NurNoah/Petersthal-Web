@@ -82,7 +82,7 @@ export default function Home() {
           </p>
         </section>
         
-        <section className="w-full max-w-6xl mx-auto mt-16">
+        <section className="w-full max-w-7xl mx-auto mt-16">
           <Carousel
             plugins={[plugin.current]}
             className="w-full"
@@ -98,12 +98,12 @@ export default function Home() {
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                   <div className="p-1">
                     <Card className="overflow-hidden">
-                      <CardContent className="p-0 flex aspect-video items-center justify-center">
+                      <CardContent className="p-0 flex aspect-[4/3] items-center justify-center">
                         <Image
                           src={image.src}
                           alt={image.alt}
                           width={600}
-                          height={400}
+                          height={450}
                           className="object-cover w-full h-full"
                           data-ai-hint={image.hint}
                         />
@@ -178,7 +178,7 @@ export default function Home() {
                 <Users className="mr-3" /> Unser Vereinsleben
             </h2>
             <Carousel
-              className="w-full max-w-4xl mx-auto"
+              className="w-full max-w-6xl mx-auto"
               opts={{
                 align: 'start',
                 loop: true,
