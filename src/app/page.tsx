@@ -44,16 +44,25 @@ const carouselImages = [
   { src: '/images/Pthal3.png', alt: 'Petersthal', hint: 'hiking trail' },
   { src: '/images/Pthal10.jpg', alt: 'Petersthal', hint: 'brass band' },
   { src: '/images/Pthal5.png', alt: 'Petersthal', hint: 'brass band' },
-   { src: '/images/Pthal7.jpg', alt: 'Petersthal', hint: 'lake sailing' },
+  { src: '/images/Pthal7.jpg', alt: 'Petersthal', hint: 'lake sailing' },
   { src: '/images/Pthal6.png', alt: 'Petersthal', hint: 'mountain landscape' },
   { src: '/images/Pthal8.jpg', alt: 'Petersthal', hint: 'village winter' },
-  
 ];
 
 export default function Home() {
   const plugin = React.useRef(
     Autoplay({ delay: 5000, stopOnInteraction: true })
   );
+  // Neues State für Modal
+  const [modalImage, setModalImage] = React.useState<{ src: string; alt: string } | null>(null);
+
+  const openModal = (image: { src: string; alt: string }) => {
+    setModalImage(image);
+  };
+
+  const closeModal = () => {
+    setModalImage(null);
+  };
 
   return (
     <div className="flex flex-col items-center">
@@ -98,7 +107,7 @@ export default function Home() {
             <CarouselContent>
               {carouselImages.map((image, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                  <div className="p-1">
+                  <div className="p-1 cursor-pointer" onClick={() => openModal({ src: image.src, alt: image.alt })}>
                     <Card className="overflow-hidden">
                       <CardContent className="p-0 flex aspect-[4/3] items-center justify-center">
                         <Image
@@ -176,37 +185,60 @@ export default function Home() {
         </section>
 
         <section className="mt-24 text-center">
-            <h2 className="text-3xl font-bold flex items-center justify-center mb-8">
-                <Users className="mr-3" /> Unser Vereinsleben
-            </h2>
-            <Carousel
-              plugins={[plugin.current]}
-              className="w-full max-w-screen-xl mx-auto"
-              opts={{
-                align: 'start',
-                loop: true,
-              }}
-            >
-              <CarouselContent>
-                {clubs.map((club) => (
-                  <CarouselItem key={club.id} className="basis-1/2 md:basis-1/3 lg:basis-1/4">
-                    <div className="p-1 h-full">
-                      <ClubCard club={club} />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
-            <Button className="mt-12" asChild size="lg">
-                <Link href="/vereine">
-                    Alle Vereine entdecken <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-            </Button>
+          <h2 className="text-3xl font-bold flex items-center justify-center mb-8">
+            <Users className="mr-3" /> Unser Vereinsleben
+          </h2>
+          <Carousel
+            plugins={[plugin.current]}
+            className="w-full max-w-screen-xl mx-auto"
+            opts={{
+              align: 'start',
+              loop: true,
+            }}
+          >
+            <CarouselContent>
+              {clubs.map((club) => (
+                <CarouselItem key={club.id} className="basis-1/2 md:basis-1/3 lg:basis-1/4">
+                  <div className="p-1 h-full">
+                    <ClubCard club={club} />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+          <Button className="mt-12" asChild size="lg">
+            <Link href="/vereine">
+              Alle Vereine entdecken <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
         </section>
-
       </div>
+
+      {/* Modal zur Großansicht */}
+      {modalImage && (
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50"
+          onClick={closeModal}
+        >
+          <div className="relative">
+            <Image
+              src={modalImage.src}
+              alt={modalImage.alt}
+              width={1000}
+              height={750}
+              className="object-contain"
+            />
+            <button
+              onClick={closeModal}
+              className="absolute top-2 right-2 text-white text-2xl"
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
