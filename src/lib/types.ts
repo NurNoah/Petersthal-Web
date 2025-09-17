@@ -46,7 +46,19 @@ export interface Club {
   imageHint: string;
 }
 
-export interface BusSchedule {
-  route: string;
+export interface DailySchedule {
+  days: string;
   times: string[];
+  note?: string;
+}
+
+export interface BusRoute {
+  line: string;
+  schedules: DailySchedule[];
+  note?: string;
+}
+
+export interface BusConnection {
+  direction: string;
+  routes: BusRoute[];
 }

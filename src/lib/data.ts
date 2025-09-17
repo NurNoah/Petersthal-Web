@@ -1,4 +1,4 @@
-import type { Event, Restaurant, Accommodation, Club, BusSchedule } from './types';
+import type { Event, Restaurant, Accommodation, Club, BusConnection } from './types';
 
 export const events: Event[] = [
   {
@@ -150,21 +150,88 @@ export const clubs: Club[] = [
   },
 ];
 
-export const busSchedules: BusSchedule[] = [
-    {
-        route: 'Linie 56: Petersthal - Nachbarort A',
-        times: ['06:15', '07:15', '08:15', '10:15', '12:15', '14:15', '16:15', '18:15'],
-    },
-    {
-        route: 'Linie 56: Nachbarort A - Petersthal',
-        times: ['06:45', '07:45', '08:45', '10:45', '12:45', '14:45', '16:45', '18:45'],
-    },
-    {
-        route: 'Linie 71: Petersthal - Kreisstadt B',
-        times: ['06:30', '08:30', '11:30', '13:30', '15:30', '17:30'],
-    },
-    {
-        route: 'Linie 71: Kreisstadt B - Petersthal',
-        times: ['07:30', '09:30', '12:30', '14:30', '16:30', '18:30'],
-    },
-]
+export const busConnections: BusConnection[] = [
+  {
+    direction: 'Von Kempten nach Petersthal',
+    routes: [
+      {
+        line: 'Linie 22 (Tagesverkehr)',
+        schedules: [
+          {
+            days: 'Montag - Freitag',
+            times: [
+              '05:35 (ab Kempten Hbf, Ankunft Petersthal ca. 06:15)',
+              '12:55 (ab ZUM, Ankunft Petersthal 13:40)',
+              '15:27 (ab ZUM, Ankunft Petersthal 15:53)',
+              '16:27 (ab ZUM, Ankunft Petersthal 16:53)',
+            ],
+          },
+        ],
+      },
+      {
+        line: 'Linie 130 (Abend- & Nachtverkehr)',
+        note: 'Abfahrt Kempten Hbf (Steig Taxi). Teilweise als Anruf-Sammel-Taxi (AST).',
+        schedules: [
+          {
+            days: 'Montag - Freitag',
+            times: ['20:25', '21:10', '22:15', '23:10', '00:10', '01:00 (nur Freitags)'],
+          },
+          {
+            days: 'Samstag',
+            times: ['20:25', '21:10', '22:15', '23:10', '00:10'],
+          },
+          {
+            days: 'Sonn- & Feiertag',
+            times: ['20:25', '21:10', '22:15'],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    direction: 'Von Oy-Mittelberg nach Petersthal',
+    routes: [
+      {
+        line: 'Linie 9787 (Ringlinie)',
+        note: 'Abfahrt Oy, Kurhaus.',
+        schedules: [
+          {
+            days: 'Montag - Freitag',
+            times: ['06:55 (Ankunft 07:08)', '08:55 (Ankunft 09:08)', '10:55 (Ankunft 11:08)', '12:55 (Ankunft 13:08)', '14:55 (Ankunft 15:08)', '16:55 (Ankunft 17:08)', '17:55 (Ankunft 18:08)'],
+          },
+          {
+            days: 'Samstag, Sonn- & Feiertag',
+            times: ['07:55 (Ankunft 08:08)', '09:55 (Ankunft 10:08)', '11:55 (Ankunft 12:08)', '13:55 (Ankunft 14:08)', '15:55 (Ankunft 16:08)', '17:55 (Ankunft 18:08)'],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    direction: 'Von Petersthal',
+    routes: [
+        {
+            line: 'Nach Kempten (Linie 22)',
+            schedules: [
+                {
+                    days: 'Montag - Freitag',
+                    times: ['06:25', '13:40', '16:15 (N)', '17:15 (N)'],
+                }
+            ]
+        },
+        {
+            line: 'Nach Oy-Mittelberg (Linie 9787)',
+            schedules: [
+                {
+                    days: 'Montag - Freitag',
+                    times: ['07:08', '09:08', '11:08', '13:08', '15:08', '17:08', '18:08'],
+                },
+                {
+                    days: 'Samstag, Sonn- & Feiertag',
+                    times: ['08:08', '10:08', '12:08', '14:08', '16:08', '18:08'],
+                }
+            ]
+        }
+    ]
+  }
+];

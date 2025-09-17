@@ -1,6 +1,7 @@
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { busSchedules } from '@/lib/data';
+import { busConnections } from '@/lib/data';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export default function AnfahrtPage() {
   return (
@@ -29,37 +30,55 @@ export default function AnfahrtPage() {
 
       <section className="mt-12">
         <h2 className="text-2xl font-bold font-headline mb-4">Busfahrpläne</h2>
-        <Card>
-          <CardContent className="p-0">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Linie</TableHead>
-                  <TableHead>Abfahrtszeiten ab Petersthal</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {busSchedules.map((schedule) => (
-                  <TableRow key={schedule.route}>
-                    <TableCell className="font-medium">{schedule.route}</TableCell>
-                    <TableCell>
-                      <div className="flex flex-wrap gap-2">
-                        {schedule.times.map((time) => (
-                          <span
-                            key={time}
-                            className="bg-secondary text-secondary-foreground px-2 py-1 rounded-md text-sm"
-                          >
-                            {time}
-                          </span>
-                        ))}
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
+        <Accordion type="single" collapsible className="w-full" defaultValue='item-0'>
+          {busConnections.map((connection, index) => (
+            <AccordionItem value={`item-${index}`} key={index}>
+              <AccordionTrigger className="text-xl font-semibold">{connection.direction}</AccordionTrigger>
+              <AccordionContent>
+                <div className="space-y-6">
+                  {connection.routes.map((route, routeIndex) => (
+                    <Card key={routeIndex}>
+                      <CardHeader>
+                        <CardTitle>{route.line}</CardTitle>
+                        {route.note && <p className="text-sm text-muted-foreground">{route.note}</p>}
+                      </CardHeader>
+                      <CardContent className="p-0">
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead>Verkehrstage</TableHead>
+                              <TableHead>Abfahrtszeiten</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {route.schedules.map((schedule, scheduleIndex) => (
+                              <TableRow key={scheduleIndex}>
+                                <TableCell className="font-medium">{schedule.days}</TableCell>
+                                <TableCell>
+                                  <div className="flex flex-wrap gap-2">
+                                    {schedule.times.map((time) => (
+                                      <span
+                                        key={time}
+                                        className="bg-secondary text-secondary-foreground px-2 py-1 rounded-md text-sm"
+                                      >
+                                        {time}
+                                      </span>
+                                    ))}
+                                  </div>
+                                   {schedule.note && <p className="text-xs text-muted-foreground mt-2">{schedule.note}</p>}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </section>
     </div>
   );
