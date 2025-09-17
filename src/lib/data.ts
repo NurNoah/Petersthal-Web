@@ -44,7 +44,7 @@ export const restaurants: Restaurant[] = [
     imageUrl: '/images/gastro/kiosk.jpg',
     imageHint: 'traditional restaurant',
     website: 'https://www.rottachsee.info/',
-    mapEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7644.259769520318!2d10.378936314279649!3d47.63638020043541!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d0fb430257f%3A0x9db0cec5248edc58!2sKiosk%20am%20Rottachsee!5e1!3m2!1sde!2sde!4v1758144303801!5m2!1sde!2sde',
+    mapEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7644.259769520318!2d10.378936314279649!3d47.63638020043541!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d0fb430257f%3A0x9db0cec5248edc58!2sKiosk%20am%20Rottachsee!5e1!3m2!1sde!2sde!4v1758144303801!5m2!1sde!2sde" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade',
   },
   {
     id: '2',
