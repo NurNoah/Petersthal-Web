@@ -156,21 +156,22 @@ export const busConnections: BusConnection[] = [
     routes: [
       {
         line: 'Linie 22 (Tagesverkehr)',
+        note: 'Abfahrt Kempten ZUM',
         schedules: [
           {
             days: 'Montag - Freitag',
             times: [
               '05:35 (ab Kempten Hbf, Ankunft Petersthal ca. 06:15)',
-              '12:55 (ab ZUM, Ankunft Petersthal 13:40)',
-              '15:27 (ab ZUM, Ankunft Petersthal 15:53)',
-              '16:27 (ab ZUM, Ankunft Petersthal 16:53)',
+              '12:55 (Ankunft Petersthal 13:40)',
+              '15:27 (Ankunft Petersthal 15:53)',
+              '16:27 (Ankunft Petersthal 16:53)',
             ],
           },
         ],
       },
       {
-        line: 'Linie 130 (Abend- & Nachtverkehr)',
-        note: 'Abfahrt Kempten Hbf (Steig Taxi). Teilweise als Anruf-Sammel-Taxi (AST).',
+        line: 'Linie 130 - Anruf-Sammel-Taxi',
+        note: 'Abfahrt Kempten Hbf (Steig Taxi). Abend- & Nachtverkehr.',
         schedules: [
           {
             days: 'Montag - Freitag',
@@ -215,7 +216,7 @@ export const busConnections: BusConnection[] = [
             schedules: [
                 {
                     days: 'Montag - Freitag',
-                    times: ['06:25', '13:40', '16:15 (N)', '17:15 (N)'],
+                    times: ['06:25', '13:40'],
                 }
             ]
         },

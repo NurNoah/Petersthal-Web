@@ -85,9 +85,9 @@ export default function AnfahrtPage() {
         <h2 className="text-2xl font-bold font-headline mb-4">Bushaltestellen</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <h3 className="text-lg font-semibold mb-2">Haltestelle Petersthal Kirche</h3>
+            <h3 className="text-lg font-semibold mb-2">Haltestelle Petersthal Ortsmitte</h3>
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.468898135893!2d10.38421457670107!3d47.63645063598501!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d1010190473%3A0xf601b559773730e7!2sPetersthal%20Kirche%2C%2087466%20Oy-Mittelberg!5e0!3m2!1sde!2sde!4v1758153495209!5m2!1sde!2sde"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d935.9523451376562!2d10.386875576916081!3d47.63573912975594!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d1116c1d7f5%3A0x2778ffdd5f58de93!2sPetersthal%2C%20Ortsmitte!5e1!3m2!1sde!2sde!4v1758147579293!5m2!1sde!2sde"
               width="100%"
               height="300"
               style={{ border: 0 }}
@@ -97,9 +97,9 @@ export default function AnfahrtPage() {
             ></iframe>
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-2">Haltestelle Petersthal Badeseeweg</h3>
+            <h3 className="text-lg font-semibold mb-2">Haltestelle Petersthal Kirche</h3>
              <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.583568461011!2d10.37517117670098!3d47.6340332360012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d1746241b39%3A0xe16b801a2f646039!2sPetersthal%20Badeseeweg%2C%2087466%20Oy-Mittelberg!5e0!3m2!1sde!2sde!4v1758153549929!5m2!1sde!2sde"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d952.916891021943!2d10.385860414060469!3d47.63483903926697!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d11851f5a6d%3A0x64984efd1259d5a0!2sParkplatz!5e1!3m2!1sde!2sde!4v1758147623829!5m2!1sde!2sde"
               width="100%"
               height="300"
               style={{ border: 0 }}
