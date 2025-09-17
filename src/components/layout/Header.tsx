@@ -64,38 +64,41 @@ export function Header() {
               </Link>
             ))}
             <DropdownMenu open={open} onOpenChange={setOpen}>
-              <DropdownMenuTrigger asChild>
-                 <Link
-                  href="/vereine"
-                   className={cn(
-                    buttonVariants({ variant: 'ghost' }),
-                    'transition-colors relative text-base py-2 px-3 flex items-center gap-1',
-                    pathname?.startsWith('/vereine')
-                      ? 'text-foreground font-semibold'
-                      : 'text-foreground'
-                  )}
-                  onClick={(e) => {
-                    if (open) {
-                      e.preventDefault();
-                      setOpen(false);
-                    }
-                  }}
-                  onMouseEnter={() => setOpen(true)}
-                  onMouseLeave={() => setOpen(false)}
-                >
-                   <span className={cn(pathname?.startsWith('/vereine') ? 'underline decoration-primary decoration-2 underline-offset-4' : '')}>
-                    Vereine
-                   </span>
-                   <ChevronDown className="h-4 w-4" />
-                </Link>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)} align="start">
-                {clubs.map((club) => (
-                  <DropdownMenuItem key={club.id} asChild>
-                    <Link href={`/vereine/${club.slug}`}>{club.name}</Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
+              <div
+                onMouseEnter={() => setOpen(true)}
+                onMouseLeave={() => setOpen(false)}
+              >
+                <DropdownMenuTrigger asChild>
+                  <Link
+                    href="/vereine"
+                    className={cn(
+                      buttonVariants({ variant: 'ghost' }),
+                      'transition-colors relative text-base py-2 px-3 flex items-center gap-1',
+                      pathname?.startsWith('/vereine')
+                        ? 'text-foreground font-semibold'
+                        : 'text-foreground'
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        pathname?.startsWith('/vereine')
+                          ? 'underline decoration-primary decoration-2 underline-offset-4'
+                          : ''
+                      )}
+                    >
+                      Vereine
+                    </span>
+                    <ChevronDown className="h-4 w-4" />
+                  </Link>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start">
+                  {clubs.map((club) => (
+                    <DropdownMenuItem key={club.id} asChild>
+                      <Link href={`/vereine/${club.slug}`}>{club.name}</Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </div>
             </DropdownMenu>
           </nav>
         </div>
