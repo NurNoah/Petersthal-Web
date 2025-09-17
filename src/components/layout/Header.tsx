@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronDown, Menu, Mountain } from 'lucide-react';
+import { ChevronDown, Menu } from 'lucide-react';
 import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -40,7 +40,7 @@ export function Header() {
       <div className="container flex h-20 items-center">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-8 flex items-center space-x-2">
-            <Mountain className="h-8 w-8" />
+            <img src="/images/PthalLogo.png" className="h-14 w-11" alt="Petersthal Logo" />
             <span className="text-xl font-bold">
               Petersthal
             </span>
@@ -115,8 +115,8 @@ export function Header() {
               </SheetTrigger>
               <SheetContent side="left">
                 <Link href="/" className="mr-6 flex items-center space-x-2 mb-6">
-                    <Mountain className="h-8 w-8" />
-                    <span className="text-xl font-bold">Petersthal</span>
+                  <img src="/images/PthalLogo.png" className="h-8 w-8" alt="Petersthal Logo" />
+                  <span className="text-xl font-bold">Petersthal</span>
                 </Link>
                 <nav className="grid gap-2">
                     {navLinks.map(({ href, label }) => (
@@ -168,7 +168,7 @@ export function Header() {
             </Sheet>
           </div>
           <Link href="/" className="flex items-center space-x-2 md:hidden">
-            <Mountain className="h-8 w-8" />
+            <img src="/PthalLogo.png" className="h-8 w-8" alt="Petersthal Logo" />
             <span className="text-xl font-bold">Petersthal</span>
           </Link>
         </div>
