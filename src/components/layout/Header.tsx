@@ -73,7 +73,7 @@ export function Header() {
                     href="/vereine"
                     className={cn(
                       buttonVariants({ variant: 'ghost' }),
-                      'transition-colors relative text-base py-2 px-3 flex items-center gap-1',
+                      'cursor-pointer transition-colors relative text-base py-2 px-3 flex items-center gap-1',
                       pathname?.startsWith('/vereine')
                         ? 'text-foreground font-semibold'
                         : 'text-foreground'
@@ -94,7 +94,9 @@ export function Header() {
                 <DropdownMenuContent align="start">
                   {clubs.map((club) => (
                     <DropdownMenuItem key={club.id} asChild>
-                      <Link href={`/vereine/${club.slug}`}>{club.name}</Link>
+                      <Link href={`/vereine/${club.slug}`} className="cursor-pointer">
+                        {club.name}
+                      </Link>
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
