@@ -40,12 +40,14 @@ function WeatherWidget() {
 }
 
 const carouselImages = [
-  { src: 'https://picsum.photos/seed/carousel1/600/400', alt: 'Alpenpanorama bei Petersthal', hint: 'mountain landscape' },
-  { src: 'https://picsum.photos/seed/carousel2/600/400', alt: 'Traditioneller Trachtenumzug', hint: 'traditional festival' },
-  { src: 'https://picsum.photos/seed/carousel3/600/400', alt: 'Segelboote auf dem See', hint: 'lake sailing' },
-  { src: 'https://picsum.photos/seed/carousel4/600/400', alt: 'Wanderweg im Sommer', hint: 'hiking trail' },
-  { src: 'https://picsum.photos/seed/carousel5/600/400', alt: 'Dorfansicht im Winter', hint: 'village winter' },
-  { src: 'https://picsum.photos/seed/carousel6/600/400', alt: 'Musikkapelle beim Dorffest', hint: 'brass band' },
+  { src: '/images/Pthal4.jpg', alt: 'Petersthal', hint: 'traditional festival' },
+  { src: '/images/Pthal3.png', alt: 'Petersthal', hint: 'hiking trail' },
+  { src: '/images/Pthal10.jpg', alt: 'Petersthal', hint: 'brass band' },
+  { src: '/images/Pthal5.png', alt: 'Petersthal', hint: 'brass band' },
+   { src: '/images/Pthal7.jpg', alt: 'Petersthal', hint: 'lake sailing' },
+  { src: '/images/Pthal6.png', alt: 'Petersthal', hint: 'mountain landscape' },
+  { src: '/images/Pthal8.jpg', alt: 'Petersthal', hint: 'village winter' },
+  
 ];
 
 export default function Home() {
@@ -57,7 +59,7 @@ export default function Home() {
     <div className="flex flex-col items-center">
       <section className="relative w-full h-[50vh] min-h-[300px] max-h-[500px] text-center text-white">
         <Image
-          src="https://picsum.photos/seed/petersthal-village/1600/600"
+          src="/images/Pthal15.png"
           alt="Panorama von Petersthal"
           fill
           priority
@@ -156,7 +158,7 @@ export default function Home() {
               <WeatherWidget />
               <Card>
                 <CardHeader>
-                  <CardTitle>Entdecken Sie unsere Gastronomie</CardTitle>
+                  <CardTitle>Entdecken Sie unsere Wirtschaften</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-4">
@@ -164,7 +166,7 @@ export default function Home() {
                   </p>
                   <Button variant="secondary" className="w-full" asChild>
                     <Link href="/gastronomie">
-                      Zur Gastronomie
+                      Zu Wirtschaften
                     </Link>
                   </Button>
                 </CardContent>

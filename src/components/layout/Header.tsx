@@ -27,7 +27,7 @@ import {
 const navLinks: NavLink[] = [
   { href: '/veranstaltungen', label: 'Veranstaltungen' },
   { href: '/anfahrt', label: 'Anfahrt' },
-  { href: '/gastronomie', label: 'Gastronomie' },
+  { href: '/gastronomie', label: 'Wirtschaften' },
   { href: '/unterkuenfte', label: 'Unterkünfte' },
 ];
 

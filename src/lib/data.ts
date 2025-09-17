@@ -38,27 +38,19 @@ export const events: Event[] = [
 export const restaurants: Restaurant[] = [
   {
     id: '1',
-    name: 'Gasthof zum Hirschen',
-    description: 'Traditionelle bayerische Küche in gemütlicher Atmosphäre. Bekannt für seine Wildgerichte.',
-    address: 'Hauptstraße 1, 87466 Petersthal',
-    imageUrl: 'https://picsum.photos/seed/res1/600/400',
+    name: 'Kiosk am Rottachsee',
+    description: 'Reichhaltiges Speisenangebot und kurze Wartezeiten. Ideal für einen schnellen Imbiss nach dem Baden.',
+    address: 'Am Petersbach 21, 87466 Oy-Mittelberg',
+    imageUrl: '/images/gastro/kiosk.jpg',
     imageHint: 'traditional restaurant',
   },
   {
     id: '2',
-    name: 'Pizzeria da Luigi',
-    description: 'Authentische italienische Pizza und Pasta. Familienfreundlich mit großer Sonnenterrasse.',
-    address: 'Seeweg 5, 87466 Petersthal',
-    imageUrl: 'https://picsum.photos/seed/res2/600/400',
+    name: 'Pizzeria Rosso Pomodoro',
+    description: 'Authentische, herzliche italienische Küche, serviert wie in den charmanten Dörfern Italiens..',
+    address: 'Thalstraße10, 86163 Oy-Mittelberg',
+    imageUrl: '/images/gastro/pizza.png',
     imageHint: 'modern restaurant',
-  },
-  {
-    id: '3',
-    name: 'Café Seeblick',
-    description: 'Hausgemachte Kuchen und Torten mit einem wunderschönen Blick auf den See.',
-    address: 'Uferstraße 12, 87466 Petersthal',
-    imageUrl: 'https://picsum.photos/seed/res3/600/400',
-    imageHint: 'cafe terrace',
   },
 ];
 
@@ -104,7 +96,7 @@ export const clubs: Club[] = [
     name: 'TSV Petersthal',
     description: 'Der Turn- und Sportverein Petersthal bietet ein breites Angebot an sportlichen Aktivitäten für alle Altersgruppen, von Fußball über Turnen bis hin zu Volleyball. Wir fördern den Gemeinschaftssinn und die Freude an der Bewegung.',
     contact: { name: 'Max Mustermann', email: 'tsv@petersthal.de', phone: '0123 456789' },
-    imageUrl: 'https://picsum.photos/seed/club1/800/500',
+    imageUrl: '/images/verein/tsv.jpg',
     imageHint: 'soccer game',
   },
   {
@@ -113,16 +105,16 @@ export const clubs: Club[] = [
     name: 'KLJB Petersthal',
     description: 'Die Katholische Landjugendbewegung Petersthal engagiert sich für die Gestaltung des Dorflebens. Wir organisieren Feste, soziale Projekte und Freizeitaktivitäten für junge Leute auf dem Land.',
     contact: { name: 'Maria Musterfrau', email: 'kljb@petersthal.de', phone: '0123 987654' },
-    imageUrl: 'https://picsum.photos/seed/club2/800/500',
+    imageUrl: '/images/verein/kljb.png',
     imageHint: 'youth group',
   },
   {
     id: '3',
     slug: 'trachtenverein-petersthal',
-    name: 'Trachtenverein D\'Lechgauer',
+    name: 'Trachtenverein Petersthal',
     description: 'Wir pflegen das bayerische Brauchtum, die Tracht und den Volkstanz. Unser Verein ist ein wichtiger Kulturträger in der Gemeinde und tritt bei vielen Festlichkeiten auf.',
     contact: { name: 'Georg Huber', email: 'trachten@petersthal.de', phone: '0123 123456' },
-    imageUrl: 'https://picsum.photos/seed/club3/800/500',
+    imageUrl: '/images/verein/trachtenverein.jpg',
     imageHint: 'traditional dance',
   },
   {
@@ -131,7 +123,7 @@ export const clubs: Club[] = [
     name: 'Musikkapelle Petersthal',
     description: 'Die Musikkapelle Petersthal ist bei kirchlichen und weltlichen Anlässen nicht wegzudenken. Unser Repertoire reicht von traditioneller Blasmusik bis zu modernen Arrangements.',
     contact: { name: 'Anna Schmidt', email: 'musik@petersthal.de', phone: '0123 654321' },
-    imageUrl: 'https://picsum.photos/seed/club4/800/500',
+    imageUrl: '/images/verein/musik.jpeg',
     imageHint: 'brass band',
   },
   {
@@ -140,7 +132,7 @@ export const clubs: Club[] = [
     name: 'Freiwillige Feuerwehr Petersthal',
     description: 'Rund um die Uhr im Einsatz für die Sicherheit der Bürger. Die Freiwillige Feuerwehr leistet schnelle Hilfe bei Bränden, Unfällen und anderen Notlagen. Wir freuen uns immer über neue Mitglieder.',
     contact: { name: 'Kommandant Bauer', email: 'feuerwehr@petersthal.de', phone: '112' },
-    imageUrl: 'https://picsum.photos/seed/club5/800/500',
+    imageUrl: '/images/verein/feuerwehr.jpg',
     imageHint: 'firefighters team',
   },
   {
@@ -149,7 +141,7 @@ export const clubs: Club[] = [
     name: 'Jodlergruppe Petersthal',
     description: 'Mit unseren Stimmen bewahren wir ein Stück alpenländische Kultur. Die Jodlergruppe tritt bei Heimatabenden und anderen festlichen Anlässen auf und pflegt das traditionelle Liedgut.',
     contact: { name: 'Theresa Mayr', email: 'jodler@petersthal.de', phone: '0123 112233' },
-    imageUrl: 'https://picsum.photos/seed/club6/800/500',
+    imageUrl: '/images/verein/jodler.jpg',
     imageHint: 'choir singing',
   },
 ];
