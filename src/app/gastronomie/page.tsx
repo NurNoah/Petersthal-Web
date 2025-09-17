@@ -1,6 +1,15 @@
-import { InfoCard } from '@/components/shared/InfoCard';
-import { MapPlaceholder } from '@/components/shared/MapPlaceholder';
 import { restaurants } from '@/lib/data';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { ExternalLink, MapPin } from 'lucide-react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 export default function GastronomiePage() {
   return (
@@ -13,19 +22,63 @@ export default function GastronomiePage() {
       </div>
 
       <section className="mt-12">
-        <h2 className="text-2xl font-bold font-headline mb-4"></h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="space-y-8">
           {restaurants.map((restaurant) => (
-            <InfoCard
-              key={restaurant.id}
-              title={restaurant.name}
-              description={restaurant.description}
-              imageUrl={restaurant.imageUrl}
-              imageAlt={`Bild von ${restaurant.name}`}
-              imageHint={restaurant.imageHint}
-            >
-                <p className="text-sm text-muted-foreground mt-4">{restaurant.address}</p>
-            </InfoCard>
+            <Card key={restaurant.id} className="overflow-hidden">
+              <div className="grid grid-cols-1 md:grid-cols-2">
+                <div className="relative h-64 md:h-auto">
+                  <Image
+                    src={restaurant.imageUrl}
+                    alt={`Bild von ${restaurant.name}`}
+                    fill
+                    className="object-cover"
+                    data-ai-hint={restaurant.imageHint}
+                  />
+                </div>
+                <div>
+                  <CardHeader>
+                    <CardTitle>{restaurant.name}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription>{restaurant.description}</CardDescription>
+                    <p className="text-sm text-muted-foreground mt-4">{restaurant.address}</p>
+                    {restaurant.website && (
+                      <Button asChild variant="link" className="px-0">
+                        <a href={restaurant.website} target="_blank" rel="noopener noreferrer">
+                          Zur Webseite <ExternalLink className="ml-2 h-4 w-4" />
+                        </a>
+                      </Button>
+                    )}
+                     <Accordion type="single" collapsible className="w-full mt-4">
+                      <AccordionItem value="item-1">
+                        <AccordionTrigger>
+                            <div className="flex items-center">
+                                <MapPin className="mr-2 h-4 w-4"/> Karte anzeigen
+                            </div>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                          {restaurant.mapEmbed ? (
+                            <div className="aspect-video overflow-hidden rounded-md border mt-2">
+                              <iframe
+                                src={restaurant.mapEmbed}
+                                width="100%"
+                                height="100%"
+                                style={{ border: 0 }}
+                                allowFullScreen
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                              ></iframe>
+                            </div>
+                          ) : (
+                            <p className="text-muted-foreground">Keine Karte verfügbar.</p>
+                          )}
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </CardContent>
+                </div>
+              </div>
+            </Card>
           ))}
         </div>
       </section>

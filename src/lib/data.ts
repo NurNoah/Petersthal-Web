@@ -43,14 +43,18 @@ export const restaurants: Restaurant[] = [
     address: 'Am Petersbach 21, 87466 Oy-Mittelberg',
     imageUrl: '/images/gastro/kiosk.jpg',
     imageHint: 'traditional restaurant',
+    website: 'https://www.rottachsee.info/',
+    mapEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7644.259769520318!2d10.378936314279649!3d47.63638020043541!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d0fb430257f%3A0x9db0cec5248edc58!2sKiosk%20am%20Rottachsee!5e1!3m2!1sde!2sde!4v1758144303801!5m2!1sde!2sde',
   },
   {
     id: '2',
     name: 'Pizzeria Rosso Pomodoro',
     description: 'Authentische, herzliche italienische Küche, serviert wie in den charmanten Dörfern Italiens..',
-    address: 'Thalstraße10, 86163 Oy-Mittelberg',
+    address: 'Thalstraße 10, 87466 Oy-Mittelberg',
     imageUrl: '/images/gastro/pizza.png',
     imageHint: 'modern restaurant',
+    website: 'https://www.example.com',
+    mapEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.991625922379!2d10.42089141567433!3d48.85837027928736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479899e548981669%3A0x5e234383a45a353b!2sThalstra%C3%9Fe%2010%2C%2087466%20Oy-Mittelberg!5e0!3m2!1sde!2sde!4v1622548858362!5m2!1sde!2sde',
   },
 ];
 

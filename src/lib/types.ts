@@ -19,6 +19,8 @@ export interface Restaurant {
   address: string;
   imageUrl: string;
   imageHint: string;
+  website?: string;
+  mapEmbed?: string;
 }
 
 export interface Accommodation {
