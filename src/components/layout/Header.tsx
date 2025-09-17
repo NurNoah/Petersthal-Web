@@ -115,7 +115,7 @@ export function Header() {
               </SheetTrigger>
               <SheetContent side="left">
                 <Link href="/" className="mr-6 flex items-center space-x-2 mb-6">
-                  <img src="/images/PthalLogo.png" className="h-8 w-8" alt="Petersthal Logo" />
+                  <img src="/images/PthalLogo.png" className="h-14 w-11" alt="Petersthal Logo" />
                   <span className="text-xl font-bold">Petersthal</span>
                 </Link>
                 <nav className="grid gap-2">
@@ -168,7 +168,7 @@ export function Header() {
             </Sheet>
           </div>
           <Link href="/" className="flex items-center space-x-2 md:hidden">
-            <img src="/PthalLogo.png" className="h-8 w-8" alt="Petersthal Logo" />
+            <img src="/images/PthalLogo.png" className="h-14 w-11" alt="Petersthal Logo" />
             <span className="text-xl font-bold">Petersthal</span>
           </Link>
         </div>
