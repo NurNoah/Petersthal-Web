@@ -1,6 +1,8 @@
 import { InfoCard } from '@/components/shared/InfoCard';
 import { accommodations } from '@/lib/data';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ExternalLink } from 'lucide-react';
 
 export default function UnterkuenftePage() {
   return (
@@ -23,7 +25,16 @@ export default function UnterkuenftePage() {
               imageAlt={`Bild von ${acc.name}`}
               imageHint={acc.imageHint}
             >
-              <Badge variant="secondary" className="mt-4">{acc.type}</Badge>
+              <div className="flex flex-col flex-grow justify-between">
+                <Badge variant="secondary" className="mt-4 w-fit">{acc.type}</Badge>
+                {acc.bookingUrl && (
+                  <Button asChild className="mt-4 w-full">
+                    <a href={acc.bookingUrl} target="_blank" rel="noopener noreferrer">
+                      Jetzt Buchen <ExternalLink className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                )}
+              </div>
             </InfoCard>
           ))}
         </div>

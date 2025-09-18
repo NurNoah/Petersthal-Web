@@ -25,7 +25,7 @@ export function InfoCard({ title, description, imageUrl, imageAlt, imageHint, ch
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent className="flex-grow">
+      <CardContent className="flex-grow flex flex-col">
         <CardDescription>{description}</CardDescription>
         {children}
       </CardContent>

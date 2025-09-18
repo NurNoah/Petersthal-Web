@@ -44,7 +44,7 @@ export const restaurants: Restaurant[] = [
     imageUrl: '/images/gastro/kiosk.jpg',
     imageHint: 'traditional restaurant',
     website: 'http://kiosk-rottachsee.9gg.de/',
-    mapEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5376.897700570105!2d10.380840192236292!3d47.636843917197744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d0fb430257f%3A0x9db0cec5248edc58!2sKiosk%20am%20Rottachsee!5e0!3m2!1sde!2sde!4v1758144734113!5m2!1sde!2sde" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade',
+    mapEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5376.897700570105!2d10.380840192236292!3d47.636843917197744!2m3!1f0!2f0!3f0!3m2!i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d0fb430257f%3A0x9db0cec5248edc58!2sKiosk%20am%20Rottachsee!5e0!3m2!1sde!2sde!4v1758144734113!5m2!1sde!2sde" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade',
   },
   {
     id: '2',
@@ -54,7 +54,7 @@ export const restaurants: Restaurant[] = [
     imageUrl: '/images/gastro/pizza.png',
     imageHint: 'modern restaurant',
     website: 'https://www.rossopomodororestaurant.de/',
-    mapEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.4636397059535!2d10.384571587124736!3d47.636556480249624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d61a1b9f71f%3A0xd01a1168f00ff6c5!2sRosso%20Pomodoro!5e0!3m2!1sde!2sde!4v1758144783040!5m2!1sde!2sde" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade',
+    mapEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.4636397059535!2d10.384571587124736!3d47.636556480249624!2m3!1f0!2f0!3f0!3m2!i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d61a1b9f71f%3A0xd01a1168f00ff6c5!2sRosso%20Pomodoro!5e0!3m2!1sde!2sde!4v1758144783040!5m2!1sde!2sde" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade',
   },
 ];
 
@@ -66,6 +66,7 @@ export const accommodations: Accommodation[] = [
     description: 'Komfortables 3-Sterne-Hotel mit Wellnessbereich und reichhaltigem Frühstücksbuffet.',
     imageUrl: 'https://picsum.photos/seed/acc1/600/400',
     imageHint: 'hotel room',
+    bookingUrl: '#',
   },
   {
     id: '2',
@@ -74,6 +75,7 @@ export const accommodations: Accommodation[] = [
     description: 'Moderne und voll ausgestattete Ferienwohnung für bis zu 4 Personen in ruhiger Lage.',
     imageUrl: 'https://picsum.photos/seed/acc2/600/400',
     imageHint: 'vacation apartment',
+    bookingUrl: '#',
   },
   {
     id: '3',
@@ -82,6 +84,7 @@ export const accommodations: Accommodation[] = [
     description: 'Familiär geführte Pension mit gemütlichen Zimmern und persönlichem Service.',
     imageUrl: 'https://picsum.photos/seed/acc3/600/400',
     imageHint: 'guesthouse exterior',
+    bookingUrl: '#',
   },
   {
     id: '4',
@@ -90,6 +93,7 @@ export const accommodations: Accommodation[] = [
     description: 'Erleben Sie das Landleben hautnah. Ideal für Familien mit Kindern.',
     imageUrl: 'https://picsum.photos/seed/acc4/600/400',
     imageHint: 'farmhouse stay',
+    bookingUrl: '#',
   },
 ];
 

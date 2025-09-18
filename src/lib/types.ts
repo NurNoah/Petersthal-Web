@@ -30,6 +30,7 @@ export interface Accommodation {
   description: string;
   imageUrl: string;
   imageHint: string;
+  bookingUrl?: string;
 }
 
 export interface Club {
