@@ -24,7 +24,43 @@ const upcomingEvents = events
   .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
   .slice(0, 3);
 
+function getWeatherDescription(weathercode: number): string {
+    if (weathercode === 0) return "Klarer Himmel";
+    if ([1, 2, 3].includes(weathercode)) return "Teilweise bewölkt";
+    if ([45, 48].includes(weathercode)) return "Nebel";
+    if ([51, 53, 55].includes(weathercode)) return "Nieselregen";
+    if ([56, 57].includes(weathercode)) return "Gefrierender Nieselregen";
+    if ([61, 63, 65].includes(weathercode)) return "Regen";
+    if ([66, 67].includes(weathercode)) return "Gefrierender Regen";
+    if ([71, 73, 75].includes(weathercode)) return "Schnee";
+    if (weathercode === 77) return "Schneekörner";
+    if ([80, 81, 82].includes(weathercode)) return "Regenschauer";
+    if ([85, 86].includes(weathercode)) return "Schneeregen";
+    if ([95, 96, 99].includes(weathercode)) return "Gewitter";
+    return "Unbekannt";
+}
+
 function WeatherWidget() {
+  const [weather, setWeather] = React.useState<any>(null);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    async function fetchWeather() {
+      try {
+        // Open-Meteo API (no key required)
+        const res = await fetch(
+          `https://api.open-meteo.com/v1/forecast?latitude=47.45&longitude=10.1167&current_weather=true&timezone=Europe/Berlin`
+        );
+        if (!res.ok) throw new Error("API error");
+        const data = await res.json();
+        setWeather(data.current_weather);
+      } catch (err) {
+        setError("Konnte Wetterdaten nicht laden");
+      }
+    }
+    fetchWeather();
+  }, []);
+
   return (
     <Card className="bg-secondary/50">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -32,8 +68,20 @@ function WeatherWidget() {
         <CloudSun className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">18°C Sonnig</div>
-        <p className="text-xs text-muted-foreground">Vorhersage für heute</p>
+        {error ? (
+          <p className="text-xs text-muted-foreground">{error}</p>
+        ) : weather ? (
+          <>
+            <div className="text-2xl font-bold">
+              {Math.round(weather.temperature)}°C
+            </div>
+            <p className="text-xs text-muted-foreground">
+              {getWeatherDescription(weather.weathercode)}
+            </p>
+          </>
+        ) : (
+          <p className="text-xs text-muted-foreground">Lade Wetterdaten...</p>
+        )}
       </CardContent>
     </Card>
   );
