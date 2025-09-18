@@ -72,10 +72,10 @@ export default function Home() {
           alt="Panorama von Petersthal"
           fill
           priority
-          className="object-cover"
+          className="object-cover" // Increased brightness
           data-ai-hint="village landscape"
         />
-        <div className="absolute inset-0 bg-black/50 flex flex-col justify-center items-center p-4">
+        <div className="absolute inset-0 bg-black/30 flex flex-col justify-center items-center p-4">
           <h1 className="text-4xl md:text-6xl font-bold drop-shadow-lg">
             Willkommen in Petersthal
           </h1>
