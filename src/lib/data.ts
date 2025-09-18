@@ -63,12 +63,12 @@ export const accommodations: Accommodation[] = [
     id: '1',
     name: 'Löwe Apartments',
     type: 'Apartments',
-    description: 'Erleben Sie die Natur im Löwe Apartments.',
+    description: 'Erleben Sie die Natur im Löwe Apartments. eine unvergessliche Unterkunft für Familien und Abenteuerlustige.',
     imageUrl: '/images/fewo/fewo4.jpg',
     imageHint: 'farmhouse stay',
     bookingUrl: 'https://www.oy-mittelberg.de/unterkunft/#/unterkuenfte/VIT/8972647d-c403-46d4-b5ec-ac077f0dbb3e/loewe-apartments---schenk?useDetailSearch=false',
-    features: ['Küche', 'Balkon', 'WLAN'],
-    price: 'ab 95€ / Nacht',
+    features: ['20m² - 110m²', 'WLAN'],
+    price: 'ab 35€ /Nacht',
   },
   {
     id: '2',
@@ -78,8 +78,8 @@ export const accommodations: Accommodation[] = [
     imageUrl: '/images/fewo/fewo2.jpg',
     imageHint: 'vacation apartment',
     bookingUrl: 'https://www.oy-mittelberg.de/unterkunft/#/unterkuenfte/VIT/675ab89c-25d6-4c71-a7cd-cb9ca236ee39/mayer-florian?useDetailSearch=false',
-    features: ['2 Schlafzimmer', 'Seeblick'],
-    price: 'auf Anfrage',
+    features: ['2 Schlafzimmer', 'Dusche, WC'],
+    price: '16,25 € /Nacht',
   },
   {
     id: '3',
@@ -89,8 +89,8 @@ export const accommodations: Accommodation[] = [
     imageUrl: '/images/fewo/fewo3.jpeg',
     imageHint: 'guesthouse exterior',
     bookingUrl: 'https://www.oy-mittelberg.de/unterkunft/#/unterkuenfte/VIT/f562e550-6a87-4594-a852-fd11c7129bff/buchenberg-hans?useDetailSearch=false',
-    features: ['Spülmaschine', 'Garage'],
-    price: 'ab 70€ / Nacht',
+    features: ['1 Schlafzimmer', 'Dusche, WC'],
+    price: '33,00 € /Nacht',
   },
   {
     id: '4',
@@ -100,6 +100,8 @@ export const accommodations: Accommodation[] = [
     imageUrl: '/images/fewo/fewo9.jpg',
     imageHint: 'farmhouse stay',
     bookingUrl: 'https://www.oy-mittelberg.de/unterkunft/#/unterkuenfte/VIT/e2669647-f047-4e0d-8d0d-84a2e308e67c/waibel?useDetailSearch=false',
+    features: ['bis zu 4 Personen'],
+    price: 'ab 20,00 € /Nacht',
   },
   {
     id: '5',
@@ -109,7 +111,8 @@ export const accommodations: Accommodation[] = [
     imageUrl: '/images/fewo/fewo1.jpg',
     imageHint: 'hotel room',
     bookingUrl: 'https://www.oy-mittelberg.de/unterkunft/#/unterkuenfte/VIT/57cd66ff-9bf2-49e6-9181-10051490074b/alpenloft-mereine?useDetailSearch=false',
-    price: 'ab 150€ / Nacht',
+    features: ['Luxus'],
+    price: 'ab 496,00 € / Nacht',
   },
   {
     id: '6',
@@ -119,7 +122,8 @@ export const accommodations: Accommodation[] = [
     imageUrl: '/images/fewo/fewo5.jpeg',
     imageHint: 'farmhouse stay',
     bookingUrl: 'https://www.oy-mittelberg.de/unterkunft/#/unterkuenfte/VIT/c512a7bd-8d02-473f-91f2-4e164fd09126/ferienwohnung-andrea---schrag-dieter?useDetailSearch=false',
-    features: ['Hunde erlaubt', 'Terrasse'],
+    features: ['1 Schlafzimmer', 'Dusche, WC'],
+    price: 'ab 45,00 € /Nacht',
   },
   {
     id: '7',
@@ -129,7 +133,8 @@ export const accommodations: Accommodation[] = [
     imageUrl: '/images/fewo/fewo6.jpeg',
     imageHint: 'farmhouse stay',
     bookingUrl: 'https://www.oy-mittelberg.de/unterkunft/#/unterkuenfte/VIT/a4eae87c-04ba-4438-88b4-11d5ef1f880b/ostheimer-annelies?useDetailSearch=false',
-    price: 'ab 65€ / Nacht',
+    features: ['1 Schlafzimmer', 'Dusche, WC'],
+    price: 'ab 29,00€ / Nacht',
   },
   {
     id: '8',
@@ -139,6 +144,7 @@ export const accommodations: Accommodation[] = [
     imageUrl: '/images/fewo/fewo7.jpeg',
     imageHint: 'farmhouse stay',
     bookingUrl: 'https://www.oy-mittelberg.de/unterkunft/#/unterkuenfte/VIT/11576888-5798-4809-a94a-a3c3292c9d2d/fewo-herp?useDetailSearch=false',
+    price: 'ab 65,00€ / Nacht',
   },
   {
     id: '9',
@@ -148,7 +154,8 @@ export const accommodations: Accommodation[] = [
     imageUrl: '/images/fewo/fewo8.jpg',
     imageHint: 'farmhouse stay',
     bookingUrl: 'https://www.oy-mittelberg.de/unterkunft/#/unterkuenfte/VIT/6d5f2b27-ed0a-43d6-9f0e-e58cbe3ab381/waldmann-waltraud?useDetailSearch=false',
-    features: ['Garten', 'Parkplatz'],
+    features: ['2 Schlafzimmer', 'Dusche, WC, Badewanne'],
+    price: 'ab 25,50€ / Nacht',
   },
 ];
 
