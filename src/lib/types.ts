@@ -31,6 +31,8 @@ export interface Accommodation {
   imageUrl: string;
   imageHint: string;
   bookingUrl?: string;
+  features?: string[];
+  price?: string;
 }
 
 export interface Club {

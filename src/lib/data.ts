@@ -67,6 +67,8 @@ export const accommodations: Accommodation[] = [
     imageUrl: '/images/fewo/fewo4.jpg',
     imageHint: 'farmhouse stay',
     bookingUrl: 'https://www.oy-mittelberg.de/unterkunft/#/unterkuenfte/VIT/8972647d-c403-46d4-b5ec-ac077f0dbb3e/loewe-apartments---schenk?useDetailSearch=false',
+    features: ['Küche', 'Balkon', 'WLAN'],
+    price: 'ab 95€ / Nacht',
   },
   {
     id: '2',
@@ -76,6 +78,8 @@ export const accommodations: Accommodation[] = [
     imageUrl: '/images/fewo/fewo2.jpg',
     imageHint: 'vacation apartment',
     bookingUrl: 'https://www.oy-mittelberg.de/unterkunft/#/unterkuenfte/VIT/675ab89c-25d6-4c71-a7cd-cb9ca236ee39/mayer-florian?useDetailSearch=false',
+    features: ['2 Schlafzimmer', 'Seeblick'],
+    price: 'auf Anfrage',
   },
   {
     id: '3',
@@ -85,6 +89,8 @@ export const accommodations: Accommodation[] = [
     imageUrl: '/images/fewo/fewo3.jpeg',
     imageHint: 'guesthouse exterior',
     bookingUrl: 'https://www.oy-mittelberg.de/unterkunft/#/unterkuenfte/VIT/f562e550-6a87-4594-a852-fd11c7129bff/buchenberg-hans?useDetailSearch=false',
+    features: ['Spülmaschine', 'Garage'],
+    price: 'ab 70€ / Nacht',
   },
   {
     id: '4',
@@ -103,6 +109,7 @@ export const accommodations: Accommodation[] = [
     imageUrl: '/images/fewo/fewo1.jpg',
     imageHint: 'hotel room',
     bookingUrl: 'https://www.oy-mittelberg.de/unterkunft/#/unterkuenfte/VIT/57cd66ff-9bf2-49e6-9181-10051490074b/alpenloft-mereine?useDetailSearch=false',
+    price: 'ab 150€ / Nacht',
   },
   {
     id: '6',
@@ -112,6 +119,7 @@ export const accommodations: Accommodation[] = [
     imageUrl: '/images/fewo/fewo5.jpeg',
     imageHint: 'farmhouse stay',
     bookingUrl: 'https://www.oy-mittelberg.de/unterkunft/#/unterkuenfte/VIT/c512a7bd-8d02-473f-91f2-4e164fd09126/ferienwohnung-andrea---schrag-dieter?useDetailSearch=false',
+    features: ['Hunde erlaubt', 'Terrasse'],
   },
   {
     id: '7',
@@ -121,6 +129,7 @@ export const accommodations: Accommodation[] = [
     imageUrl: '/images/fewo/fewo6.jpeg',
     imageHint: 'farmhouse stay',
     bookingUrl: 'https://www.oy-mittelberg.de/unterkunft/#/unterkuenfte/VIT/a4eae87c-04ba-4438-88b4-11d5ef1f880b/ostheimer-annelies?useDetailSearch=false',
+    price: 'ab 65€ / Nacht',
   },
   {
     id: '8',
@@ -139,6 +148,7 @@ export const accommodations: Accommodation[] = [
     imageUrl: '/images/fewo/fewo8.jpg',
     imageHint: 'farmhouse stay',
     bookingUrl: 'https://www.oy-mittelberg.de/unterkunft/#/unterkuenfte/VIT/6d5f2b27-ed0a-43d6-9f0e-e58cbe3ab381/waldmann-waltraud?useDetailSearch=false',
+    features: ['Garten', 'Parkplatz'],
   },
 ];
 

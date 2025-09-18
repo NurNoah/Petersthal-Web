@@ -2,7 +2,7 @@ import { InfoCard } from '@/components/shared/InfoCard';
 import { accommodations } from '@/lib/data';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ExternalLink } from 'lucide-react';
+import { BedDouble, Euro, ExternalLink, Sparkles } from 'lucide-react';
 
 export default function UnterkuenftePage() {
   return (
@@ -25,8 +25,28 @@ export default function UnterkuenftePage() {
               imageAlt={`Bild von ${acc.name}`}
               imageHint={acc.imageHint}
             >
-              <div className="flex flex-col flex-grow justify-between">
-                <Badge variant="secondary" className="mt-4 w-fit">{acc.type}</Badge>
+              <div className="flex flex-col flex-grow justify-between pt-4">
+                <div className="space-y-3">
+                  <div className="flex items-center text-sm text-muted-foreground">
+                    <BedDouble className="h-4 w-4 mr-2" />
+                    <Badge variant="secondary">{acc.type}</Badge>
+                  </div>
+                  {acc.features && acc.features.length > 0 && (
+                     <div className="flex items-start text-sm text-muted-foreground">
+                       <Sparkles className="h-4 w-4 mr-2 mt-0.5 shrink-0" />
+                       <div className="flex flex-wrap gap-2">
+                          {acc.features.map(feature => <Badge key={feature} variant="outline">{feature}</Badge>)}
+                       </div>
+                    </div>
+                  )}
+                  {acc.price && (
+                    <div className="flex items-center text-sm text-muted-foreground">
+                      <Euro className="h-4 w-4 mr-2" />
+                      <span>{acc.price}</span>
+                    </div>
+                  )}
+                </div>
+
                 {acc.bookingUrl && (
                   <Button asChild className="mt-4 w-full">
                     <a href={acc.bookingUrl} target="_blank" rel="noopener noreferrer">
