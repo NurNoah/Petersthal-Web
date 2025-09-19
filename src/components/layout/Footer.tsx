@@ -10,12 +10,12 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-2">
             <Button variant="ghost" asChild>
-                <a href="https://www.archiv-petersthal.de" target="_blank" rel="noopener noreferrer">
+                <a href="http://www.archiv-petersthal.de" target="_blank" rel="noopener noreferrer">
                     Dorfarchive
                 </a>
             </Button>
             <Button variant="ghost" asChild>
-                <a href="https://www.rottachsee.info" target="_blank" rel="noopener noreferrer">
+                <a href="http://www.rottachsee.info" target="_blank" rel="noopener noreferrer">
                     Verkehrsverein
                 </a>
             </Button>
