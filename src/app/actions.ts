@@ -44,7 +44,7 @@ export async function saveEventAction(
         time: parsed.data.eventTime,
         location: parsed.data.eventLocation,
         description: parsed.data.eventDescription,
-        organizerClubSlug: parsed.data.organizerClubSlug === '' ? undefined : parsed.data.organizerClubSlug,
+        organizerClubSlug: parsed.data.organizerClubSlug === 'none' ? undefined : parsed.data.organizerClubSlug,
     };
     
     console.log('Neues Event wird gespeichert:', newEvent);

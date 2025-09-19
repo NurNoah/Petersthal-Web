@@ -86,7 +86,7 @@ export function EventSuggestionForm() {
                   <SelectValue placeholder="Verein auswählen" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Kein Verein</SelectItem>
+                  <SelectItem value="none">Kein Verein</SelectItem>
                   {clubs.map(club => (
                     <SelectItem key={club.slug} value={club.slug}>
                       {club.name}
