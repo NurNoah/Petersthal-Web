@@ -4,10 +4,13 @@ import { useState } from 'react';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { events } from '@/lib/data';
+import { events, clubs } from '@/lib/data';
 import type { Event } from '@/lib/types';
-import { format } from 'date-fns';
+import { format, isPast } from 'date-fns';
 import { de } from 'date-fns/locale';
+import Link from 'next/link';
+import { cn } from '@/lib/utils';
+import { Badge } from '@/components/ui/badge';
 
 function EventList({ eventsToShow }: { eventsToShow: Event[] }) {
   if (eventsToShow.length === 0) {
@@ -16,19 +19,32 @@ function EventList({ eventsToShow }: { eventsToShow: Event[] }) {
 
   return (
     <div className="space-y-4 mt-4">
-      {eventsToShow.map((event) => (
-        <Card key={event.id}>
-          <CardHeader>
-            <CardTitle>{event.title}</CardTitle>
-            <CardDescription>
-              {format(new Date(event.date), "EEEE, dd. MMMM yyyy", { locale: de })} um {event.time} Uhr - {event.location}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>{event.description}</p>
-          </CardContent>
-        </Card>
-      ))}
+      {eventsToShow.map((event) => {
+        const hasPassed = isPast(new Date(event.date));
+        const club = clubs.find(c => c.slug === event.organizerClubSlug);
+        return (
+            <Card key={event.id} className={cn(hasPassed ? 'bg-muted/50' : '')}>
+            <CardHeader>
+                <div className="flex justify-between items-start">
+                    <div>
+                        <CardTitle>{event.title}</CardTitle>
+                        <CardDescription>
+                        {format(new Date(event.date), "EEEE, dd. MMMM yyyy", { locale: de })} um {event.time} Uhr - {event.location}
+                        </CardDescription>
+                    </div>
+                    {club && (
+                        <Badge variant="secondary" asChild>
+                            <Link href={`/vereine/${club.slug}`}>{club.name}</Link>
+                        </Badge>
+                    )}
+                </div>
+            </CardHeader>
+            <CardContent>
+                <p>{event.description}</p>
+            </CardContent>
+            </Card>
+        );
+      })}
     </div>
   );
 }
@@ -62,19 +78,31 @@ export default function VeranstaltungenPage() {
         </TabsList>
         <TabsContent value="list">
             <div className="mt-6 space-y-4">
-               {sortedEvents.map((event) => (
-                    <Card key={event.id}>
+               {sortedEvents.map((event) => {
+                 const hasPassed = isPast(new Date(event.date));
+                 const club = clubs.find(c => c.slug === event.organizerClubSlug);
+                 return (
+                    <Card key={event.id} className={cn(hasPassed ? 'bg-muted/50 text-muted-foreground' : '')}>
                     <CardHeader>
-                        <CardTitle>{event.title}</CardTitle>
-                        <CardDescription>
-                        {format(new Date(event.date), "EEEE, dd. MMMM yyyy", { locale: de })} um {event.time} Uhr - {event.location}
-                        </CardDescription>
+                         <div className="flex justify-between items-start">
+                            <div>
+                                <CardTitle className={cn(hasPassed ? 'text-muted-foreground' : '')}>{event.title}</CardTitle>
+                                <CardDescription>
+                                {format(new Date(event.date), "EEEE, dd. MMMM yyyy", { locale: de })} um {event.time} Uhr - {event.location}
+                                </CardDescription>
+                            </div>
+                            {club && (
+                                <Badge variant={hasPassed ? "outline" : "secondary"} asChild>
+                                    <Link href={`/vereine/${club.slug}`}>{club.name}</Link>
+                                </Badge>
+                            )}
+                        </div>
                     </CardHeader>
                     <CardContent>
                         <p>{event.description}</p>
                     </CardContent>
                     </Card>
-                ))}
+                )})}
             </div>
         </TabsContent>
         <TabsContent value="month">

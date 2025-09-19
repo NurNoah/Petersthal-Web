@@ -8,6 +8,7 @@ export const events: Event[] = [
     time: '11:00',
     location: 'Dorfplatz',
     description: 'Jährliches Dorffest mit Musik, Essen und Trinken. Ein Treffpunkt für Jung und Alt.',
+    organizerClubSlug: 'musikkapelle-petersthal',
   },
   {
     id: '2',
@@ -16,6 +17,7 @@ export const events: Event[] = [
     time: '10:00',
     location: 'Dorfplatz',
     description: 'Traditionelles Aufstellen des Maibaums durch die Katholische Landjugend.',
+    organizerClubSlug: 'kljb-petersthal',
   },
   {
     id: '3',
@@ -32,6 +34,7 @@ export const events: Event[] = [
     time: '19:30',
     location: 'Musikpavillon',
     description: 'Genießen Sie einen lauen Sommerabend mit Blasmusik vom Feinsten.',
+    organizerClubSlug: 'musikkapelle-petersthal',
   },
 ];
 

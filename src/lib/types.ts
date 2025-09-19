@@ -10,6 +10,7 @@ export interface Event {
   time: string; // HH:MM
   location: string;
   description: string;
+  organizerClubSlug?: string; // Optional slug of the organizing club
 }
 
 export interface Restaurant {

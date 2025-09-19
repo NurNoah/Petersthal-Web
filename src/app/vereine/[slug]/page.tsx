@@ -1,13 +1,34 @@
 import Image from 'next/image';
-import { clubs } from '@/lib/data';
+import { clubs, events } from '@/lib/data';
 import { notFound } from 'next/navigation';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mail, Phone, User } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Mail, Phone, User, Calendar } from 'lucide-react';
+import type { Event } from '@/lib/types';
+import { format, isPast, isFuture, parseISO } from 'date-fns';
+import { de } from 'date-fns/locale';
+import { cn } from '@/lib/utils';
 
 export async function generateStaticParams() {
   return clubs.map((club) => ({
     slug: club.slug,
   }));
+}
+
+function EventCard({ event }: { event: Event }) {
+    const hasPassed = isPast(parseISO(event.date));
+    return (
+        <Card className={cn(hasPassed ? 'bg-muted/50' : '')}>
+            <CardHeader>
+                <CardTitle className={cn(hasPassed ? 'text-muted-foreground' : '')}>{event.title}</CardTitle>
+                <CardDescription>
+                    {format(parseISO(event.date), "EEEE, dd. MMMM yyyy", { locale: de })} um {event.time} Uhr - {event.location}
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <p>{event.description}</p>
+            </CardContent>
+        </Card>
+    )
 }
 
 export default function ClubDetailPage({ params }: { params: { slug: string } }) {
@@ -16,6 +37,14 @@ export default function ClubDetailPage({ params }: { params: { slug: string } })
   if (!club) {
     notFound();
   }
+  
+  const clubEvents = events
+    .filter((event) => event.organizerClubSlug === club.slug)
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    
+  const upcomingEvents = clubEvents.filter(e => isFuture(parseISO(e.date)));
+  const pastEvents = clubEvents.filter(e => isPast(parseISO(e.date))).reverse();
+
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -35,6 +64,31 @@ export default function ClubDetailPage({ params }: { params: { slug: string } })
           <div className="prose max-w-none text-foreground/80">
             <p>{club.description}</p>
           </div>
+            {clubEvents.length > 0 && (
+                 <section className="mt-12">
+                    <h2 className="text-3xl font-bold font-headline mb-6 flex items-center">
+                        <Calendar className="mr-3 h-6 w-6" /> Veranstaltungen
+                    </h2>
+                     {upcomingEvents.length > 0 && (
+                        <>
+                            <h3 className="text-xl font-semibold mb-4">Kommende Veranstaltungen</h3>
+                            <div className="space-y-4">
+                                {upcomingEvents.map(event => <EventCard key={event.id} event={event} />)}
+                            </div>
+                        </>
+                    )}
+
+                    {pastEvents.length > 0 && (
+                         <>
+                            <h3 className="text-xl font-semibold mt-8 mb-4">Vergangene Veranstaltungen</h3>
+                            <div className="space-y-4">
+                                {pastEvents.map(event => <EventCard key={event.id} event={event} />)}
+                            </div>
+                        </>
+                    )}
+                 </section>
+            )}
+
         </div>
         <div>
           <Card>
