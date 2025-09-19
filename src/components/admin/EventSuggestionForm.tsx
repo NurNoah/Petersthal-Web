@@ -17,6 +17,8 @@ import { saveEventAction, type FormState } from '@/app/actions';
 import { useEffect, useRef } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Save } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { clubs } from '@/lib/data';
 
 const initialState: FormState = {
   message: '',
@@ -67,16 +69,34 @@ export function EventSuggestionForm() {
       </CardHeader>
       <form ref={formRef} action={formAction}>
         <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="eventName">Eventname</Label>
+            <Input id="eventName" name="eventName" placeholder="z.B. Dorffest" required />
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="eventName">Eventname</Label>
-              <Input id="eventName" name="eventName" placeholder="z.B. Dorffest" required />
-            </div>
             <div className="space-y-2">
               <Label htmlFor="eventLocation">Ort</Label>
               <Input id="eventLocation" name="eventLocation" placeholder="z.B. Dorfplatz" required />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="organizerClubSlug">Veranstalter (Verein)</Label>
+               <Select name="organizerClubSlug">
+                <SelectTrigger>
+                  <SelectValue placeholder="Verein auswählen" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">Kein Verein</SelectItem>
+                  {clubs.map(club => (
+                    <SelectItem key={club.slug} value={club.slug}>
+                      {club.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
+          
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="eventDate">Datum</Label>

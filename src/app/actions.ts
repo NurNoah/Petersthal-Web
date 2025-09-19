@@ -11,6 +11,7 @@ const formSchema = z.object({
     eventTime: z.string().min(1, 'Uhrzeit ist erforderlich.'),
     eventLocation: z.string().min(1, 'Ort ist erforderlich.'),
     eventDescription: z.string().min(1, 'Beschreibung ist erforderlich.'),
+    organizerClubSlug: z.string().optional(),
   });
   
 export interface FormState {
@@ -43,12 +44,17 @@ export async function saveEventAction(
         time: parsed.data.eventTime,
         location: parsed.data.eventLocation,
         description: parsed.data.eventDescription,
+        organizerClubSlug: parsed.data.organizerClubSlug === '' ? undefined : parsed.data.organizerClubSlug,
     };
     
     console.log('Neues Event wird gespeichert:', newEvent);
     events.push(newEvent);
 
     revalidatePath('/veranstaltungen');
+    if (newEvent.organizerClubSlug) {
+      revalidatePath(`/vereine/${newEvent.organizerClubSlug}`);
+    }
+
 
     return {
         message: `Veranstaltung "${newEvent.title}" erfolgreich gespeichert!`,
