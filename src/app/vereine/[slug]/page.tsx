@@ -7,6 +7,12 @@ import type { Event } from '@/lib/types';
 import { format, isPast, isFuture, parseISO } from 'date-fns';
 import { de } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 export async function generateStaticParams() {
   return clubs.map((club) => ({
@@ -79,12 +85,20 @@ export default function ClubDetailPage({ params }: { params: { slug: string } })
                     )}
 
                     {pastEvents.length > 0 && (
-                         <>
-                            <h3 className="text-xl font-semibold mt-8 mb-4">Vergangene Veranstaltungen</h3>
-                            <div className="space-y-4">
-                                {pastEvents.map(event => <EventCard key={event.id} event={event} />)}
-                            </div>
-                        </>
+                        <div className="mt-8">
+                            <Accordion type="single" collapsible>
+                                <AccordionItem value="past-events">
+                                    <AccordionTrigger className="text-xl font-semibold">
+                                        Vergangene Veranstaltungen
+                                    </AccordionTrigger>
+                                    <AccordionContent>
+                                        <div className="space-y-4 mt-4">
+                                            {pastEvents.map(event => <EventCard key={event.id} event={event} />)}
+                                        </div>
+                                    </AccordionContent>
+                                </AccordionItem>
+                            </Accordion>
+                        </div>
                     )}
                  </section>
             )}
