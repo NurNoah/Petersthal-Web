@@ -17,6 +17,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Button } from '@/components/ui/button';
 
 
 function EventCard({ event }: { event: Event }) {
@@ -117,7 +118,7 @@ export default function VeranstaltungenPage() {
         </TabsContent>
         <TabsContent value="month">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
-            <div className="md:col-span-1 flex justify-center">
+            <div className="md:col-span-1 flex flex-col items-center gap-4">
               <Calendar
                 mode="single"
                 selected={date}
@@ -134,6 +135,7 @@ export default function VeranstaltungenPage() {
                   },
                 }}
               />
+              <Button variant="outline" onClick={() => setDate(new Date())}>Heute</Button>
             </div>
             <div className="md:col-span-2">
               <h2 className="text-2xl font-bold font-headline">
