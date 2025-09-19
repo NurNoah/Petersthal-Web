@@ -6,34 +6,34 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { events, clubs } from '@/lib/data';
 import type { Event } from '@/lib/types';
-import { format, isPast } from 'date-fns';
+import { format, isPast, isFuture, parseISO } from 'date-fns';
 import { de } from 'date-fns/locale';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
-function EventList({ eventsToShow }: { eventsToShow: Event[] }) {
-  if (eventsToShow.length === 0) {
-    return <p className="text-muted-foreground mt-4">Keine Veranstaltungen an diesem Tag.</p>;
-  }
 
-  return (
-    <div className="space-y-4 mt-4">
-      {eventsToShow.map((event) => {
-        const hasPassed = isPast(new Date(event.date));
-        const club = clubs.find(c => c.slug === event.organizerClubSlug);
-        return (
-            <Card key={event.id} className={cn(hasPassed ? 'bg-muted/50' : '')}>
+function EventCard({ event }: { event: Event }) {
+    const hasPassed = isPast(new Date(event.date));
+    const club = clubs.find(c => c.slug === event.organizerClubSlug);
+    return (
+        <Card className={cn(hasPassed ? 'bg-muted/50 text-muted-foreground' : '')}>
             <CardHeader>
                 <div className="flex justify-between items-start">
                     <div>
-                        <CardTitle>{event.title}</CardTitle>
+                        <CardTitle className={cn(hasPassed ? 'text-muted-foreground' : '')}>{event.title}</CardTitle>
                         <CardDescription>
-                        {format(new Date(event.date), "EEEE, dd. MMMM yyyy", { locale: de })} um {event.time} Uhr - {event.location}
+                            {format(new Date(event.date), "EEEE, dd. MMMM yyyy", { locale: de })} um {event.time} Uhr - {event.location}
                         </CardDescription>
                     </div>
                     {club && (
-                        <Badge variant="secondary" asChild>
+                        <Badge variant={hasPassed ? "outline" : "secondary"} asChild>
                             <Link href={`/vereine/${club.slug}`}>{club.name}</Link>
                         </Badge>
                     )}
@@ -42,9 +42,18 @@ function EventList({ eventsToShow }: { eventsToShow: Event[] }) {
             <CardContent>
                 <p>{event.description}</p>
             </CardContent>
-            </Card>
-        );
-      })}
+        </Card>
+    )
+}
+
+function EventList({ eventsToShow }: { eventsToShow: Event[] }) {
+  if (eventsToShow.length === 0) {
+    return <p className="text-muted-foreground mt-4">Keine Veranstaltungen an diesem Tag.</p>;
+  }
+
+  return (
+    <div className="space-y-4 mt-4">
+      {eventsToShow.map((event) => <EventCard key={event.id} event={event} />)}
     </div>
   );
 }
@@ -66,6 +75,9 @@ export default function VeranstaltungenPage() {
   const eventsForSelectedDay = selectedDateString ? eventsByDate[selectedDateString] || [] : [];
   
   const sortedEvents = [...events].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  const upcomingEvents = sortedEvents.filter(e => isFuture(new Date(e.date)) || new Date(e.date).toDateString() === new Date().toDateString());
+  const pastEvents = sortedEvents.filter(e => isPast(new Date(e.date)) && new Date(e.date).toDateString() !== new Date().toDateString()).reverse();
+
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -78,32 +90,30 @@ export default function VeranstaltungenPage() {
         </TabsList>
         <TabsContent value="list">
             <div className="mt-6 space-y-4">
-               {sortedEvents.map((event) => {
-                 const hasPassed = isPast(new Date(event.date));
-                 const club = clubs.find(c => c.slug === event.organizerClubSlug);
-                 return (
-                    <Card key={event.id} className={cn(hasPassed ? 'bg-muted/50 text-muted-foreground' : '')}>
-                    <CardHeader>
-                         <div className="flex justify-between items-start">
-                            <div>
-                                <CardTitle className={cn(hasPassed ? 'text-muted-foreground' : '')}>{event.title}</CardTitle>
-                                <CardDescription>
-                                {format(new Date(event.date), "EEEE, dd. MMMM yyyy", { locale: de })} um {event.time} Uhr - {event.location}
-                                </CardDescription>
-                            </div>
-                            {club && (
-                                <Badge variant={hasPassed ? "outline" : "secondary"} asChild>
-                                    <Link href={`/vereine/${club.slug}`}>{club.name}</Link>
-                                </Badge>
-                            )}
-                        </div>
-                    </CardHeader>
-                    <CardContent>
-                        <p>{event.description}</p>
-                    </CardContent>
-                    </Card>
-                )})}
+                <h2 className="text-2xl font-bold font-headline">Kommende Veranstaltungen</h2>
+                {upcomingEvents.length > 0 ? (
+                    upcomingEvents.map((event) => <EventCard key={event.id} event={event} />)
+                ) : (
+                    <p className="text-muted-foreground">Derzeit sind keine bevorstehenden Veranstaltungen geplant.</p>
+                )}
             </div>
+            
+            {pastEvents.length > 0 && (
+                <div className="mt-12">
+                    <Accordion type="single" collapsible>
+                        <AccordionItem value="past-events">
+                            <AccordionTrigger className="text-2xl font-bold font-headline">
+                                Vergangene Veranstaltungen
+                            </AccordionTrigger>
+                            <AccordionContent>
+                                <div className="space-y-4 mt-4">
+                                    {pastEvents.map(event => <EventCard key={event.id} event={event} />)}
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                </div>
+            )}
         </TabsContent>
         <TabsContent value="month">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
