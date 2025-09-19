@@ -128,13 +128,32 @@ export default function VeranstaltungenPage() {
                 modifiers={{
                   hasEvent: (day) => eventDates.includes(day.toDateString()),
                 }}
-                modifiersStyles={{
-                  hasEvent: {
-                    fontWeight: 'bold',
-                    color: 'hsl(var(--primary))',
-                  },
+                 modifiersClassNames={{
+                  hasEvent: 'has-event',
                 }}
               />
+              <style>{`
+                .has-event:not([aria-selected="true"]) {
+                  font-weight: bold;
+                }
+                .has-event {
+                  position: relative;
+                }
+                .has-event::after {
+                  content: '';
+                  position: absolute;
+                  bottom: 4px;
+                  left: 50%;
+                  transform: translateX(-50%);
+                  width: 4px;
+                  height: 4px;
+                  border-radius: 50%;
+                  background-color: hsl(var(--primary));
+                }
+                .rdp-day_selected.has-event::after {
+                  background-color: hsl(var(--primary-foreground));
+                }
+              `}</style>
               <Button variant="outline" onClick={() => setDate(new Date())}>Heute</Button>
             </div>
             <div className="md:col-span-2">
