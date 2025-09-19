@@ -215,7 +215,7 @@ export default function Home() {
               <WeatherWidget />
               <Card>
                 <CardHeader>
-                  <CardTitle>Entdecken Sie unsere Wirtschaften</CardTitle>
+                  <CardTitle>Entdecken Sie unsere Gastro</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-4">
@@ -223,7 +223,7 @@ export default function Home() {
                   </p>
                   <Button variant="secondary" className="w-full" asChild>
                     <Link href="/gastronomie">
-                      Zu Wirtschaften
+                      Zur Gastro
                     </Link>
                   </Button>
                 </CardContent>

@@ -10,7 +10,7 @@ export default function UnterkuenftePage() {
       <div className="text-center">
         <h1 className="text-4xl font-bold font-headline">Unterkünfte in Petersthal</h1>
         <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
-          Finden Sie die perfekte Unterkunft für Ihren Aufenthalt. Ob Hotel, Ferienwohnung oder Pension – bei uns werden Sie fündig.
+          Finden Sie die perfekte Unterkunft für Ihren Aufenthalt.
         </p>
       </div>
 

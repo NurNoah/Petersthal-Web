@@ -87,7 +87,7 @@ export default function AnfahrtPage() {
           <div>
             <h3 className="text-lg font-semibold mb-2">Haltestelle Petersthal Ortsmitte</h3>
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d935.9523451376562!2d10.386875576916081!3d47.63573912975594!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d1116c1d7f5%3A0x2778ffdd5f58de93!2sPetersthal%2C%20Ortsmitte!5e1!3m2!1sde!2sde!4v1758147579293!5m2!1sde!2sde"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.4986520151565!2d10.387887000000006!3d47.635876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d1116c1d7f5%3A0x2778ffdd5f58de93!2sPetersthal%2C%20Ortsmitte!5e0!3m2!1sde!2sde!4v1758310587219!5m2!1sde!2sde"
               width="100%"
               height="300"
               style={{ border: 0 }}
@@ -99,7 +99,7 @@ export default function AnfahrtPage() {
           <div>
             <h3 className="text-lg font-semibold mb-2">Haltestelle Petersthal Kirche</h3>
              <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d952.916891021943!2d10.385860414060469!3d47.63483903926697!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d11851f5a6d%3A0x64984efd1259d5a0!2sParkplatz!5e1!3m2!1sde!2sde!4v1758147623829!5m2!1sde!2sde"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2687.251078404166!2d10.385418999999994!3d47.634856!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d11851f5a6d%3A0x64984efd1259d5a0!2sParkplatz!5e0!3m2!1sde!2sde!4v1758310642314!5m2!1sde!2sde"
               width="100%"
               height="300"
               style={{ border: 0 }}
