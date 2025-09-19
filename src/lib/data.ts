@@ -36,6 +36,15 @@ export const events: Event[] = [
     description: 'Genießen Sie einen lauen Sommerabend mit Blasmusik vom Feinsten.',
     organizerClubSlug: 'musikkapelle-petersthal',
   },
+  {
+    id: '5',
+    title: 'Testveranstaltung',
+    date: '2025-09-24',
+    time: '18:00',
+    location: 'Testhausen',
+    description: 'Dies ist eine Testveranstaltung, um die Funktionalität zu prüfen.',
+    organizerClubSlug: 'tsv-petersthal',
+  },
 ];
 
 export const restaurants: Restaurant[] = [
