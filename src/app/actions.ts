@@ -19,7 +19,7 @@ const formSchema = z.object({
   eventDate: z.string().min(1, 'Datum ist erforderlich.'),
   eventTime: z.string().min(1, 'Uhrzeit ist erforderlich.'),
   eventLocation: z.string().min(1, 'Ort ist erforderlich.'),
-  eventDescription: z.string().min(1, 'Beschreibung ist erforderlich.'),
+  eventDescription: z.string().optional(),
   organizerClubSlug: z.string().optional(),
 });
 

@@ -67,19 +67,19 @@ export function EventSuggestionForm() {
       <CardHeader>
         <CardTitle>Neue Veranstaltung erstellen</CardTitle>
         <CardDescription>
-          Geben Sie die Eckdaten ein und speichern Sie die Veranstaltung.
+          Geben Sie die Eckdaten ein und speichern Sie die Veranstaltung. Felder mit * sind erforderlich.
         </CardDescription>
       </CardHeader>
       <form ref={formRef} action={formAction}>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="eventName">Eventname</Label>
+            <Label htmlFor="eventName">Eventname *</Label>
             <Input id="eventName" name="eventName" placeholder="z.B. Dorffest" required />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="eventLocation">Ort</Label>
+              <Label htmlFor="eventLocation">Ort *</Label>
               <Input id="eventLocation" name="eventLocation" placeholder="z.B. Dorfplatz" required />
             </div>
             <div className="space-y-2">
@@ -102,11 +102,11 @@ export function EventSuggestionForm() {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="eventDate">Datum</Label>
+              <Label htmlFor="eventDate">Datum *</Label>
               <Input id="eventDate" name="eventDate" type="date" required />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="eventTime">Uhrzeit</Label>
+              <Label htmlFor="eventTime">Uhrzeit *</Label>
               <Input id="eventTime" name="eventTime" type="time" required />
             </div>
           </div>
@@ -116,7 +116,6 @@ export function EventSuggestionForm() {
               id="eventDescription"
               name="eventDescription"
               placeholder="Beschreiben Sie die Veranstaltung..."
-              required
             />
           </div>
         </CardContent>
