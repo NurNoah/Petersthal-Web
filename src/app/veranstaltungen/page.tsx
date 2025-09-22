@@ -1,12 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { Calendar as CalendarIcon, Clock, MapPin } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { clubs } from '@/lib/data';
 import type { Event } from '@/lib/types';
-import { format, isPast, isFuture, parseISO } from 'date-fns';
+import { format, isPast, isFuture } from 'date-fns';
 import { de } from 'date-fns/locale';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
@@ -24,26 +25,43 @@ import { supabase } from '@/lib/supabaseClient';
 function EventCard({ event }: { event: Event }) {
     const hasPassed = isPast(new Date(event.date));
     const club = clubs.find(c => c.slug === event.organizer_club_slug);
+
+    // Format time to HH:mm
+    const formattedTime = event.time ? event.time.substring(0, 5) : 'N/A';
+
     return (
-        <Card className={cn(hasPassed ? 'bg-muted/50 text-muted-foreground' : '')}>
+        <Card className={cn(hasPassed ? 'bg-muted/50' : '')}>
             <CardHeader>
-                <div className="flex justify-between items-start">
-                    <div>
+                <div className="flex justify-between items-start gap-4">
+                    <div className="flex-1">
                         <CardTitle className={cn(hasPassed ? 'text-muted-foreground' : '')}>{event.title}</CardTitle>
-                        <CardDescription>
-                            {format(new Date(event.date), "EEEE, dd. MMMM yyyy", { locale: de })} um {event.time} Uhr - {event.location}
-                        </CardDescription>
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-2 text-sm">
+                            <Badge variant="outline" className="flex items-center gap-2">
+                                <CalendarIcon className="h-4 w-4" />
+                                {format(new Date(event.date), "dd. MMMM yyyy", { locale: de })}
+                            </Badge>
+                             <Badge variant="outline" className="flex items-center gap-2">
+                                <Clock className="h-4 w-4" />
+                                {formattedTime} Uhr
+                            </Badge>
+                             <Badge variant="outline" className="flex items-center gap-2">
+                                <MapPin className="h-4 w-4" />
+                                {event.location}
+                            </Badge>
+                        </div>
                     </div>
                     {club && (
-                        <Badge variant={hasPassed ? "outline" : "secondary"} asChild>
+                        <Badge variant={hasPassed ? "outline" : "secondary"} asChild className="shrink-0">
                             <Link href={`/vereine/${club.slug}`}>{club.name}</Link>
                         </Badge>
                     )}
                 </div>
             </CardHeader>
-            <CardContent>
-                <p>{event.description}</p>
-            </CardContent>
+             {event.description && (
+                <CardContent>
+                    <p className={cn('text-sm', hasPassed ? 'text-muted-foreground' : 'text-foreground/80')}>{event.description}</p>
+                </CardContent>
+            )}
         </Card>
     )
 }

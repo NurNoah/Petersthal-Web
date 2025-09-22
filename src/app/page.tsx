@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Calendar, CloudSun, Users } from 'lucide-react';
+import { ArrowRight, Calendar as CalendarIcon, CloudSun, Users, Clock, MapPin } from 'lucide-react';
 import { clubs } from '@/lib/data';
 import { format, isFuture } from 'date-fns';
 import { de } from 'date-fns/locale';
@@ -20,6 +20,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import { ClubCard } from '@/components/shared/ClubCard';
 import type { Event } from '@/lib/types';
 import { supabase } from '@/lib/supabaseClient';
+import { Badge } from '@/components/ui/badge';
 
 function getWeatherDescription(weathercode: number): string {
     if (weathercode === 0) return "Klarer Himmel";
@@ -109,25 +110,36 @@ function UpcomingEventsWidget() {
   return (
     <div>
       <h3 className="text-2xl font-bold flex items-center mb-4">
-        <Calendar className="mr-2" /> Nächste Termine
+        <CalendarIcon className="mr-2" /> Nächste Termine
       </h3>
       <div className="space-y-4">
         {upcomingEvents.length > 0 ? (
-          upcomingEvents.map(event => (
-            <Card key={event.id}>
-              <CardContent className="p-4 flex items-center justify-between">
-                <div>
-                  <p className="font-semibold">{event.title}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {format(new Date(event.date), "EEEE, dd. MMMM yyyy", { locale: de })} - {event.time} Uhr
-                  </p>
-                </div>
-                <Button variant="ghost" size="sm" asChild>
-                  <Link href="/veranstaltungen">Details</Link>
-                </Button>
-              </CardContent>
-            </Card>
-          ))
+          upcomingEvents.map(event => {
+            const formattedTime = event.time ? event.time.substring(0, 5) : 'N/A';
+            return (
+              <Card key={event.id}>
+                <CardHeader>
+                   <CardTitle>{event.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+                      <Badge variant="outline" className="flex items-center gap-2">
+                          <CalendarIcon className="h-4 w-4" />
+                          {format(new Date(event.date), "dd. MMMM yyyy", { locale: de })}
+                      </Badge>
+                        <Badge variant="outline" className="flex items-center gap-2">
+                          <Clock className="h-4 w-4" />
+                          {formattedTime} Uhr
+                      </Badge>
+                        <Badge variant="outline" className="flex items-center gap-2">
+                          <MapPin className="h-4 w-4" />
+                          {event.location}
+                      </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            )
+          })
         ) : (
           <p>Derzeit sind keine bevorstehenden Veranstaltungen geplant.</p>
         )}
