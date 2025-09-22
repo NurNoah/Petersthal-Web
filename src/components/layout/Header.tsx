@@ -34,6 +34,11 @@ const navLinks: NavLink[] = [
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+
+  const handleLinkClick = () => {
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -106,7 +111,7 @@ export function Header() {
         </div>
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <div className="md:hidden">
-            <Sheet>
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
                   <Menu className="h-6 w-6" />
@@ -114,7 +119,7 @@ export function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left">
-                <Link href="/" className="mr-6 flex items-center space-x-2 mb-6">
+                <Link href="/" className="mr-6 flex items-center space-x-2 mb-6" onClick={handleLinkClick}>
                   <img src="/images/PthalLogo.png" className="h-14 w-10" alt="Petersthal Logo" />
                   <span className="text-xl font-bold">Petersthal</span>
                 </Link>
@@ -123,6 +128,7 @@ export function Header() {
                         <Link
                             key={href}
                             href={href}
+                            onClick={handleLinkClick}
                             className={cn(
                                 'flex items-center py-2 text-xl font-semibold',
                                 pathname === href ? 'text-foreground' : 'text-muted-foreground'
@@ -141,7 +147,7 @@ export function Header() {
                         </AccordionTrigger>
                         <AccordionContent>
                           <div className="flex flex-col space-y-2 pl-4">
-                            <Link href="/vereine" className={cn(
+                            <Link href="/vereine" onClick={handleLinkClick} className={cn(
                                 'py-2 text-lg',
                                 pathname === '/vereine' ? 'text-foreground font-semibold' : 'text-muted-foreground'
                             )}>
@@ -151,6 +157,7 @@ export function Header() {
                               <Link
                                 key={club.id}
                                 href={`/vereine/${club.slug}`}
+                                onClick={handleLinkClick}
                                 className={cn(
                                   'py-2 text-lg',
                                   pathname === `/vereine/${club.slug}` ? 'text-foreground font-semibold' : 'text-muted-foreground'
