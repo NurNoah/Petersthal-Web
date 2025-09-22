@@ -59,7 +59,7 @@ function EventCard({ event }: { event: Event }) {
             </CardHeader>
              {event.description && (
                 <CardContent>
-                    <p className={cn('text-sm', hasPassed ? 'text-muted-foreground' : 'text-foreground/80')}>{event.description}</p>
+                    <p className={cn('text-sm', hasPassed ? 'text-muted-foreground' : 'text-foreground')}>{event.description}</p>
                 </CardContent>
             )}
         </Card>
