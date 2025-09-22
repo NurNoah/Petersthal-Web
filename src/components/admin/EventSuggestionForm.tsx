@@ -1,6 +1,7 @@
+
 'use client';
 
-import { useActionState, useEffect, useRef } from 'react';
+import { useActionState, useEffect, useRef, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import {
   Card,
@@ -36,6 +37,7 @@ function SubmitButton() {
 
 export function EventSuggestionForm() {
   const [state, formAction] = useActionState(saveEventAction, initialState);
+  const [selectKey, setSelectKey] = useState(Date.now());
   
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
@@ -54,6 +56,7 @@ export function EventSuggestionForm() {
             description: state.message,
         });
         formRef.current?.reset();
+        setSelectKey(Date.now()); // Reset the Select component
       }
     }
   }, [state, toast]);
@@ -81,7 +84,7 @@ export function EventSuggestionForm() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="organizerClubSlug">Veranstalter (Verein)</Label>
-               <Select name="organizerClubSlug">
+               <Select name="organizerClubSlug" key={selectKey}>
                 <SelectTrigger>
                   <SelectValue placeholder="Verein auswählen" />
                 </SelectTrigger>
