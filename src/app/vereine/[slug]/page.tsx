@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import { clubs, events } from '@/lib/data';
+import { clubs } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Mail, Phone, User, Calendar } from 'lucide-react';
 import type { Event } from '@/lib/types';
-import { format, isPast, isFuture, parseISO } from 'date-fns';
+import { format, isPast, isFuture } from 'date-fns';
 import { de } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import {
@@ -13,6 +13,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { createClient } from '@supabase/supabase-js';
+
+// Use a server-only Supabase client for data fetching
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
 export async function generateStaticParams() {
   return clubs.map((club) => ({
@@ -21,13 +28,13 @@ export async function generateStaticParams() {
 }
 
 function EventCard({ event }: { event: Event }) {
-    const hasPassed = isPast(parseISO(event.date));
+    const hasPassed = isPast(new Date(event.date));
     return (
-        <Card className={cn(hasPassed ? 'bg-muted/50' : '')}>
+        <Card className={cn(hasPassed ? 'bg-muted/50 text-muted-foreground' : '')}>
             <CardHeader>
                 <CardTitle className={cn(hasPassed ? 'text-muted-foreground' : '')}>{event.title}</CardTitle>
                 <CardDescription>
-                    {format(parseISO(event.date), "EEEE, dd. MMMM yyyy", { locale: de })} um {event.time} Uhr - {event.location}
+                    {format(new Date(event.date), "EEEE, dd. MMMM yyyy", { locale: de })} um {event.time} Uhr - {event.location}
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -37,19 +44,25 @@ function EventCard({ event }: { event: Event }) {
     )
 }
 
-export default function ClubDetailPage({ params }: { params: { slug: string } }) {
+export default async function ClubDetailPage({ params }: { params: { slug: string } }) {
   const club = clubs.find((c) => c.slug === params.slug);
 
   if (!club) {
     notFound();
   }
   
-  const clubEvents = events
-    .filter((event) => event.organizerClubSlug === club.slug)
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-    
-  const upcomingEvents = clubEvents.filter(e => isFuture(parseISO(e.date)));
-  const pastEvents = clubEvents.filter(e => isPast(parseISO(e.date))).reverse();
+  const { data: clubEvents, error } = await supabase
+    .from('events')
+    .select('*')
+    .eq('organizer_club_slug', club.slug)
+    .order('date', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching club events:', error);
+  }
+
+  const upcomingEvents = (clubEvents || []).filter(e => isFuture(new Date(e.date)) || new Date(e.date).toDateString() === new Date().toDateString());
+  const pastEvents = (clubEvents || []).filter(e => isPast(new Date(e.date)) && new Date(e.date).toDateString() !== new Date().toDateString()).reverse();
 
 
   return (
@@ -70,7 +83,7 @@ export default function ClubDetailPage({ params }: { params: { slug: string } })
           <div className="prose max-w-none text-foreground/80">
             <p>{club.description}</p>
           </div>
-            {clubEvents.length > 0 && (
+            {clubEvents && clubEvents.length > 0 && (
                  <section className="mt-12">
                     <h2 className="text-3xl font-bold font-headline mb-6 flex items-center">
                         <Calendar className="mr-3 h-6 w-6" /> Veranstaltungen
