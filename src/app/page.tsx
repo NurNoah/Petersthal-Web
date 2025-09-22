@@ -174,7 +174,7 @@ export default function Home() {
           alt="Panorama von Petersthal"
           fill
           priority
-          className="object-cover" // Increased brightness
+          className="object-cover"
           data-ai-hint="village landscape"
         />
         <div className="absolute inset-0 bg-black/30 flex flex-col justify-center items-center p-4">
