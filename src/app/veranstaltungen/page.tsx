@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { events, clubs } from '@/lib/data';
+import { clubs } from '@/lib/data';
 import type { Event } from '@/lib/types';
 import { format, isPast, isFuture, parseISO } from 'date-fns';
 import { de } from 'date-fns/locale';
@@ -18,11 +18,12 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Button } from '@/components/ui/button';
+import { supabase } from '@/lib/supabaseClient';
 
 
 function EventCard({ event }: { event: Event }) {
     const hasPassed = isPast(new Date(event.date));
-    const club = clubs.find(c => c.slug === event.organizerClubSlug);
+    const club = clubs.find(c => c.slug === event.organizer_club_slug);
     return (
         <Card className={cn(hasPassed ? 'bg-muted/50 text-muted-foreground' : '')}>
             <CardHeader>
@@ -61,6 +62,19 @@ function EventList({ eventsToShow }: { eventsToShow: Event[] }) {
 
 export default function VeranstaltungenPage() {
   const [date, setDate] = useState<Date | undefined>(new Date());
+  const [events, setEvents] = useState<Event[]>([]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const { data, error } = await supabase.from('events').select('*');
+      if (error) {
+        console.error('Error fetching events:', error);
+      } else {
+        setEvents(data as Event[]);
+      }
+    };
+    fetchEvents();
+  }, []);
 
   const eventDates = events.map(event => new Date(event.date).toDateString());
   const eventsByDate = events.reduce((acc, event) => {

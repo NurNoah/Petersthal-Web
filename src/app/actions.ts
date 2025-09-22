@@ -1,9 +1,13 @@
 'use server';
 
-import { events } from '@/lib/data';
-import type { Event } from '@/lib/types';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 const formSchema = z.object({
     eventName: z.string().min(1, 'Eventname ist erforderlich.'),
@@ -20,7 +24,6 @@ export interface FormState {
     issues?: string[];
   }
   
-
 export async function saveEventAction(
     prevState: FormState,
     data: FormData
@@ -35,28 +38,34 @@ export async function saveEventAction(
         };
     }
     
-    // In einer echten Anwendung würden Sie dies in einer Datenbank speichern.
-    // Hier fügen wir es zur In-Memory-Liste hinzu.
-    const newEvent: Event = {
-        id: (events.length + 1).toString(),
+    const { error } = await supabase.from('events').insert([
+      {
         title: parsed.data.eventName,
         date: parsed.data.eventDate,
         time: parsed.data.eventTime,
         location: parsed.data.eventLocation,
         description: parsed.data.eventDescription,
-        organizerClubSlug: parsed.data.organizerClubSlug === 'none' ? undefined : parsed.data.organizerClubSlug,
-    };
-    
-    console.log('Neues Event wird gespeichert:', newEvent);
-    events.push(newEvent);
+        organizer_club_slug:
+          parsed.data.organizerClubSlug === 'none'
+            ? null
+            : parsed.data.organizerClubSlug,
+      },
+    ]);
+
+    if (error) {
+      return {
+        message: 'Fehler beim Speichern der Veranstaltung.',
+        issues: [error.message],
+      };
+    }
 
     revalidatePath('/veranstaltungen');
-    if (newEvent.organizerClubSlug) {
-      revalidatePath(`/vereine/${newEvent.organizerClubSlug}`);
+    if (parsed.data.organizerClubSlug) {
+      revalidatePath(`/vereine/${parsed.data.organizerClubSlug}`);
     }
 
 
     return {
-        message: `Veranstaltung "${newEvent.title}" erfolgreich gespeichert!`,
+        message: `Veranstaltung "${parsed.data.eventName}" erfolgreich gespeichert!`,
     }
 }
