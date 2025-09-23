@@ -214,6 +214,31 @@ export const clubs: Club[] = [
     imageUrl: 'https://picsum.photos/seed/club7/800/500',
     imageHint: 'shooting range',
   },
+  {
+    id: '8',
+    slug: 'theatergruppe-petersthal',
+    name: 'Theatergruppe Petersthal',
+    description: 'Die Theatergruppe Petersthal bringt regelmäßig unterhaltsame und traditionelle Stücke auf die Bühne und bereichert so das kulturelle Leben im Dorf.',
+    contact: {
+      name: 'Spielleiter Josef Laub',
+      address: 'Theatergruppe Petersthal Oy-Mittelberg\nFeld 4\n87466 Oy-Mittelberg',
+    },
+    imageUrl: 'https://picsum.photos/seed/club8/800/500',
+    imageHint: 'theater stage',
+  },
+  {
+    id: '9',
+    slug: 'lebendiges-petersthal',
+    name: 'Lebendiges Petersthal e.V.',
+    description: 'Der Verein Lebendiges Petersthal e.V. engagiert sich für die Förderung des Dorflebens, die Organisation von Veranstaltungen und die Pflege von Traditionen.',
+    contact: {
+      name: '1. Vorstand Alfred Kögel',
+      address: 'Lebendiges Petersthal e.V. Oy-Mittelberg\nAm Petersbach 15\n87466 Oy-Mittelberg',
+      website: 'http://www.rottachsee.info'
+    },
+    imageUrl: 'https://picsum.photos/seed/club9/800/500',
+    imageHint: 'community gathering',
+  },
 ];
 
 export const busConnections: BusConnection[] = [
