@@ -42,9 +42,12 @@ export interface Club {
   name: string;
   description: string;
   contact: {
-    name: string;
-    email: string;
-    phone: string;
+    name?: string;
+    email?: string;
+    phone?: string;
+    address?: string;
+    website?: string;
+    instagram?: string;
   };
   imageUrl: string;
   imageHint: string;

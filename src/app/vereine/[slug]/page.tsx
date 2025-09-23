@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { clubs } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mail, Phone, User, Calendar as CalendarIcon, Clock, MapPin } from 'lucide-react';
+import { Mail, Phone, User, Calendar as CalendarIcon, Clock, MapPin, Globe, Building } from 'lucide-react';
 import type { Event } from '@/lib/types';
 import { format, isPast, isFuture } from 'date-fns';
 import { de } from 'date-fns/locale';
@@ -58,6 +58,23 @@ function EventCard({ event }: { event: Event }) {
         </Card>
     )
 }
+
+const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  );
 
 export default async function ClubDetailPage({ params }: { params: { slug: string } }) {
   const club = clubs.find((c) => c.slug === params.slug);
@@ -138,22 +155,50 @@ export default async function ClubDetailPage({ params }: { params: { slug: strin
               <CardTitle>Kontakt</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex items-center">
-                <User className="h-4 w-4 mr-3 text-muted-foreground" />
-                <span>{club.contact.name}</span>
-              </div>
-              <div className="flex items-center">
-                <Mail className="h-4 w-4 mr-3 text-muted-foreground" />
-                <a href={`mailto:${club.contact.email}`} className="hover:underline">
-                  {club.contact.email}
-                </a>
-              </div>
-              <div className="flex items-center">
-                <Phone className="h-4 w-4 mr-3 text-muted-foreground" />
-                <a href={`tel:${club.contact.phone.replace(/\s/g, '')}`} className="hover:underline">
-                  {club.contact.phone}
-                </a>
-              </div>
+              {club.contact.name && (
+                <div className="flex items-center">
+                  <User className="h-4 w-4 mr-3 text-muted-foreground" />
+                  <span>{club.contact.name}</span>
+                </div>
+              )}
+               {club.contact.address && (
+                <div className="flex items-center">
+                  <Building className="h-4 w-4 mr-3 text-muted-foreground" />
+                  <span>{club.contact.address}</span>
+                </div>
+              )}
+              {club.contact.email && (
+                <div className="flex items-center">
+                  <Mail className="h-4 w-4 mr-3 text-muted-foreground" />
+                  <a href={`mailto:${club.contact.email}`} className="hover:underline break-all">
+                    {club.contact.email}
+                  </a>
+                </div>
+              )}
+              {club.contact.phone && (
+                <div className="flex items-center">
+                  <Phone className="h-4 w-4 mr-3 text-muted-foreground" />
+                  <a href={`tel:${club.contact.phone.replace(/\s/g, '')}`} className="hover:underline">
+                    {club.contact.phone}
+                  </a>
+                </div>
+              )}
+               {club.contact.website && (
+                <div className="flex items-center">
+                  <Globe className="h-4 w-4 mr-3 text-muted-foreground" />
+                  <a href={club.contact.website} target="_blank" rel="noopener noreferrer" className="hover:underline break-all">
+                    Webseite besuchen
+                  </a>
+                </div>
+              )}
+              {club.contact.instagram && (
+                 <div className="flex items-center">
+                    <InstagramIcon className="h-4 w-4 mr-3 text-muted-foreground" />
+                    <a href={`https://instagram.com/${club.contact.instagram}`} target="_blank" rel="noopener noreferrer" className="hover:underline break-all">
+                        @{club.contact.instagram}
+                    </a>
+                 </div>
+              )}
             </CardContent>
           </Card>
         </div>
