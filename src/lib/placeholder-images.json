@@ -3,85 +3,91 @@
     {
       "id": "restaurant-1",
       "description": "Cozy interior of a traditional restaurant.",
-      "imageUrl": "https://picsum.photos/seed/res1/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1693732252871-993d5aecd144?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx0cmFkaXRpb25hbCUyMHJlc3RhdXJhbnR8ZW58MHx8fHwxNzU4NjUzNzExfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "traditional restaurant"
     },
     {
       "id": "restaurant-2",
       "description": "Modern restaurant with a view.",
-      "imageUrl": "https://picsum.photos/seed/res2/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1490716961549-5dbd18f53101?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bW9kZXJuJTIwcmVzdGF1cmFudHxlbnwwfHx8fDE3NTg1OTIxODJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "modern restaurant"
     },
     {
       "id": "restaurant-3",
       "description": "Outdoor seating area of a cafe.",
-      "imageUrl": "https://picsum.photos/seed/res3/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1621239287542-bc091be57d55?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjYWZlJTIwdGVycmFjZXxlbnwwfHx8fDE3NTg2NTM3MTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "cafe terrace"
     },
     {
       "id": "accommodation-1",
       "description": "Comfortable hotel room with a double bed.",
-      "imageUrl": "https://picsum.photos/seed/acc1/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1629140727571-9b5c6f6267b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxob3RlbCUyMHJvb218ZW58MHx8fHwxNzU4NjAxODcxfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "hotel room"
     },
     {
       "id": "accommodation-2",
       "description": "Vacation apartment with a small kitchen.",
-      "imageUrl": "https://picsum.photos/seed/acc2/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1584266337128-4b7ffdec0280?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx2YWNhdGlvbiUyMGFwYXJ0bWVudHxlbnwwfHx8fDE3NTg2NTM3MTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "vacation apartment"
     },
     {
       "id": "accommodation-3",
       "description": "Charming guesthouse with a balcony.",
-      "imageUrl": "https://picsum.photos/seed/acc3/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1605972015822-7b4cd2f21bcb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxndWVzdGhvdXNlJTIwZXh0ZXJpb3J8ZW58MHx8fHwxNzU4NjUzNzEwfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "guesthouse exterior"
     },
     {
       "id": "accommodation-4",
       "description": "Farmhouse offering bed and breakfast.",
-      "imageUrl": "https://picsum.photos/seed/acc4/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1679984743238-0cbb6e039cec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxmYXJtaG91c2UlMjBzdGF5fGVufDB8fHx8MTc1ODY1MzcxMHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "farmhouse stay"
     },
     {
       "id": "club-tsv",
       "description": "Soccer field with players.",
-      "imageUrl": "https://picsum.photos/seed/club1/800/500",
+      "imageUrl": "https://images.unsplash.com/photo-1518657205760-dafa7ef924de?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxzb2NjZXIlMjBnYW1lfGVufDB8fHx8MTc1ODU5OTc1N3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "soccer game"
     },
     {
       "id": "club-kljb",
       "description": "Group of young people at a community event.",
-      "imageUrl": "https://picsum.photos/seed/club2/800/500",
+      "imageUrl": "https://images.unsplash.com/photo-1651372381086-9861c9c81db5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8eW91dGglMjBncm91cHxlbnwwfHx8fDE3NTg1OTA3Mzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "youth group"
     },
     {
       "id": "club-trachtenverein",
       "description": "People in traditional german attire dancing.",
-      "imageUrl": "https://picsum.photos/seed/club3/800/500",
+      "imageUrl": "https://images.unsplash.com/photo-1556720095-a20f6b895f95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx0cmFkaXRpb25hbCUyMGRhbmNlfGVufDB8fHx8MTc1ODU5MjIyM3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "traditional dance"
     },
     {
       "id": "club-musikkapelle",
       "description": "Brass band performing outdoors.",
-      "imageUrl": "https://picsum.photos/seed/club4/800/500",
+      "imageUrl": "https://images.unsplash.com/photo-1614442848457-36ddcbb0876d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YnJhc3MlMjBiYW5kfGVufDB8fHx8MTc1ODY1MzcxMHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "brass band"
     },
     {
       "id": "club-feuerwehr",
       "description": "Firefighters with a fire truck.",
-      "imageUrl": "https://picsum.photos/seed/club5/800/500",
+      "imageUrl": "https://images.unsplash.com/photo-1758177351800-79c779fa88dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxmaXJlZmlnaHRlcnMlMjB0ZWFtfGVufDB8fHx8MTc1ODY1MzcxMHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "firefighters team"
     },
     {
       "id": "club-jodlergruppe",
       "description": "Group of people singing in the mountains.",
-      "imageUrl": "https://picsum.photos/seed/club6/800/500",
+      "imageUrl": "https://images.unsplash.com/photo-1745852738196-4dfed8cbd691?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjaG9pciUyMHNpbmdpbmd8ZW58MHx8fHwxNzU4NjUzNzEwfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "choir singing"
+    },
+    {
+      "id": "club-schuetzenverein",
+      "description": "People at a shooting range, aiming rifles.",
+      "imageUrl": "https://images.unsplash.com/photo-1533091917107-98f819e4cb54?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzaG9vdGluZyUyMHJhbmdlfGVufDB8fHx8MTc1ODY1MzcxMHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "shooting range"
     },
     {
       "id": "map-placeholder",
       "description": "Stylized map of a small town.",
-      "imageUrl": "https://picsum.photos/seed/map/1200/500",
+      "imageUrl": "https://images.unsplash.com/photo-1590393820812-8a2ed3ece96f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx0b3duJTIwbWFwfGVufDB8fHx8MTc1ODY1MzcxMHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "town map"
     }
   ]
