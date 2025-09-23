@@ -7,7 +7,7 @@ export default function VereinePage() {
       <div className="text-center">
         <h1 className="text-4xl font-bold font-headline">Das Vereinsleben in Petersthal</h1>
         <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
-          Unsere Vereine sind das Herzstück der Dorfgemeinschaft. Entdecken Sie die Vielfalt und finden Sie vielleicht Ihr neues Hobby.
+          Unsere Vereine
         </p>
       </div>
 

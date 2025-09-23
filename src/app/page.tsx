@@ -194,7 +194,7 @@ export default function Home() {
             Willkommen in Petersthal
           </h1>
           <p className="mt-4 max-w-2xl text-lg md:text-xl drop-shadow-md">
-            Petersthal ist ein Pfarrdorf im Landkreis Oberallgäu, idyllisch gelegen im Tal der Rottach auf etwa 870 Metern Höhe.
+            Petersthal ist ein Dorf im östlichen Oberallgäu, idyllisch gelegen am Ufer des Rottachsees.
           </p>
         </div>
       </section>
@@ -203,7 +203,7 @@ export default function Home() {
         <section className="text-center">
           <h2 className="text-3xl font-bold">⛰️⛪🏞️</h2>
           <p className="mt-4 max-w-3xl mx-auto text-muted-foreground">
-            Das Pfarrdorf Petersthal liegt auf einer Höhe von 872 m ü. NHN im Tal der Rottach, zwischen dem Rottachsee auf nördlicher Seite und dem Petersthaler Hörnle – geprägt vom markanten Zwiebelturm der Pfarrkirche St. Peter und Paul.
+            Petersthal ist ein kleines Dorf mit 18 Weilern und rund 800 Einwohnern – gelegen zwischen dem Rottachsee auf nördlicher Seite und dem Petersthaler Hörnle auf etwa 870 Metern Höhe. Obwohl bei der Gebietsreform 1976 der Gemeinde Oy-Mittelberg angeschlossen, pflegt dieser kleine Ort bis heute ein eigenes, reges Vereinsleben.
           </p>
         </section>
         
