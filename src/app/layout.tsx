@@ -4,6 +4,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Toaster } from '@/components/ui/toaster';
 import { Inter } from 'next/font/google';
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   title: 'Petersthal Village Hub',
@@ -35,6 +36,7 @@ export default function RootLayout({
           <Footer />
         </div>
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );
