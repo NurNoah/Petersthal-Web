@@ -165,7 +165,7 @@ export const clubs: Club[] = [
       instagram: 'd.rottachtalerpetersthal',
     },
     imageUrl: '/images/verein/trachtenverein.jpg',
-    imageHint: 'traditional dance',
+    imageHint: 'traditional',
   },
   {
     id: '4',
