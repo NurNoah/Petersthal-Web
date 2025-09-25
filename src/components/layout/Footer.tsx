@@ -6,7 +6,7 @@ export function Footer() {
       <footer className="border-t">
         <div className="container flex h-14 flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-sm text-muted-foreground text-center sm:text-left">
-            © {new Date().getFullYear()} Petersthal Village Hub
+            © {new Date().getFullYear()} Petersthal
           </p>
           <div className="flex items-center gap-2">
             <Button variant="ghost" asChild>

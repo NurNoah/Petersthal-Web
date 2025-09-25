@@ -1,4 +1,4 @@
-# **App Name**: Petersthal Village Hub
+# **App Name**: Petersthal
 
 ## Core Features:
 

@@ -6,6 +6,7 @@ import { Mail, Phone, User, Calendar as CalendarIcon, Clock, MapPin, Globe, Buil
 import type { Event } from '@/lib/types';
 import { format, isPast, isFuture } from 'date-fns';
 import { de } from 'date-fns/locale';
+import { Metadata } from 'next';
 import { cn } from '@/lib/utils';
 import {
   Accordion,
@@ -15,6 +16,32 @@ import {
 } from "@/components/ui/accordion"
 import { createClient } from '@supabase/supabase-js';
 import { Badge } from '@/components/ui/badge';
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const club = clubs.find((c) => c.slug === params.slug);
+
+  if (!club) {
+    return {
+      title: 'Verein nicht gefunden',
+    };
+  }
+
+  return {
+    title: club.name,
+    description: `Informationen über den Verein ${club.name} in Petersthal. ${club.description.substring(0, 150)}...`,
+    openGraph: {
+      title: club.name,
+      description: `Informationen über den Verein ${club.name} in Petersthal.`,
+      images: [
+        {
+          url: `https://www.petersthal.info${club.imageUrl}`,
+          width: 800,
+          height: 600,
+        },
+      ],
+    },
+  };
+}
 
 // Use a server-only Supabase client for data fetching
 const supabase = createClient(

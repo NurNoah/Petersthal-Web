@@ -8,8 +8,47 @@ import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
-  title: 'Petersthal Village Hub',
-  description: 'Ihr Dorfportal für Petersthal - Veranstaltungen, Informationen und mehr.',
+  title: {
+    template: '%s | Petersthal',
+    default: 'Petersthal - Ihr Dorfportal',
+  },
+  description: 'Ihr Dorfportal für Petersthal - Veranstaltungen, Informationen und mehr über das Leben in Petersthal am Rottachsee.',
+  keywords: ['Petersthal', 'Rottachsee', 'Dorfleben', 'Veranstaltungen Petersthal', 'Vereine Petersthal'],
+  authors: [{ name: 'Ihr Name oder Organisation' }],
+  openGraph: {
+    title: 'Petersthal',
+    description: 'Ihr Dorfportal für Petersthal - Veranstaltungen, Informationen und mehr.',
+    url: 'https://www.petersthal.info',
+    siteName: 'Petersthal',
+    // Fügen Sie hier ein Bild für Social-Media-Vorschauen hinzu
+    images: [
+      {
+        url: 'https://www.petersthal.info/images/og-image.png', // Beispiel-URL
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: 'de_DE',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Petersthal',
+    description: 'Ihr Dorfportal für Petersthal - Veranstaltungen, Informationen und mehr.',
+    // Fügen Sie hier ein Bild für Twitter-Vorschauen hinzu
+    images: ['https://www.petersthal.info/images/twitter-image.png'], // Beispiel-URL
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 const inter = Inter({
