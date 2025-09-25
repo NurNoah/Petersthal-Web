@@ -154,13 +154,13 @@ function UpcomingEventsWidget() {
 }
 
 const carouselImages = [
-  { src: '/images/Pthal4.jpg', alt: 'Petersthal', hint: 'traditional festival' },
-  { src: '/images/Pthal3.png', alt: 'Petersthal', hint: 'hiking trail' },
-  { src: '/images/Pthal10.jpg', alt: 'Petersthal', hint: 'brass band' },
-  { src: '/images/Pthal5.png', alt: 'Petersthal', hint: 'brass band' },
-  { src: '/images/Pthal7.jpg', alt: 'Petersthal', hint: 'lake sailing' },
-  { src: '/images/Pthal6.png', alt: 'Petersthal', hint: 'mountain landscape' },
-  { src: '/images/Pthal8.jpg', alt: 'Petersthal', hint: 'village winter' },
+  { src: '/images/pthal4.jpg', alt: 'Petersthal', hint: 'traditional festival' },
+  { src: '/images/pthal3.png', alt: 'Petersthal', hint: 'hiking trail' },
+  { src: '/images/pthal10.jpg', alt: 'Petersthal', hint: 'brass band' },
+  { src: '/images/pthal5.png', alt: 'Petersthal', hint: 'brass band' },
+  { src: '/images/pthal7.jpg', alt: 'Petersthal', hint: 'lake sailing' },
+  { src: '/images/pthal6.png', alt: 'Petersthal', hint: 'mountain landscape' },
+  { src: '/images/pthal8.jpg', alt: 'Petersthal', hint: 'village winter' },
 ];
 
 export default function Home() {
@@ -182,7 +182,7 @@ export default function Home() {
     <div className="flex flex-col items-center">
       <section className="relative w-full h-[50vh] min-h-[300px] max-h-[500px] text-center text-white">
         <Image
-          src="/images/Pthal15.png"
+          src="/images/pthal15.png"
           alt="Panorama von Petersthal"
           fill
           priority
