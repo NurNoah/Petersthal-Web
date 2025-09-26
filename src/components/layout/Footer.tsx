@@ -19,6 +19,11 @@ export function Footer() {
                     Verkehrsverein
                 </a>
             </Button>
+             <Button variant="ghost" asChild>
+                <a href="mailto:Weissenbachnoah@gmail.com">
+                    Kontakt
+                </a>
+            </Button>
             <Button variant="ghost" asChild>
               <Link href="/admin">
                 Admin
