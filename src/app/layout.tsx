@@ -8,22 +8,34 @@ import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://petersthal.info'),
   title: {
     template: '%s | Petersthal',
-    default: 'Petersthal - Ihr Dorfportal',
+    default: 'Petersthal',
   },
   description: 'Ihr Dorfportal für Petersthal - Veranstaltungen, Informationen und mehr über das Leben in Petersthal am Rottachsee.',
+  icons: {
+    icon: '/images/pLogo.png', 
+    shortcut: '/images/pLogo.png', 
+    apple: '/images/pLogo.png', 
+    other: [
+      {
+        rel: 'icon',
+        url: '/favicon.ico', 
+      },
+    ],
+  },
   keywords: ['Petersthal', 'Rottachsee', 'Dorfleben', 'Veranstaltungen Petersthal', 'Vereine Petersthal'],
-  authors: [{ name: 'Ihr Name oder Organisation' }],
+  authors: [{ name: 'Noah' }],
   openGraph: {
     title: 'Petersthal',
     description: 'Ihr Dorfportal für Petersthal - Veranstaltungen, Informationen und mehr.',
-    url: 'https://www.petersthal.info',
+    url: 'https://petersthal.info',
     siteName: 'Petersthal',
     // Fügen Sie hier ein Bild für Social-Media-Vorschauen hinzu
     images: [
       {
-        url: 'https://www.petersthal.info/images/og-image.png', // Beispiel-URL
+        url: 'https://petersthal.info/images/pLogo.png', // Beispiel-URL
         width: 1200,
         height: 630,
       },
