@@ -133,6 +133,7 @@ export const clubs: Club[] = [
     contact: {
       name: '1. Vorstand: Andreas Waldmann jun.',
       address: 'Feld 9a\n87466 Oy-Mittelberg',
+      email: 'info@tsvpetersthal.de',
       website: 'https://www.tsvpetersthal.de',
       instagram: 'tsv_petersthal',
     },
@@ -309,28 +310,28 @@ export const busConnections: BusConnection[] = [
   {
     direction: 'Von Petersthal',
     routes: [
-        {
-            line: 'Nach Kempten (Linie 22)',
-            schedules: [
-                {
-                    days: 'Montag - Freitag',
-                    times: ['06:25', '13:40'],
-                }
-            ]
-        },
-        {
-            line: 'Nach Oy-Mittelberg (Linie 9787)',
-            schedules: [
-                {
-                    days: 'Montag - Freitag',
-                    times: ['07:08', '09:08', '11:08', '13:08', '15:08', '17:08', '18:08'],
-                },
-                {
-                    days: 'Samstag, Sonn- & Feiertag',
-                    times: ['08:08', '10:08', '12:08', '14:08', '16:08', '18:08'],
-                }
-            ]
-        }
+      {
+        line: 'Nach Kempten (Linie 22)',
+        schedules: [
+          {
+            days: 'Montag - Freitag',
+            times: ['06:25', '13:40'],
+          }
+        ]
+      },
+      {
+        line: 'Nach Oy-Mittelberg (Linie 9787)',
+        schedules: [
+          {
+            days: 'Montag - Freitag',
+            times: ['07:08', '09:08', '11:08', '13:08', '15:08', '17:08', '18:08'],
+          },
+          {
+            days: 'Samstag, Sonn- & Feiertag',
+            times: ['08:08', '10:08', '12:08', '14:08', '16:08', '18:08'],
+          }
+        ]
+      }
     ]
   }
 ];
