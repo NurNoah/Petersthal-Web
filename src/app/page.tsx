@@ -23,19 +23,19 @@ import { supabase } from '@/lib/supabaseClient';
 import { Badge } from '@/components/ui/badge';
 
 function getWeatherDescription(weathercode: number): string {
-    if (weathercode === 0) return "Klarer Himmel";
-    if ([1, 2, 3].includes(weathercode)) return "Teilweise bewölkt";
-    if ([45, 48].includes(weathercode)) return "Nebel";
-    if ([51, 53, 55].includes(weathercode)) return "Nieselregen";
-    if ([56, 57].includes(weathercode)) return "Gefrierender Nieselregen";
-    if ([61, 63, 65].includes(weathercode)) return "Regen";
-    if ([66, 67].includes(weathercode)) return "Gefrierender Regen";
-    if ([71, 73, 75].includes(weathercode)) return "Schnee";
-    if (weathercode === 77) return "Schneekörner";
-    if ([80, 81, 82].includes(weathercode)) return "Regenschauer";
-    if ([85, 86].includes(weathercode)) return "Schneeregen";
-    if ([95, 96, 99].includes(weathercode)) return "Gewitter";
-    return "Unbekannt";
+  if (weathercode === 0) return "Klarer Himmel";
+  if ([1, 2, 3].includes(weathercode)) return "Teilweise bewölkt";
+  if ([45, 48].includes(weathercode)) return "Nebel";
+  if ([51, 53, 55].includes(weathercode)) return "Nieselregen";
+  if ([56, 57].includes(weathercode)) return "Gefrierender Nieselregen";
+  if ([61, 63, 65].includes(weathercode)) return "Regen";
+  if ([66, 67].includes(weathercode)) return "Gefrierender Regen";
+  if ([71, 73, 75].includes(weathercode)) return "Schnee";
+  if (weathercode === 77) return "Schneekörner";
+  if ([80, 81, 82].includes(weathercode)) return "Regenschauer";
+  if ([85, 86].includes(weathercode)) return "Schneeregen";
+  if ([95, 96, 99].includes(weathercode)) return "Gewitter";
+  return "Unbekannt";
 }
 
 function WeatherWidget() {
@@ -119,22 +119,22 @@ function UpcomingEventsWidget() {
             return (
               <Card key={event.id}>
                 <CardHeader>
-                   <CardTitle>{event.title}</CardTitle>
+                  <CardTitle>{event.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-                      <Badge variant="outline" className="flex items-center gap-2">
-                          <CalendarIcon className="h-4 w-4" />
-                          {format(new Date(event.date), "dd. MMMM yyyy", { locale: de })}
-                      </Badge>
-                        <Badge variant="outline" className="flex items-center gap-2">
-                          <Clock className="h-4 w-4" />
-                          {formattedTime} Uhr
-                      </Badge>
-                        <Badge variant="outline" className="flex items-center gap-2">
-                          <MapPin className="h-4 w-4" />
-                          {event.location}
-                      </Badge>
+                    <Badge variant="outline" className="flex items-center gap-2">
+                      <CalendarIcon className="h-4 w-4" />
+                      {format(new Date(event.date), "dd. MMMM yyyy", { locale: de })}
+                    </Badge>
+                    <Badge variant="outline" className="flex items-center gap-2">
+                      <Clock className="h-4 w-4" />
+                      {formattedTime} Uhr
+                    </Badge>
+                    <Badge variant="outline" className="flex items-center gap-2">
+                      <MapPin className="h-4 w-4" />
+                      {event.location}
+                    </Badge>
                   </div>
                 </CardContent>
               </Card>
@@ -203,10 +203,10 @@ export default function Home() {
         <section className="text-center">
           <h2 className="text-3xl font-bold">⛰️⛪🏞️</h2>
           <p className="mt-4 max-w-3xl mx-auto text-muted-foreground">
-            Petersthal ist ein kleines Dorf mit 18 Weilern und rund 800 Einwohnern – gelegen zwischen dem Rottachsee auf nördlicher Seite und dem Petersthaler Hörnle auf etwa 870 Metern Höhe. Obwohl bei der Gebietsreform 1976 der Gemeinde Oy-Mittelberg angeschlossen, pflegt dieser kleine Ort bis heute ein eigenes, reges Vereinsleben.
+            Petersthal ist ein kleines Dorf mit 18 Weilern und rund 800 Einwohnern – gelegen auf etwa 870 Metern Höhe zwischen dem Rottachsee auf nördlicher Seite und dem Petersthaler Hörnle. Obwohl bei der Gebietsreform 1976 der Gemeinde Oy-Mittelberg angeschlossen, pflegt dieser kleine Ort bis heute ein eigenes, reges Vereinsleben.
           </p>
         </section>
-        
+
         <section className="w-full max-w-screen-xl mx-auto mt-16">
           <Carousel
             plugins={[plugin.current]}
