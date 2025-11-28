@@ -180,7 +180,7 @@ function UpcomingEventsWidget() {
                                 className="w-full h-full object-cover blur-[0.5px] group-hover:blur-0 transition-all duration-300"
                               />
                               <div className="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-transparent transition-colors">
-                                <ZoomIn className="text-white drop-shadow-md w-5 h-5 opacity-70 group-hover:opacity-0 transition-opacity transform group-hover:scale-150" />
+                                <ZoomIn className="text-white drop-shadow-md w-8 h-8 opacity-70 group-hover:opacity-0 transition-opacity transform group-hover:scale-150" />
                               </div>
                             </div>
                             <div className="absolute bottom-0 left-0 right-0 bg-primary/90 text-primary-foreground text-[8px] font-bold text-center py-0.5 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
