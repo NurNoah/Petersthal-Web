@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Calendar as CalendarIcon, Clock, MapPin } from 'lucide-react';
+import { Calendar as CalendarIcon, Clock, MapPin, Image as ImageIcon, ZoomIn } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -18,6 +18,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/supabaseClient';
 
@@ -32,44 +37,83 @@ function EventCard({ event }: { event: Event }) {
   const formattedTime = event.time ? event.time.substring(0, 5) : 'N/A';
 
   return (
-    <Card className={cn(
-      hasPassed ? 'bg-muted/50' : '',
-      isTodayEvent ? 'border-green-500 border-2 shadow-[0_0_15px_rgba(34,197,94,0.3)]' : ''
-    )}>
-      <CardHeader>
-        <div className="flex justify-between items-start gap-4">
+    <Dialog>
+      <Card className={cn(
+        hasPassed ? 'bg-muted/50' : '',
+        isTodayEvent ? 'border-green-500 border-2 shadow-[0_0_15px_rgba(34,197,94,0.3)]' : '',
+        "overflow-hidden transition-all hover:shadow-md"
+      )}>
+        <div className="flex flex-col sm:flex-row">
           <div className="flex-1">
-            <CardTitle className={cn(hasPassed ? 'text-muted-foreground' : '')}>
-              {event.title}
-            </CardTitle>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-2 text-sm">
-              <Badge variant={isTodayEvent ? "default" : "outline"} className={cn("flex items-center gap-2", isTodayEvent ? "bg-green-600 hover:bg-green-700" : "")}>
-                <CalendarIcon className="h-4 w-4" />
-                {format(eventDate, "dd. MMMM yyyy", { locale: de })}
-              </Badge>
-              <Badge variant="outline" className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                {formattedTime} Uhr
-              </Badge>
-              <Badge variant="outline" className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
-                {event.location}
-              </Badge>
-            </div>
+            <CardHeader>
+              <div className="flex flex-col gap-2">
+                <CardTitle className={cn(hasPassed ? 'text-muted-foreground' : '')}>
+                  {event.title}
+                </CardTitle>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+                  <Badge variant={isTodayEvent ? "default" : "outline"} className={cn("flex items-center gap-2", isTodayEvent ? "bg-green-600 hover:bg-green-700" : "")}>
+                    <CalendarIcon className="h-4 w-4" />
+                    {format(eventDate, "dd. MMMM yyyy", { locale: de })}
+                  </Badge>
+                  <Badge variant="outline" className="flex items-center gap-2">
+                    <Clock className="h-4 w-4" />
+                    {formattedTime} Uhr
+                  </Badge>
+                  <Badge variant="outline" className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4" />
+                    {event.location}
+                  </Badge>
+                  {club && (
+                    <Badge variant={hasPassed ? "outline" : "secondary"} asChild>
+                      <Link href={`/vereine/${club.slug}`}>{club.name}</Link>
+                    </Badge>
+                  )}
+                </div>
+              </div>
+            </CardHeader>
+            {event.description && (
+              <CardContent>
+                <p className={cn('text-sm', hasPassed ? 'text-muted-foreground' : 'text-foreground')}>{event.description}</p>
+              </CardContent>
+            )}
           </div>
-          {club && (
-            <Badge variant={hasPassed ? "outline" : "secondary"} asChild className="shrink-0">
-              <Link href={`/vereine/${club.slug}`}>{club.name}</Link>
-            </Badge>
+
+          {event.flyerUrl && (
+            <div className="sm:w-48 bg-muted/5 flex flex-col items-center justify-center p-4 gap-3">
+              <DialogTrigger asChild>
+                <div className="relative group cursor-pointer overflow-hidden rounded-md shadow-sm border hover:shadow-lg transition-all hover:scale-105 bg-white">
+                  <div className="w-24 h-32 relative overflow-hidden">
+                    <img
+                      src={event.flyerUrl}
+                      alt="Flyer Preview"
+                      className="w-full h-full object-cover blur-[0.5px] group-hover:blur-0 transition-all duration-300"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-transparent transition-colors">
+                      <ZoomIn className="text-white drop-shadow-md w-8 h-8 opacity-70 group-hover:opacity-0 transition-opacity transform group-hover:scale-150" />
+                    </div>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-primary/90 text-primary-foreground text-[10px] font-bold text-center py-1 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    VERGRÖSSERN
+                  </div>
+                </div>
+              </DialogTrigger>
+            </div>
           )}
         </div>
-      </CardHeader>
-      {event.description && (
-        <CardContent>
-          <p className={cn('text-sm', hasPassed ? 'text-muted-foreground' : 'text-foreground')}>{event.description}</p>
-        </CardContent>
+      </Card>
+
+      {event.flyerUrl && (
+        <DialogContent className="max-w-5xl max-h-[95vh] w-auto h-auto p-0 overflow-hidden bg-transparent border-none shadow-none flex items-center justify-center">
+          <div className="relative">
+            <img
+              src={event.flyerUrl}
+              alt={`Flyer für ${event.title}`}
+              className="max-w-[90vw] max-h-[90vh] rounded-lg shadow-2xl object-contain bg-black/50 backdrop-blur-sm"
+            />
+          </div>
+        </DialogContent>
       )}
-    </Card>
+    </Dialog>
   )
 }
 
@@ -95,7 +139,25 @@ export default function VeranstaltungenPage() {
       if (error) {
         console.error('Error fetching events:', error);
       } else {
-        setEvents(data as Event[]);
+        // DEMO: Inject example flyer into the next 3 upcoming events
+        let allEvents = data as Event[];
+
+        // Sort to find upcoming
+        const sorted = [...allEvents].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+        // Find next 3 upcoming events (today or future)
+        const upcomingIds = sorted
+          .filter(e => isFuture(new Date(e.date)) || isToday(new Date(e.date)))
+          .slice(0, 3)
+          .map(e => e.id);
+
+        const eventsWithFlyer = allEvents.map((event) => {
+          if (upcomingIds.includes(event.id)) {
+            return { ...event, flyerUrl: '/images/pthal4.jpg' };
+          }
+          return event;
+        });
+        setEvents(eventsWithFlyer);
       }
     };
     fetchEvents();

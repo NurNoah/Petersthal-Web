@@ -11,6 +11,7 @@ export interface Event {
   location: string;
   description: string;
   organizer_club_slug?: string; // Optional slug of the organizing club
+  flyerUrl?: string; // Optional URL to the flyer image
 }
 
 export interface Restaurant {
@@ -25,7 +26,7 @@ export interface Restaurant {
 }
 
 export interface Accommodation {
-  id:string;
+  id: string;
   name: string;
   type: string;
   description: string;
