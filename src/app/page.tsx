@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, Calendar as CalendarIcon, CloudSun, Users, Clock, MapPin } from 'lucide-react';
 import { clubs } from '@/lib/data';
-import { format, isFuture } from 'date-fns';
+import { format, isFuture, isToday } from 'date-fns';
 import { de } from 'date-fns/locale';
 import {
   Carousel,
@@ -116,14 +116,17 @@ function UpcomingEventsWidget() {
         {upcomingEvents.length > 0 ? (
           upcomingEvents.map(event => {
             const formattedTime = event.time ? event.time.substring(0, 5) : 'N/A';
+            const isTodayEvent = isToday(new Date(event.date));
             return (
-              <Card key={event.id}>
+              <Card key={event.id} className={isTodayEvent ? "border-green-500 border-2 shadow-[0_0_15px_rgba(34,197,94,0.3)]" : ""}>
                 <CardHeader>
-                  <CardTitle>{event.title}</CardTitle>
+                  <CardTitle>
+                    {event.title}
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-                    <Badge variant="outline" className="flex items-center gap-2">
+                    <Badge variant={isTodayEvent ? "default" : "outline"} className={`flex items-center gap-2 ${isTodayEvent ? "bg-green-600 hover:bg-green-700" : ""}`}>
                       <CalendarIcon className="h-4 w-4" />
                       {format(new Date(event.date), "dd. MMMM yyyy", { locale: de })}
                     </Badge>

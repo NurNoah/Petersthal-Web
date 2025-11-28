@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, Phone, User, Calendar as CalendarIcon, Clock, MapPin, Globe, Building } from 'lucide-react';
 import type { Event } from '@/lib/types';
-import { format, isPast, isFuture } from 'date-fns';
+import { format, isPast, isFuture, isToday } from 'date-fns';
 import { de } from 'date-fns/locale';
 import { Metadata } from 'next';
 import { cn } from '@/lib/utils';
@@ -56,52 +56,59 @@ export async function generateStaticParams() {
 }
 
 function EventCard({ event }: { event: Event }) {
-    const hasPassed = isPast(new Date(event.date));
-    const formattedTime = event.time ? event.time.substring(0, 5) : 'N/A';
-    return (
-        <Card className={cn(hasPassed ? 'bg-muted/50' : '')}>
-            <CardHeader>
-                <CardTitle className={cn(hasPassed ? 'text-muted-foreground' : '')}>{event.title}</CardTitle>
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-2 text-sm">
-                    <Badge variant="outline" className="flex items-center gap-2">
-                        <CalendarIcon className="h-4 w-4" />
-                        {format(new Date(event.date), "dd. MMMM yyyy", { locale: de })}
-                    </Badge>
-                        <Badge variant="outline" className="flex items-center gap-2">
-                        <Clock className="h-4 w-4" />
-                        {formattedTime} Uhr
-                    </Badge>
-                        <Badge variant="outline" className="flex items-center gap-2">
-                        <MapPin className="h-4 w-4" />
-                        {event.location}
-                    </Badge>
-                </div>
-            </CardHeader>
-            {event.description && (
-                <CardContent>
-                    <p className={cn('text-sm', hasPassed ? 'text-muted-foreground' : 'text-foreground')}>{event.description}</p>
-                </CardContent>
-            )}
-        </Card>
-    )
+  const eventDate = new Date(event.date);
+  const isTodayEvent = isToday(eventDate);
+  const hasPassed = isPast(eventDate) && !isTodayEvent;
+  const formattedTime = event.time ? event.time.substring(0, 5) : 'N/A';
+  return (
+    <Card className={cn(
+      hasPassed ? 'bg-muted/50' : '',
+      isTodayEvent ? 'border-green-500 border-2 shadow-[0_0_15px_rgba(34,197,94,0.3)]' : ''
+    )}>
+      <CardHeader>
+        <CardTitle className={cn(hasPassed ? 'text-muted-foreground' : '')}>
+          {event.title}
+        </CardTitle>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-2 text-sm">
+          <Badge variant={isTodayEvent ? "default" : "outline"} className={cn("flex items-center gap-2", isTodayEvent ? "bg-green-600 hover:bg-green-700" : "")}>
+            <CalendarIcon className="h-4 w-4" />
+            {format(eventDate, "dd. MMMM yyyy", { locale: de })}
+          </Badge>
+          <Badge variant="outline" className="flex items-center gap-2">
+            <Clock className="h-4 w-4" />
+            {formattedTime} Uhr
+          </Badge>
+          <Badge variant="outline" className="flex items-center gap-2">
+            <MapPin className="h-4 w-4" />
+            {event.location}
+          </Badge>
+        </div>
+      </CardHeader>
+      {event.description && (
+        <CardContent>
+          <p className={cn('text-sm', hasPassed ? 'text-muted-foreground' : 'text-foreground')}>{event.description}</p>
+        </CardContent>
+      )}
+    </Card>
+  )
 }
 
 const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
-    >
-      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-    </svg>
-  );
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+  </svg>
+);
 
 export default async function ClubDetailPage({ params }: { params: { slug: string } }) {
   const club = clubs.find((c) => c.slug === params.slug);
@@ -109,7 +116,7 @@ export default async function ClubDetailPage({ params }: { params: { slug: strin
   if (!club) {
     notFound();
   }
-  
+
   const { data: clubEvents, error } = await supabase
     .from('events')
     .select('*')
@@ -142,38 +149,38 @@ export default async function ClubDetailPage({ params }: { params: { slug: strin
           <div className="prose max-w-none text-foreground/80">
             <p>{club.description}</p>
           </div>
-            {clubEvents && clubEvents.length > 0 && (
-                 <section className="mt-12">
-                    <h2 className="text-3xl font-bold font-headline mb-6 flex items-center">
-                        <CalendarIcon className="mr-3 h-6 w-6" /> Veranstaltungen
-                    </h2>
-                     {upcomingEvents.length > 0 && (
-                        <>
-                            <h3 className="text-xl font-semibold mb-4">Kommende Veranstaltungen</h3>
-                            <div className="space-y-4">
-                                {upcomingEvents.map(event => <EventCard key={event.id} event={event} />)}
-                            </div>
-                        </>
-                    )}
+          {clubEvents && clubEvents.length > 0 && (
+            <section className="mt-12">
+              <h2 className="text-3xl font-bold font-headline mb-6 flex items-center">
+                <CalendarIcon className="mr-3 h-6 w-6" /> Veranstaltungen
+              </h2>
+              {upcomingEvents.length > 0 && (
+                <>
+                  <h3 className="text-xl font-semibold mb-4">Kommende Veranstaltungen</h3>
+                  <div className="space-y-4">
+                    {upcomingEvents.map(event => <EventCard key={event.id} event={event} />)}
+                  </div>
+                </>
+              )}
 
-                    {pastEvents.length > 0 && (
-                        <div className="mt-8">
-                            <Accordion type="single" collapsible>
-                                <AccordionItem value="past-events">
-                                    <AccordionTrigger className="text-xl font-semibold">
-                                        Vergangene Veranstaltungen
-                                    </AccordionTrigger>
-                                    <AccordionContent>
-                                        <div className="space-y-4 mt-4">
-                                            {pastEvents.map(event => <EventCard key={event.id} event={event} />)}
-                                        </div>
-                                    </AccordionContent>
-                                </AccordionItem>
-                            </Accordion>
+              {pastEvents.length > 0 && (
+                <div className="mt-8">
+                  <Accordion type="single" collapsible>
+                    <AccordionItem value="past-events">
+                      <AccordionTrigger className="text-xl font-semibold">
+                        Vergangene Veranstaltungen
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="space-y-4 mt-4">
+                          {pastEvents.map(event => <EventCard key={event.id} event={event} />)}
                         </div>
-                    )}
-                 </section>
-            )}
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
+              )}
+            </section>
+          )}
 
         </div>
         <div>
@@ -188,7 +195,7 @@ export default async function ClubDetailPage({ params }: { params: { slug: strin
                   <span>{club.contact.name}</span>
                 </div>
               )}
-               {club.contact.address && (
+              {club.contact.address && (
                 <div className="flex items-center">
                   <Building className="h-4 w-4 mr-3 text-muted-foreground" />
                   <span>{club.contact.address}</span>
@@ -210,7 +217,7 @@ export default async function ClubDetailPage({ params }: { params: { slug: strin
                   </a>
                 </div>
               )}
-               {club.contact.website && (
+              {club.contact.website && (
                 <div className="flex items-center">
                   <Globe className="h-4 w-4 mr-3 text-muted-foreground" />
                   <a href={club.contact.website} target="_blank" rel="noopener noreferrer" className="hover:underline break-all">
@@ -219,12 +226,12 @@ export default async function ClubDetailPage({ params }: { params: { slug: strin
                 </div>
               )}
               {club.contact.instagram && (
-                 <div className="flex items-center">
-                    <InstagramIcon className="h-4 w-4 mr-3 text-muted-foreground" />
-                    <a href={`https://instagram.com/${club.contact.instagram}`} target="_blank" rel="noopener noreferrer" className="hover:underline break-all">
-                        @{club.contact.instagram}
-                    </a>
-                 </div>
+                <div className="flex items-center">
+                  <InstagramIcon className="h-4 w-4 mr-3 text-muted-foreground" />
+                  <a href={`https://instagram.com/${club.contact.instagram}`} target="_blank" rel="noopener noreferrer" className="hover:underline break-all">
+                    @{club.contact.instagram}
+                  </a>
+                </div>
               )}
             </CardContent>
           </Card>
