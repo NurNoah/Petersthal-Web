@@ -6,6 +6,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { Inter } from 'next/font/google';
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import SnowEffect from '@/components/shared/SnowEffect';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://petersthal.info'),
@@ -82,6 +83,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
       </head>
       <body className="antialiased">
+        <SnowEffect />
         <div className="flex min-h-screen flex-col">
           <Header />
           <main className="flex-1">{children}</main>
