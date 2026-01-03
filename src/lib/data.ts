@@ -48,6 +48,20 @@ export const accommodations: Accommodation[] = [
   },
   {
     id: '3',
+    name: 'Ferienwohnung Reitemann',
+    type: 'Ferienwohnung',
+    description: 'Tauchen Sie ein in die unberührte Natur rund um die Ferienwohnung Reitemann, wo traumhafte Ausblicke und ruhige Umgebungen auf Sie warten.',
+    imageUrl: '/images/fewo/fewo10.jpeg',
+    imageHint: 'vacation apartment',
+    bookingUrl: 'https://www.oy-mittelberg.de/unterkunft/#/unterkuenfte/VIT/30d1f5fa-8578-4a8c-ac81-9c4efc85110b/ferienwohnung-reitemann?useDetailSearch=false',
+    features: [
+      '1 Schlafzimmer + Couch',
+      'Infrarotkabine',
+    ],
+    price: '120,00 € /Nacht',
+  },
+  {
+    id: '10',
     name: 'Buchenberg Hans',
     type: 'Appartement/Fewo',
     description: 'Die 3-Sterne-Ferienwohnung (60 m² Maisonettewohnung) mit gehobener Ausstattung und komfortablem Bad.',
