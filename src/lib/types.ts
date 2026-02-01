@@ -25,7 +25,7 @@ export interface Restaurant {
 }
 
 export interface Accommodation {
-  id:string;
+  id: string;
   name: string;
   type: string;
   description: string;
@@ -68,4 +68,23 @@ export interface BusRoute {
 export interface BusConnection {
   direction: string;
   routes: BusRoute[];
+}
+
+export interface Candidate {
+  id: string;
+  listennummer: number;
+  vorname: string;
+  nachname: string;
+  geburtsjahr?: number;
+  beruf: string;
+  ort: string;
+  portraitUrl: string;
+  kurzerText: string;
+  langerText: string;
+  themen: string[];
+  kontaktEmail?: string;
+  socialLinks?: {
+    facebook?: string;
+    instagram?: string;
+  };
 }

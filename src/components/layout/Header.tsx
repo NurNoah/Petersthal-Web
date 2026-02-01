@@ -28,6 +28,7 @@ const navLinks: NavLink[] = [
   { href: '/veranstaltungen', label: 'Veranstaltungen' },
   { href: '/gastronomie', label: 'Gastro' },
   { href: '/unterkuenfte', label: 'Unterkünfte' },
+  { href: '/buergerblock', label: 'Bürgerblock Petersthal' },
   { href: '/anfahrt', label: 'Anfahrt' },
 ];
 
@@ -64,7 +65,7 @@ export function Header() {
                 )}
               >
                 <span className={cn(pathname === href ? 'underline decoration-primary decoration-2 underline-offset-4' : '')}>
-                    {label}
+                  {label}
                 </span>
               </Link>
             ))}
@@ -124,52 +125,52 @@ export function Header() {
                   <span className="text-xl font-bold">Petersthal</span>
                 </Link>
                 <nav className="grid gap-2">
-                    {navLinks.map(({ href, label }) => (
-                        <Link
-                            key={href}
-                            href={href}
-                            onClick={handleLinkClick}
-                            className={cn(
-                                'flex items-center py-2 text-xl font-semibold',
-                                pathname === href ? 'text-foreground' : 'text-muted-foreground'
-                            )}
-                        >
-                            {label}
-                        </Link>
-                    ))}
-                    <Accordion type="single" collapsible className="w-full">
-                      <AccordionItem value="vereine" className="border-b-0">
-                        <AccordionTrigger className={cn(
-                          'flex items-center py-2 text-xl font-semibold hover:no-underline',
-                          pathname?.startsWith('/vereine') ? 'text-foreground' : 'text-muted-foreground'
-                        )}>
-                          Vereine
-                        </AccordionTrigger>
-                        <AccordionContent>
-                          <div className="flex flex-col space-y-2 pl-4">
-                            <Link href="/vereine" onClick={handleLinkClick} className={cn(
+                  {navLinks.map(({ href, label }) => (
+                    <Link
+                      key={href}
+                      href={href}
+                      onClick={handleLinkClick}
+                      className={cn(
+                        'flex items-center py-2 text-xl font-semibold',
+                        pathname === href ? 'text-foreground' : 'text-muted-foreground'
+                      )}
+                    >
+                      {label}
+                    </Link>
+                  ))}
+                  <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="vereine" className="border-b-0">
+                      <AccordionTrigger className={cn(
+                        'flex items-center py-2 text-xl font-semibold hover:no-underline',
+                        pathname?.startsWith('/vereine') ? 'text-foreground' : 'text-muted-foreground'
+                      )}>
+                        Vereine
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="flex flex-col space-y-2 pl-4">
+                          <Link href="/vereine" onClick={handleLinkClick} className={cn(
+                            'py-2 text-lg',
+                            pathname === '/vereine' ? 'text-foreground font-semibold' : 'text-muted-foreground'
+                          )}>
+                            Alle Vereine
+                          </Link>
+                          {clubs.map((club) => (
+                            <Link
+                              key={club.id}
+                              href={`/vereine/${club.slug}`}
+                              onClick={handleLinkClick}
+                              className={cn(
                                 'py-2 text-lg',
-                                pathname === '/vereine' ? 'text-foreground font-semibold' : 'text-muted-foreground'
-                            )}>
-                                Alle Vereine
+                                pathname === `/vereine/${club.slug}` ? 'text-foreground font-semibold' : 'text-muted-foreground'
+                              )}
+                            >
+                              {club.name}
                             </Link>
-                            {clubs.map((club) => (
-                              <Link
-                                key={club.id}
-                                href={`/vereine/${club.slug}`}
-                                onClick={handleLinkClick}
-                                className={cn(
-                                  'py-2 text-lg',
-                                  pathname === `/vereine/${club.slug}` ? 'text-foreground font-semibold' : 'text-muted-foreground'
-                                )}
-                              >
-                                {club.name}
-                              </Link>
-                            ))}
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
+                          ))}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
                 </nav>
               </SheetContent>
             </Sheet>
