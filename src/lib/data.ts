@@ -11,6 +11,7 @@ export const restaurants: Restaurant[] = [
     website: 'http://kiosk-rottachsee.9gg.de/',
     mapEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5376.897700570105!2d10.380840192236292!3d47.636843917197744!2m3!1f0!2f0!3f0!3m2!i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d0fb430257f%3A0x9db0cec5248edc58!2sKiosk%20am%20Rottachsee!5e0!3m2!1sde!2sde!4v1758144734113!5m2!1sde!2sde" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade',
   },
+
   {
     id: '2',
     name: 'Pizzeria Rosso Pomodoro',
