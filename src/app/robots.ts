@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/admin/', // Admin-Bereich ausschließen
     },
-    sitemap: 'https://petersthal.info/sitemap.xml',
+    sitemap: 'https://www.petersthal.info/sitemap.xml',
   }
 }
