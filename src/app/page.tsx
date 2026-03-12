@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import * as React from 'react';
 import Image from 'next/image';
@@ -246,26 +246,7 @@ export default function Home() {
           </Carousel>
         </section>
 
-        <section className="mt-16">
-          <Card className="mb-8 border-primary/20 shadow-sm bg-gradient-to-br from-background to-muted/50">
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2 text-xl text-primary">
-                🗳️ Kommunalwahl am 8. März 2026
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-muted-foreground leading-relaxed">
-                Lernen Sie unsere Kandidaten kennen und informieren Sie sich über unsere Ziele für Petersthal.
-              </p>
-              <Button asChild className="w-full sm:w-auto font-semibold">
-                <Link href="/buergerblock">
-                  Zum Bürgerblock Petersthal <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <section className="mt-16">          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2">
               <UpcomingEventsWidget />
             </div>
@@ -349,3 +330,5 @@ export default function Home() {
     </div>
   );
 }
+
+

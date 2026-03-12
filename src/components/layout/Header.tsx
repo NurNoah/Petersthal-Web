@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -28,7 +28,6 @@ const navLinks: NavLink[] = [
   { href: '/veranstaltungen', label: 'Veranstaltungen' },
   { href: '/gastronomie', label: 'Gastro' },
   { href: '/unterkuenfte', label: 'Unterkünfte' },
-  { href: '/buergerblock', label: 'Bürgerblock Petersthal' },
   { href: '/anfahrt', label: 'Anfahrt' },
 ];
 
@@ -184,3 +183,4 @@ export function Header() {
     </header>
   );
 }
+
