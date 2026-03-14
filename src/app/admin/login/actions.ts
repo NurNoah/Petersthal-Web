@@ -3,9 +3,14 @@
 import { z } from 'zod';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import {
+  ADMIN_AUTH_COOKIE_MAX_AGE,
+  ADMIN_AUTH_COOKIE_NAME,
+  createAdminAuthToken,
+  isAdminAuthConfigured,
+} from '@/lib/admin-auth';
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
-const COOKIE_NAME = 'admin-auth';
 
 const formSchema = z.object({
   password: z.string(),
@@ -20,8 +25,8 @@ export async function loginAction(
   prevState: LoginFormState,
   data: FormData
 ): Promise<LoginFormState> {
-  if (!ADMIN_PASSWORD) {
-    console.error('Admin password is not set in environment variables.');
+  if (!ADMIN_PASSWORD || !isAdminAuthConfigured()) {
+    console.error('Admin password or auth secret is not set in environment variables.');
     return {
       message: 'Server-Konfigurationsfehler. Bitte kontaktieren Sie den Support.',
       success: false,
@@ -33,16 +38,20 @@ export async function loginAction(
 
   if (!parsed.success) {
     return {
-      message: 'Ungültige Eingabe.',
+      message: 'Ungueltige Eingabe.',
       success: false,
     };
   }
 
   if (parsed.data.password === ADMIN_PASSWORD) {
-    cookies().set(COOKIE_NAME, 'true', {
+    const token = await createAdminAuthToken();
+    const cookieStore = await cookies();
+
+    cookieStore.set(ADMIN_AUTH_COOKIE_NAME, token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60 * 24 * 7, // 1 week
+      sameSite: 'strict',
+      maxAge: ADMIN_AUTH_COOKIE_MAX_AGE,
       path: '/',
     });
     redirect('/admin');
