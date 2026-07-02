@@ -39,9 +39,6 @@ export function Footer() {
         <div className="flex flex-col gap-3 pt-4 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
           <p>&copy; {new Date().getFullYear()} Petersthal</p>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <a href="mailto:Info@Noah-Weissenbach.de" className="transition-colors hover:text-primary">
-              Info@Noah-Weissenbach.de
-            </a>
             <span className="hidden text-border md:inline">|</span>
             <p>
               Webdesign, technische Umsetzung und Betreuung durch{" "}
