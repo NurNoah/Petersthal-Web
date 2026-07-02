@@ -46,6 +46,11 @@ export default function GastronomiePage() {
                     </CardHeader>
                     <CardContent>
                       <CardDescription>{restaurant.description}</CardDescription>
+                      {restaurant.notice && (
+                        <p className="mt-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">
+                          {restaurant.notice}
+                        </p>
+                      )}
                       <p className="text-sm text-muted-foreground mt-4">{restaurant.address}</p>
                       {restaurant.website && (
                         <Button asChild variant="link" className="px-0">

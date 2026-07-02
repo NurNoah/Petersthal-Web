@@ -17,6 +17,7 @@ export interface Restaurant {
   id: string;
   name: string;
   description: string;
+  notice?: string;
   address: string;
   imageUrl: string;
   imageHint: string;

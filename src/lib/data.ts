@@ -16,6 +16,7 @@ export const restaurants: Restaurant[] = [
     id: '2',
     name: 'Pizzeria Rosso Pomodoro',
     description: 'Authentische, herzliche italienische Küche, serviert wie in den charmanten Dörfern Italiens.',
+    notice: 'Hinweis: Die Pizzeria Rosso Pomodoro ist möglicherweise geschlossen.',
     address: 'Thalstraße 10, 87466 Oy-Mittelberg',
     imageUrl: '/images/gastro/pizza.png',
     imageHint: 'modern restaurant',
