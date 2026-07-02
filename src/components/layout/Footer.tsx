@@ -1,6 +1,16 @@
 import Link from "next/link";
-import { ExternalLink } from "lucide-react";
+import { ArrowRight, ExternalLink, Mail } from "lucide-react";
 import { Button } from "../ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const externalLinks = [
   { href: "http://www.archiv-petersthal.de", label: "Dorfarchiv" },
@@ -22,9 +32,39 @@ export function Footer() {
           <div className="space-y-2 md:text-right">
             <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">Kontakt &amp; interessantes</h3>
             <div className="flex flex-wrap gap-2 md:justify-end">
-              <Button variant="outline" size="sm" asChild>
-                <a href="mailto:Info@Noah-Weissenbach.de">Kontakt</a>
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="sm">Kontakt</Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Hinweis zum Kontakt</DialogTitle>
+                    <DialogDescription>
+                      Bitte schreiben Sie an diese E-Mail-Adresse nur Anliegen, die die Webseite betreffen.
+                      Vereinsbezogene Themen wie Kündigungen, Mitgliedschaften oder Anfragen an einzelne Vereine
+                      gehören nicht hierher. Nutzen Sie dafür bitte den Kontaktbereich auf der jeweiligen
+                      Vereins-Unterseite.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter className="gap-2 sm:space-x-0">
+                    <DialogClose asChild>
+                      <Button variant="outline">Abbrechen</Button>
+                    </DialogClose>
+                    <Button variant="secondary" asChild>
+                      <Link href="/vereine">
+                        <ArrowRight className="mr-2 h-4 w-4" />
+                        Weiter
+                      </Link>
+                    </Button>
+                    <Button asChild>
+                      <a href="mailto:Info@Noah-Weissenbach.de">
+                        <Mail className="mr-2 h-4 w-4" />
+                        E-Mail senden
+                      </a>
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
               {externalLinks.map((link) => (
                 <Button key={link.href} variant="outline" size="sm" asChild>
                   <a href={link.href} target="_blank" rel="noopener noreferrer">
