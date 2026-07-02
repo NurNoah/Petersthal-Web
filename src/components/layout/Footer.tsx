@@ -50,12 +50,14 @@ export function Footer() {
                     <DialogClose asChild>
                       <Button variant="outline">Abbrechen</Button>
                     </DialogClose>
-                    <Button variant="secondary" asChild>
-                      <Link href="/vereine">
-                        <ArrowRight className="mr-2 h-4 w-4" />
-                        Weiter
-                      </Link>
-                    </Button>
+                    <DialogClose asChild>
+                      <Button variant="secondary" asChild>
+                        <Link href="/vereine">
+                          <ArrowRight className="mr-2 h-4 w-4" />
+                          Vereine
+                        </Link>
+                      </Button>
+                    </DialogClose>
                     <Button asChild>
                       <a href="mailto:Info@Noah-Weissenbach.de">
                         <Mail className="mr-2 h-4 w-4" />
