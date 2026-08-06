@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Calendar as CalendarIcon, CloudSun, Users, Clock, MapPin } from 'lucide-react';
+import { ArrowRight, Calendar as CalendarIcon, CloudSun, Users, Clock, MapPin, Waves, Thermometer, Wind, ExternalLink, ChevronDown } from 'lucide-react';
 import { clubs } from '@/lib/data';
 import { format, isFuture, isToday } from 'date-fns';
 import { de } from 'date-fns/locale';
@@ -21,6 +21,45 @@ import { ClubCard } from '@/components/shared/ClubCard';
 import type { Event } from '@/lib/types';
 import { supabase } from '@/lib/supabaseClient';
 import { Badge } from '@/components/ui/badge';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { Line, LineChart, YAxis } from 'recharts';
+
+type RottachseeData = {
+  measuredAt: string | null;
+  waterTemperature: number;
+  lakeLevel: number;
+  lakeLevelElevation: number;
+  fullLevel: number;
+  airTemperature: number | null;
+  windSpeed: number | null;
+  waterQuality: string | null;
+  levelHistory: Array<{
+    date: string;
+    label: string;
+    level: number;
+  }>;
+  temperatureHistory: Array<{
+    date: string;
+    label: string;
+    temperature: number;
+  }>;
+  source: {
+    name: string;
+    url: string;
+    historyName: string;
+    historyUrl: string;
+  };
+};
+
+type LakeMetric = 'level' | 'temperature';
+type HistoryPeriod = 7 | 30 | 90 | 365;
+
+const historyPeriods: Array<{ days: HistoryPeriod; label: string }> = [
+  { days: 7, label: '7 Tage' },
+  { days: 30, label: '30 Tage' },
+  { days: 90, label: '90 Tage' },
+  { days: 365, label: '1 Jahr' },
+];
 
 function getWeatherDescription(weathercode: number): string {
   if (weathercode === 0) return "Klarer Himmel";
@@ -79,6 +118,298 @@ function WeatherWidget() {
           </>
         ) : (
           <p className="text-xs text-muted-foreground">Lade Wetterdaten...</p>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function RottachseeWidget() {
+  const [lakeData, setLakeData] = React.useState<RottachseeData | null>(null);
+  const [error, setError] = React.useState<string | null>(null);
+  const [expandedMetric, setExpandedMetric] = React.useState<LakeMetric | null>(null);
+  const [historyPeriod, setHistoryPeriod] = React.useState<HistoryPeriod>(7);
+
+  React.useEffect(() => {
+    const controller = new AbortController();
+
+    async function fetchLakeData() {
+      try {
+        const response = await fetch('/api/rottachsee', { signal: controller.signal });
+        if (!response.ok) throw new Error('API error');
+        setLakeData(await response.json());
+      } catch (err) {
+        if (err instanceof DOMException && err.name === 'AbortError') return;
+        setError('Messdaten sind gerade nicht erreichbar.');
+      }
+    }
+
+    fetchLakeData();
+    return () => controller.abort();
+  }, []);
+
+  const selectedPeriodLabel =
+    historyPeriods.find((period) => period.days === historyPeriod)?.label ?? '7 Tage';
+  const chartData = lakeData && expandedMetric
+    ? (expandedMetric === 'level'
+        ? lakeData.levelHistory.slice(-historyPeriod).map((point) => ({
+            date: point.date,
+            label: point.label,
+            value: point.level,
+          }))
+        : lakeData.temperatureHistory.slice(-historyPeriod).map((point) => ({
+            date: point.date,
+            label: point.label,
+            value: point.temperature,
+          })))
+    : [];
+  const chartChange = chartData.length > 1
+    ? chartData.at(-1)!.value - chartData[0].value
+    : null;
+  const chartUnit = expandedMetric === 'temperature' ? '°C' : 'm';
+  const chartLabel = expandedMetric === 'temperature' ? 'Wassertemperatur' : 'Füllhöhe';
+  const chartColor = expandedMetric === 'temperature'
+    ? 'hsl(24 94% 50%)'
+    : 'hsl(199 89% 48%)';
+  const fillPercent = lakeData
+    ? Math.min(100, Math.max(0, (lakeData.lakeLevel / lakeData.fullLevel) * 100))
+    : 0;
+
+  function toggleMetric(metric: LakeMetric) {
+    setExpandedMetric((current) => current === metric ? null : metric);
+  }
+
+  return (
+    <Card className="overflow-hidden border-sky-200/80 bg-gradient-to-br from-white via-sky-50/60 to-emerald-50/70">
+      <CardHeader className="pb-3">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <Waves className="h-5 w-5 text-sky-600" />
+              Rottachsee live
+            </CardTitle>
+            <p className="mt-1 text-xs text-muted-foreground">
+              {lakeData?.measuredAt ? 'Stand ' + lakeData.measuredAt : 'Aktuelle Messwerte'}
+            </p>
+          </div>
+          <Badge variant="outline" className="border-emerald-200 bg-emerald-50 text-emerald-700">
+            <span className="mr-1.5 h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            Live
+          </Badge>
+        </div>
+      </CardHeader>
+      <CardContent>
+        {error ? (
+          <p className="text-sm text-muted-foreground">{error}</p>
+        ) : lakeData ? (
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => toggleMetric('temperature')}
+                aria-expanded={expandedMetric === 'temperature'}
+                aria-controls="rottachsee-history"
+                className={
+                  'rounded-xl border bg-white/80 p-3 text-left transition hover:border-orange-300 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 ' +
+                  (expandedMetric === 'temperature' ? 'border-orange-300 ring-2 ring-orange-100' : 'border-sky-100')
+                }
+              >
+                <div className="flex items-center justify-between gap-1 text-xs text-muted-foreground">
+                  <span className="flex items-center gap-1.5">
+                    <Thermometer className="h-3.5 w-3.5 text-orange-500" />
+                    Wassertemperatur
+                  </span>
+                  <ChevronDown
+                    className={
+                      'h-3.5 w-3.5 shrink-0 transition-transform ' +
+                      (expandedMetric === 'temperature' ? 'rotate-180' : '')
+                    }
+                  />
+                </div>
+                <div className="mt-1 text-2xl font-bold tabular-nums">
+                  {lakeData.waterTemperature.toLocaleString('de-DE', { maximumFractionDigits: 1 })} °C
+                </div>
+                <p className="mt-2 text-[11px] font-medium text-orange-700">
+                  Verlauf anzeigen
+                </p>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => toggleMetric('level')}
+                aria-expanded={expandedMetric === 'level'}
+                aria-controls="rottachsee-history"
+                className={
+                  'rounded-xl border bg-white/80 p-3 text-left transition hover:border-sky-300 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 ' +
+                  (expandedMetric === 'level' ? 'border-sky-300 ring-2 ring-sky-100' : 'border-sky-100')
+                }
+              >
+                <div className="flex items-center justify-between gap-1 text-xs text-muted-foreground">
+                  <span className="flex items-center gap-1.5">
+                    <Waves className="h-3.5 w-3.5 text-sky-600" />
+                    Seestand
+                  </span>
+                  <ChevronDown
+                    className={
+                      'h-3.5 w-3.5 shrink-0 transition-transform ' +
+                      (expandedMetric === 'level' ? 'rotate-180' : '')
+                    }
+                  />
+                </div>
+                <div className="mt-1 text-2xl font-bold tabular-nums">
+                  {lakeData.lakeLevel.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} m
+                </div>
+                <div
+                  className="mt-2 h-1.5 overflow-hidden rounded-full bg-sky-100"
+                  role="progressbar"
+                  aria-label="Seestand im Vergleich zum Vollstau"
+                  aria-valuemin={0}
+                  aria-valuemax={lakeData.fullLevel}
+                  aria-valuenow={lakeData.lakeLevel}
+                >
+                  <div
+                    className="h-full rounded-full bg-sky-500"
+                    style={{ width: fillPercent + '%' }}
+                  />
+                </div>
+                <p className="mt-1.5 text-[10px] text-muted-foreground">
+                  Voll: {lakeData.fullLevel.toLocaleString('de-DE', { minimumFractionDigits: 2 })} m
+                </p>
+              </button>
+            </div>
+
+            {expandedMetric && (
+              <div id="rottachsee-history" className="rounded-xl border border-sky-100 bg-white/75 p-3">
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-semibold">
+                        {chartLabel} · {selectedPeriodLabel}
+                      </p>
+                      <p className="text-[11px] text-muted-foreground">Tagesmittelwerte</p>
+                    </div>
+                    {chartChange !== null && (
+                      <span className="text-xs font-medium tabular-nums text-muted-foreground">
+                        {chartChange > 0 ? '+' : ''}
+                        {chartChange.toLocaleString('de-DE', {
+                          minimumFractionDigits: expandedMetric === 'level' ? 2 : 1,
+                          maximumFractionDigits: expandedMetric === 'level' ? 2 : 1,
+                        })} {chartUnit}
+                      </span>
+                    )}
+                  </div>
+
+                  <div
+                    className="grid grid-cols-4 gap-1 rounded-lg bg-sky-50 p-1"
+                    role="group"
+                    aria-label="Zeitraum auswählen"
+                  >
+                    {historyPeriods.map((period) => (
+                      <button
+                        key={period.days}
+                        type="button"
+                        onClick={() => setHistoryPeriod(period.days)}
+                        aria-pressed={historyPeriod === period.days}
+                        className={
+                          'rounded-md px-1.5 py-1.5 text-[11px] font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 ' +
+                          (historyPeriod === period.days
+                            ? 'bg-white text-foreground shadow-sm'
+                            : 'text-muted-foreground hover:text-foreground')
+                        }
+                      >
+                        {period.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <ChartContainer
+                  config={{ value: { label: chartLabel, color: chartColor } }}
+                  className="mt-2 h-[140px] w-full"
+                >
+                  <LineChart accessibilityLayer data={chartData} margin={{ top: 8, right: 5, bottom: 4, left: 5 }}>
+                    <YAxis
+                      hide
+                      domain={
+                        expandedMetric === 'level'
+                          ? ['dataMin - 0.05', 'dataMax + 0.05']
+                          : ['dataMin - 1', 'dataMax + 1']
+                      }
+                    />
+                    <ChartTooltip
+                      cursor={false}
+                      content={
+                        <ChartTooltipContent
+                          hideLabel
+                          hideIndicator
+                          formatter={(value, _name, item) => (
+                            <div className="flex min-w-[8.5rem] items-center justify-between gap-3">
+                              <span className="text-muted-foreground">{item.payload.label}</span>
+                              <span className="font-mono font-medium tabular-nums">
+                                {Number(value).toLocaleString('de-DE', {
+                                  minimumFractionDigits: expandedMetric === 'level' ? 2 : 1,
+                                  maximumFractionDigits: expandedMetric === 'level' ? 2 : 1,
+                                })} {chartUnit}
+                              </span>
+                            </div>
+                          )}
+                        />
+                      }
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="value"
+                      stroke="var(--color-value)"
+                      strokeWidth={3}
+                      dot={false}
+                      activeDot={{ r: 4, fill: 'var(--color-value)', strokeWidth: 0 }}
+                    />
+                  </LineChart>
+                </ChartContainer>
+
+                <div className="flex justify-between text-[10px] text-muted-foreground">
+                  <span>{chartData[0]?.label}</span>
+                  <span>{chartData.at(-1)?.label}</span>
+                </div>
+                <a
+                  href={lakeData.source.historyUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium text-sky-700 hover:underline"
+                >
+                  Verlauf: {lakeData.source.historyName}
+                  <ExternalLink className="h-3 w-3" />
+                </a>
+              </div>
+            )}
+
+            <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground">
+              {lakeData.windSpeed !== null && (
+                <span className="flex items-center gap-1.5">
+                  <Wind className="h-3.5 w-3.5" />
+                  Wind {lakeData.windSpeed.toLocaleString('de-DE', { maximumFractionDigits: 1 })} m/s
+                </span>
+              )}
+              <span>{fillPercent.toLocaleString('de-DE', { maximumFractionDigits: 1 })} % von Vollstau</span>
+            </div>
+
+            <a
+              href={lakeData.source.url}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-xs font-medium text-sky-700 hover:underline"
+            >
+              Quelle: {lakeData.source.historyName}
+              <ExternalLink className="h-3 w-3" />
+            </a>
+          </div>
+        ) : (
+          <div className="space-y-3" aria-label="Rottachsee-Messdaten werden geladen">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="h-28 animate-pulse rounded-xl bg-sky-100/70" />
+              <div className="h-28 animate-pulse rounded-xl bg-sky-100/70" />
+            </div>
+          </div>
         )}
       </CardContent>
     </Card>
@@ -246,28 +577,15 @@ export default function Home() {
           </Carousel>
         </section>
 
-        <section className="mt-16">          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <section className="mt-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2">
               <UpcomingEventsWidget />
             </div>
             <div className="space-y-6">
               <h3 className="text-2xl font-bold">Aktuelles</h3>
               <WeatherWidget />
-              <Card>
-                <CardHeader>
-                  <CardTitle>Entdecken Sie unsere Gastro</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Entdecken Sie die kulinarische Vielfalt unseres Dorfes. Von traditionell bayerischer Küche bis hin zu internationalen Spezialitäten.
-                  </p>
-                  <Button variant="secondary" className="w-full" asChild>
-                    <Link href="/gastronomie">
-                      Zur Gastro
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
+              <RottachseeWidget />
             </div>
           </div>
         </section>
