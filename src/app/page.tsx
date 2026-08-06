@@ -272,8 +272,8 @@ function RottachseeWidget() {
                     style={{ width: fillPercent + '%' }}
                   />
                 </div>
-                <p className="mt-1.5 text-[10px] text-muted-foreground">
-                  Voll: {lakeData.fullLevel.toLocaleString('de-DE', { minimumFractionDigits: 2 })} m
+                <p className="mt-2 text-[11px] font-medium text-blue-700">
+                  Verlauf anzeigen
                 </p>
               </button>
             </div>
@@ -390,7 +390,7 @@ function RottachseeWidget() {
                   Wind {lakeData.windSpeed.toLocaleString('de-DE', { maximumFractionDigits: 1 })} m/s
                 </span>
               )}
-              <span>{fillPercent.toLocaleString('de-DE', { maximumFractionDigits: 1 })} % von Vollstau</span>
+              <span>{fillPercent.toLocaleString('de-DE', { maximumFractionDigits: 1 })} % von Vollstau (50,00 m)</span>
             </div>
 
             <a
