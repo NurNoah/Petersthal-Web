@@ -28,6 +28,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.wwa-ke.bayern.de',
+        port: '',
+        pathname: '/themen/fluesse_seen/gewaesserportraits/rottachsee/webcam/pic/**',
+      },
     ],
   },
 };

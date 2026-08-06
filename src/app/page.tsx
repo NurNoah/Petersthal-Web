@@ -279,7 +279,7 @@ function RottachseeWidget() {
             </div>
 
             {expandedMetric && (
-              <div id="rottachsee-history" className="rounded-xl border border-sky-100 bg-white/75 p-3">
+              <div id="rottachsee-history" className="rounded-xl border border-sky-100 bg-white/75 px-3 pb-2 pt-3">
                 <div className="flex flex-col gap-3">
                   <div className="flex items-start justify-between gap-3">
                     <div>
@@ -367,17 +367,10 @@ function RottachseeWidget() {
                   </LineChart>
                 </ChartContainer>
 
-                <div className="flex justify-between text-[10px] text-muted-foreground">
+                <div className="flex justify-between text-[10px] leading-none text-muted-foreground">
                   <span>{chartData[0]?.label}</span>
                   <span>{chartData.at(-1)?.label}</span>
                 </div>
-                <a
-                  href={lakeData.source.historyUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium text-sky-700 hover:underline"
-                >
-                </a>
               </div>
             )}
 
@@ -485,8 +478,17 @@ function UpcomingEventsWidget() {
   );
 }
 
+const ROTTACHSEE_LIVE_IMAGE_URL =
+  'https://www.wwa-ke.bayern.de/themen/fluesse_seen/gewaesserportraits/rottachsee/webcam/pic/svc_ts.jpg';
+
 const carouselImages = [
   { src: '/images/pthal4.jpg', alt: 'Petersthal', hint: 'traditional festival' },
+  {
+    src: ROTTACHSEE_LIVE_IMAGE_URL,
+    alt: 'Livebild vom Rottachsee',
+    hint: 'Rottachsee live webcam',
+    live: true,
+  },
   { src: '/images/pthal3.png', alt: 'Petersthal', hint: 'hiking trail' },
   { src: '/images/pthal10.jpg', alt: 'Petersthal', hint: 'brass band' },
   { src: '/images/pthal5.png', alt: 'Petersthal', hint: 'brass band' },
@@ -499,10 +501,19 @@ export default function Home() {
   const plugin = React.useRef(
     Autoplay({ delay: 5000, stopOnInteraction: true })
   );
-  // Neues State für Modal
-  const [modalImage, setModalImage] = React.useState<{ src: string; alt: string } | null>(null);
+  const [liveImageUrl, setLiveImageUrl] = React.useState(ROTTACHSEE_LIVE_IMAGE_URL);
+  const [modalImage, setModalImage] = React.useState<{ src: string; alt: string; live?: boolean } | null>(null);
 
-  const openModal = (image: { src: string; alt: string }) => {
+  React.useEffect(() => {
+    const refreshLiveImage = () => {
+      setLiveImageUrl(ROTTACHSEE_LIVE_IMAGE_URL + '?t=' + Date.now());
+    };
+    refreshLiveImage();
+    const interval = window.setInterval(refreshLiveImage, 10 * 60 * 1000);
+    return () => window.clearInterval(interval);
+  }, []);
+
+  const openModal = (image: { src: string; alt: string; live?: boolean }) => {
     setModalImage(image);
   };
 
@@ -551,24 +562,34 @@ export default function Home() {
             }}
           >
             <CarouselContent>
-              {carouselImages.map((image, index) => (
+              {carouselImages.map((image, index) => {
+                const imageSrc = image.live ? liveImageUrl : image.src;
+                return (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                  <div className="p-1 cursor-pointer" onClick={() => openModal({ src: image.src, alt: image.alt })}>
+                  <div className="p-1 cursor-pointer" onClick={() => openModal({ src: imageSrc, alt: image.alt, live: image.live })}>
                     <Card className="overflow-hidden">
-                      <CardContent className="p-0 flex aspect-[4/3] items-center justify-center">
+                      <CardContent className="relative p-0 flex aspect-[4/3] items-center justify-center">
                         <Image
-                          src={image.src}
+                          src={imageSrc}
                           alt={image.alt}
                           width={600}
                           height={450}
+                          unoptimized={image.live}
                           className="object-cover w-full h-full"
                           data-ai-hint={image.hint}
                         />
+                        {image.live && (
+                          <span className="absolute left-3 top-3 flex items-center rounded-full bg-black/65 px-2.5 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                            <span className="mr-1.5 h-1.5 w-1.5 rounded-full bg-red-500" />
+                            LIVE · Rottachsee
+                          </span>
+                        )}
                       </CardContent>
                     </Card>
                   </div>
                 </CarouselItem>
-              ))}
+                );
+              })}
             </CarouselContent>
             <CarouselPrevious />
             <CarouselNext />
@@ -632,6 +653,7 @@ export default function Home() {
               alt={modalImage.alt}
               width={1000}
               height={750}
+              unoptimized={modalImage.live}
               className="object-contain"
             />
             <button
@@ -646,5 +668,4 @@ export default function Home() {
     </div>
   );
 }
-
 
