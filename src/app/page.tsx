@@ -377,8 +377,6 @@ function RottachseeWidget() {
                   rel="noreferrer"
                   className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium text-sky-700 hover:underline"
                 >
-                  Verlauf: {lakeData.source.historyName}
-                  <ExternalLink className="h-3 w-3" />
                 </a>
               </div>
             )}
