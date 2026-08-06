@@ -135,9 +135,20 @@ function RottachseeWidget() {
 
     async function fetchLakeData() {
       try {
-        const response = await fetch('/api/rottachsee', { signal: controller.signal });
+        const response = await fetch('/api/rottachsee?v=2', {
+          signal: controller.signal,
+          cache: 'no-store',
+        });
         if (!response.ok) throw new Error('API error');
-        setLakeData(await response.json());
+        const data = await response.json();
+        if (
+          typeof data.fullLevel !== 'number' ||
+          !Array.isArray(data.levelHistory) ||
+          !Array.isArray(data.temperatureHistory)
+        ) {
+          throw new Error('Incomplete API data');
+        }
+        setLakeData(data);
       } catch (err) {
         if (err instanceof DOMException && err.name === 'AbortError') return;
         setError('Messdaten sind gerade nicht erreichbar.');
@@ -203,7 +214,7 @@ function RottachseeWidget() {
           <p className="text-sm text-muted-foreground">{error}</p>
         ) : lakeData ? (
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <button
                 type="button"
                 onClick={() => toggleMetric('temperature')}
@@ -300,7 +311,7 @@ function RottachseeWidget() {
                   </div>
 
                   <div
-                    className="grid grid-cols-4 gap-1 rounded-lg bg-sky-50 p-1"
+                    className="grid grid-cols-2 gap-1 rounded-lg bg-sky-50 p-1 sm:grid-cols-4"
                     role="group"
                     aria-label="Zeitraum auswählen"
                   >
@@ -396,7 +407,7 @@ function RottachseeWidget() {
           </div>
         ) : (
           <div className="space-y-3" aria-label="Rottachsee-Messdaten werden geladen">
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div className="h-28 animate-pulse rounded-xl bg-sky-100/70" />
               <div className="h-28 animate-pulse rounded-xl bg-sky-100/70" />
             </div>
@@ -597,11 +608,11 @@ export default function Home() {
         </section>
 
         <section className="mt-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="md:col-span-2">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(24rem,2fr)]">
+            <div className="min-w-0">
               <UpcomingEventsWidget />
             </div>
-            <div className="space-y-6">
+            <div className="min-w-0 space-y-6">
               <h3 className="text-2xl font-bold">Aktuelles</h3>
               <WeatherWidget />
               <RottachseeWidget />
@@ -668,4 +679,3 @@ export default function Home() {
     </div>
   );
 }
-
