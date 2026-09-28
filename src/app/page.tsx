@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Calendar as CalendarIcon, CloudSun, Users, Clock, MapPin, Waves, Thermometer, Wind, ExternalLink, ChevronDown } from 'lucide-react';
+import { ArrowRight, Calendar as CalendarIcon, CloudSun, Users, Clock, MapPin, Waves, Thermometer, Wind, ExternalLink, ChevronDown, Droplets, Info } from 'lucide-react';
 import { clubs } from '@/lib/data';
 import { format, isFuture, isToday } from 'date-fns';
 import { de } from 'date-fns/locale';
@@ -30,6 +30,10 @@ type RottachseeData = {
   lakeLevel: number;
   lakeLevelElevation: number;
   fullLevel: number;
+  storageVolume: number;
+  storageCapacity: number;
+  storagePercent: number;
+  storageIsEstimate: boolean;
   airTemperature: number | null;
   windSpeed: number | null;
   waterQuality: string | null;
@@ -37,6 +41,7 @@ type RottachseeData = {
     date: string;
     label: string;
     level: number;
+    storageVolume: number;
   }>;
   temperatureHistory: Array<{
     date: string;
@@ -48,10 +53,12 @@ type RottachseeData = {
     url: string;
     historyName: string;
     historyUrl: string;
+    storageName: string;
+    storageUrl: string;
   };
 };
 
-type LakeMetric = 'level' | 'temperature';
+type LakeMetric = 'volume' | 'temperature';
 type HistoryPeriod = 7 | 30 | 90 | 365;
 
 const historyPeriods: Array<{ days: HistoryPeriod; label: string }> = [
@@ -162,11 +169,11 @@ function RottachseeWidget() {
   const selectedPeriodLabel =
     historyPeriods.find((period) => period.days === historyPeriod)?.label ?? '7 Tage';
   const chartData = lakeData && expandedMetric
-    ? (expandedMetric === 'level'
+    ? (expandedMetric === 'volume'
         ? lakeData.levelHistory.slice(-historyPeriod).map((point) => ({
             date: point.date,
             label: point.label,
-            value: point.level,
+            value: point.storageVolume,
           }))
         : lakeData.temperatureHistory.slice(-historyPeriod).map((point) => ({
             date: point.date,
@@ -177,14 +184,12 @@ function RottachseeWidget() {
   const chartChange = chartData.length > 1
     ? chartData.at(-1)!.value - chartData[0].value
     : null;
-  const chartUnit = expandedMetric === 'temperature' ? '°C' : 'm';
-  const chartLabel = expandedMetric === 'temperature' ? 'Wassertemperatur' : 'Füllhöhe';
+  const chartUnit = expandedMetric === 'temperature' ? '°C' : 'Mio. m³';
+  const chartLabel = expandedMetric === 'temperature' ? 'Wassertemperatur' : 'Füllmenge';
   const chartColor = expandedMetric === 'temperature'
     ? 'hsl(24 94% 50%)'
     : 'hsl(199 89% 48%)';
-  const fillPercent = lakeData
-    ? Math.min(100, Math.max(0, (lakeData.lakeLevel / lakeData.fullLevel) * 100))
-    : 0;
+  const fillPercent = lakeData?.storagePercent ?? 0;
 
   function toggleMetric(metric: LakeMetric) {
     setExpandedMetric((current) => current === metric ? null : metric);
@@ -247,36 +252,39 @@ function RottachseeWidget() {
 
               <button
                 type="button"
-                onClick={() => toggleMetric('level')}
-                aria-expanded={expandedMetric === 'level'}
+                onClick={() => toggleMetric('volume')}
+                aria-expanded={expandedMetric === 'volume'}
                 aria-controls="rottachsee-history"
                 className={
                   'rounded-xl border bg-white/80 p-3 text-left transition hover:border-sky-300 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 ' +
-                  (expandedMetric === 'level' ? 'border-sky-300 ring-2 ring-sky-100' : 'border-sky-100')
+                  (expandedMetric === 'volume' ? 'border-sky-300 ring-2 ring-sky-100' : 'border-sky-100')
                 }
               >
                 <div className="flex items-center justify-between gap-1 text-xs text-muted-foreground">
                   <span className="flex items-center gap-1.5">
-                    <Waves className="h-3.5 w-3.5 text-sky-600" />
-                    Seestand
+                    <Droplets className="h-3.5 w-3.5 text-sky-600" />
+                    Füllmenge
                   </span>
                   <ChevronDown
                     className={
                       'h-3.5 w-3.5 shrink-0 transition-transform ' +
-                      (expandedMetric === 'level' ? 'rotate-180' : '')
+                      (expandedMetric === 'volume' ? 'rotate-180' : '')
                     }
                   />
                 </div>
                 <div className="mt-1 text-2xl font-bold tabular-nums">
-                  {lakeData.lakeLevel.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} m
+                  ≈ {lakeData.storageVolume.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} Mio. m³
                 </div>
+                <p className="mt-0.5 text-[11px] tabular-nums text-muted-foreground">
+                  {lakeData.lakeLevel.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} m Seestand
+                </p>
                 <div
                   className="mt-2 h-1.5 overflow-hidden rounded-full bg-sky-100"
                   role="progressbar"
-                  aria-label="Seestand im Vergleich zum Vollstau"
+                  aria-label="Geschätzte Füllmenge im Vergleich zum Stauziel"
                   aria-valuemin={0}
-                  aria-valuemax={lakeData.fullLevel}
-                  aria-valuenow={lakeData.lakeLevel}
+                  aria-valuemax={100}
+                  aria-valuenow={fillPercent}
                 >
                   <div
                     className="h-full rounded-full bg-sky-500"
@@ -303,8 +311,8 @@ function RottachseeWidget() {
                       <span className="text-xs font-medium tabular-nums text-muted-foreground">
                         {chartChange > 0 ? '+' : ''}
                         {chartChange.toLocaleString('de-DE', {
-                          minimumFractionDigits: expandedMetric === 'level' ? 2 : 1,
-                          maximumFractionDigits: expandedMetric === 'level' ? 2 : 1,
+                          minimumFractionDigits: 1,
+                          maximumFractionDigits: 1,
                         })} {chartUnit}
                       </span>
                     )}
@@ -342,8 +350,8 @@ function RottachseeWidget() {
                     <YAxis
                       hide
                       domain={
-                        expandedMetric === 'level'
-                          ? ['dataMin - 0.05', 'dataMax + 0.05']
+                        expandedMetric === 'volume'
+                          ? ['dataMin - 0.2', 'dataMax + 0.2']
                           : ['dataMin - 1', 'dataMax + 1']
                       }
                     />
@@ -358,8 +366,8 @@ function RottachseeWidget() {
                               <span className="text-muted-foreground">{item.payload.label}</span>
                               <span className="font-mono font-medium tabular-nums">
                                 {Number(value).toLocaleString('de-DE', {
-                                  minimumFractionDigits: expandedMetric === 'level' ? 2 : 1,
-                                  maximumFractionDigits: expandedMetric === 'level' ? 2 : 1,
+                                  minimumFractionDigits: 1,
+                                  maximumFractionDigits: 1,
                                 })} {chartUnit}
                               </span>
                             </div>
@@ -392,18 +400,36 @@ function RottachseeWidget() {
                   Wind {lakeData.windSpeed.toLocaleString('de-DE', { maximumFractionDigits: 1 })} m/s
                 </span>
               )}
-              <span>{fillPercent.toLocaleString('de-DE', { maximumFractionDigits: 1 })} % von Vollstau (50,00 m)</span>
+              <span>
+                ≈ {fillPercent.toLocaleString('de-DE', { maximumFractionDigits: 1 })} % von {lakeData.storageCapacity.toLocaleString('de-DE', { maximumFractionDigits: 1 })} Mio. m³
+              </span>
             </div>
 
-            <a
-              href={lakeData.source.url}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-xs font-medium text-sky-700 hover:underline"
-            >
-              Quelle: {lakeData.source.historyName}
-              <ExternalLink className="h-3 w-3" />
-            </a>
+            <p className="flex items-start gap-1.5 text-[10px] leading-relaxed text-muted-foreground">
+              <Info className="mt-0.5 h-3 w-3 shrink-0" />
+              Näherungswert aus Seestand und amtlichen Speicherkennwerten; Bezugsgröße ist das Stauziel bei 850 m ü. NN.
+            </p>
+
+            <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs font-medium text-sky-700">
+              <a
+                href={lakeData.source.historyUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1 hover:underline"
+              >
+                Messwerte: {lakeData.source.historyName}
+                <ExternalLink className="h-3 w-3" />
+              </a>
+              <a
+                href={lakeData.source.storageUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1 hover:underline"
+              >
+                Speicherdaten: {lakeData.source.storageName}
+                <ExternalLink className="h-3 w-3" />
+              </a>
+            </div>
           </div>
         ) : (
           <div className="space-y-3" aria-label="Rottachsee-Messdaten werden geladen">

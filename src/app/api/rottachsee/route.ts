@@ -1,4 +1,9 @@
 import { NextResponse } from 'next/server';
+import {
+  estimateStorageVolume,
+  NORMAL_STORAGE_MILLION_CUBIC_METRES,
+  storagePercentAtNormalTarget,
+} from '@/lib/rottachsee-storage';
 
 const LIVE_DATA_URL =
   'https://www.wwa-ke.bayern.de/themen/fluesse_seen/gewaesserportraits/rottachsee/index.htm';
@@ -6,6 +11,8 @@ const GKD_LEVEL_URL =
   'https://www.gkd.bayern.de/de/seen/wasserstand/inn/rottachsee-11444001/gesamtzeitraum/tabelle';
 const GKD_TEMPERATURE_URL =
   'https://www.gkd.bayern.de/de/seen/wassertemperatur/inn/rottachsee-11444001/gesamtzeitraum/tabelle';
+const STORAGE_DATA_URL =
+  'https://www.lfu.bayern.de/wasser/staatliche_wasserspeicher/rottachsee/index.htm';
 
 const GAUGE_ZERO_METRES = 800;
 const FULL_LEVEL_METRES = 50;
@@ -133,6 +140,7 @@ export async function GET() {
       date: point.date,
       label: point.label,
       level: Number((point.value - GAUGE_ZERO_METRES).toFixed(2)),
+      storageVolume: Number(estimateStorageVolume(point.value).toFixed(2)),
     }));
     const temperatureHistory = rawTemperatureHistory.reverse().map((point) => ({
       date: point.date,
@@ -144,6 +152,12 @@ export async function GET() {
       {
         ...live,
         fullLevel: FULL_LEVEL_METRES,
+        storageVolume: Number(estimateStorageVolume(live.lakeLevelElevation as number).toFixed(2)),
+        storageCapacity: NORMAL_STORAGE_MILLION_CUBIC_METRES,
+        storagePercent: Number(
+          storagePercentAtNormalTarget(live.lakeLevelElevation as number).toFixed(1)
+        ),
+        storageIsEstimate: true,
         levelHistory,
         temperatureHistory,
         source: {
@@ -151,6 +165,8 @@ export async function GET() {
           url: LIVE_DATA_URL,
           historyName: 'Gewässerkundlicher Dienst Bayern',
           historyUrl: GKD_LEVEL_URL,
+          storageName: 'Bayerisches Landesamt für Umwelt',
+          storageUrl: STORAGE_DATA_URL,
         },
       },
       {
