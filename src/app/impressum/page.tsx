@@ -29,7 +29,7 @@ export default function ImpressumPage() {
         <div className="space-y-2 text-muted-foreground">
           <p>Noah Weissenbach</p>
           <p>E-Mail: Kontakt@Noah-Weissenbach.de</p>
-          <p>c/o MDC#weissenbach</p>
+          <p>c/o MDC#wasgehtsiedasan</p>
           <p>Welserstraße 3</p>
           <p>87463 Dietmannsried</p>
         </div>
