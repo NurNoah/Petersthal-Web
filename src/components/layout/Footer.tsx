@@ -79,7 +79,12 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col gap-3 pt-4 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <p>&copy; {new Date().getFullYear()} Petersthal</p>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 md:shrink-0">
+            <p>&copy; {new Date().getFullYear()} Petersthal</p>
+            <Link href="/impressum" className="underline underline-offset-4 transition-colors hover:text-primary">
+              Impressum
+            </Link>
+          </div>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <span className="hidden text-border md:inline">|</span>
             <p>
