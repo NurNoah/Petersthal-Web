@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, Calendar as CalendarIcon, CloudSun, Users, Clock, MapPin, Waves, Thermometer, Wind, ExternalLink, ChevronDown, Droplets, Info } from 'lucide-react';
 import { clubs } from '@/lib/data';
-import { format, isFuture, isToday } from 'date-fns';
+import { format, isFuture, isToday, parseISO } from 'date-fns';
 import { de } from 'date-fns/locale';
 import {
   Carousel,
@@ -93,7 +93,7 @@ function WeatherWidget() {
       try {
         // Open-Meteo API (no key required)
         const res = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=47.45&longitude=10.1167&current_weather=true&timezone=Europe/Berlin`
+          `https://api.open-meteo.com/v1/forecast?latitude=47.636&longitude=10.388&current_weather=true&timezone=Europe/Berlin`
         );
         if (!res.ok) throw new Error("API error");
         const data = await res.json();
@@ -458,7 +458,7 @@ function UpcomingEventsWidget() {
         console.error('Error fetching events:', error);
       } else {
         const futureEvents = data
-          .filter(event => isFuture(new Date(event.date)) || new Date(event.date).toDateString() === new Date().toDateString())
+          .filter(event => isFuture(parseISO(event.date)) || isToday(parseISO(event.date)))
           .slice(0, 3);
         setUpcomingEvents(futureEvents);
       }
@@ -474,25 +474,27 @@ function UpcomingEventsWidget() {
       <div className="space-y-4">
         {upcomingEvents.length > 0 ? (
           upcomingEvents.map(event => {
-            const formattedTime = event.time ? event.time.substring(0, 5) : 'N/A';
-            const isTodayEvent = isToday(new Date(event.date));
+            const formattedTime = event.time ? event.time.substring(0, 5) : null;
+            const isTodayEvent = isToday(parseISO(event.date));
             return (
               <Card key={event.id} className={isTodayEvent ? "border-green-500 border-2 shadow-[0_0_15px_rgba(34,197,94,0.3)]" : ""}>
-                <CardHeader>
-                  <CardTitle>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-xl">
                     {event.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+                  <div className="flex flex-wrap items-center gap-2 text-sm">
                     <Badge variant={isTodayEvent ? "default" : "outline"} className={`flex items-center gap-2 ${isTodayEvent ? "bg-green-600 hover:bg-green-700" : ""}`}>
                       <CalendarIcon className="h-4 w-4" />
-                      {format(new Date(event.date), "dd. MMMM yyyy", { locale: de })}
+                      {isTodayEvent ? 'Heute' : format(parseISO(event.date), "EEE, dd. MMMM yyyy", { locale: de })}
                     </Badge>
-                    <Badge variant="outline" className="flex items-center gap-2">
-                      <Clock className="h-4 w-4" />
-                      {formattedTime} Uhr
-                    </Badge>
+                    {formattedTime && (
+                      <Badge variant="outline" className="flex items-center gap-2">
+                        <Clock className="h-4 w-4" />
+                        {formattedTime} Uhr
+                      </Badge>
+                    )}
                     <Badge variant="outline" className="flex items-center gap-2">
                       <MapPin className="h-4 w-4" />
                       {event.location}
@@ -503,7 +505,7 @@ function UpcomingEventsWidget() {
             )
           })
         ) : (
-          <p>Derzeit sind keine bevorstehenden Veranstaltungen geplant.</p>
+          <p className="text-muted-foreground">Derzeit sind keine bevorstehenden Veranstaltungen geplant.</p>
         )}
       </div>
       <Button className="mt-6" asChild>
@@ -538,6 +540,10 @@ export default function Home() {
   const plugin = React.useRef(
     Autoplay({ delay: 5000, stopOnInteraction: true })
   );
+  // Each carousel needs its own Autoplay instance; sharing one breaks the first carousel.
+  const clubsPlugin = React.useRef(
+    Autoplay({ delay: 5000, stopOnInteraction: true })
+  );
   const [liveImageUrl, setLiveImageUrl] = React.useState(ROTTACHSEE_LIVE_IMAGE_URL);
   const [modalImage, setModalImage] = React.useState<{ src: string; alt: string; live?: boolean } | null>(null);
 
@@ -557,6 +563,20 @@ export default function Home() {
   const closeModal = () => {
     setModalImage(null);
   };
+
+  React.useEffect(() => {
+    if (!modalImage) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setModalImage(null);
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [modalImage]);
 
   return (
     <div className="flex flex-col items-center">
@@ -602,8 +622,13 @@ export default function Home() {
               {carouselImages.map((image, index) => {
                 const imageSrc = image.live ? liveImageUrl : image.src;
                 return (
-                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                  <div className="p-1 cursor-pointer" onClick={() => openModal({ src: imageSrc, alt: image.alt, live: image.live })}>
+                <CarouselItem key={index} className="basis-[88%] sm:basis-1/2 lg:basis-1/3">
+                  <button
+                    type="button"
+                    className="block w-full p-1 text-left cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg"
+                    onClick={() => openModal({ src: imageSrc, alt: image.alt, live: image.live })}
+                    aria-label={`${image.alt} vergrößern`}
+                  >
                     <Card className="overflow-hidden">
                       <CardContent className="relative p-0 flex aspect-[4/3] items-center justify-center">
                         <Image
@@ -623,13 +648,13 @@ export default function Home() {
                         )}
                       </CardContent>
                     </Card>
-                  </div>
+                  </button>
                 </CarouselItem>
                 );
               })}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselPrevious className="hidden md:inline-flex left-3 shadow-md 2xl:-left-12" />
+            <CarouselNext className="hidden md:inline-flex right-3 shadow-md 2xl:-right-12" />
           </Carousel>
         </section>
 
@@ -651,8 +676,10 @@ export default function Home() {
             <Users className="mr-3" /> Unser Vereinsleben
           </h2>
           <Carousel
-            plugins={[plugin.current]}
+            plugins={[clubsPlugin.current]}
             className="w-full max-w-screen-xl mx-auto"
+            onMouseEnter={clubsPlugin.current.stop}
+            onMouseLeave={clubsPlugin.current.reset}
             opts={{
               align: 'start',
               loop: true,
@@ -660,15 +687,15 @@ export default function Home() {
           >
             <CarouselContent>
               {clubs.map((club) => (
-                <CarouselItem key={club.id} className="basis-1/2 md:basis-1/3 lg:basis-1/4">
+                <CarouselItem key={club.id} className="basis-[80%] sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
                   <div className="p-1 h-full">
                     <ClubCard club={club} />
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselPrevious className="hidden md:inline-flex left-3 top-24 shadow-md 2xl:-left-12 2xl:top-1/2" />
+            <CarouselNext className="hidden md:inline-flex right-3 top-24 shadow-md 2xl:-right-12 2xl:top-1/2" />
           </Carousel>
           <Button className="mt-12" asChild size="lg">
             <Link href="/vereine">
@@ -681,25 +708,29 @@ export default function Home() {
       {/* Modal zur Großansicht */}
       {modalImage && (
         <div
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
           onClick={closeModal}
+          role="dialog"
+          aria-modal="true"
+          aria-label={modalImage.alt}
         >
-          <div className="relative">
-            <Image
-              src={modalImage.src}
-              alt={modalImage.alt}
-              width={1000}
-              height={750}
-              unoptimized={modalImage.live}
-              className="object-contain"
-            />
-            <button
-              onClick={closeModal}
-              className="absolute top-2 right-2 text-white text-2xl"
-            >
-              &times;
-            </button>
-          </div>
+          <Image
+            src={modalImage.src}
+            alt={modalImage.alt}
+            width={1600}
+            height={1200}
+            sizes="100vw"
+            unoptimized={modalImage.live}
+            className="h-auto max-h-[85vh] w-auto max-w-full rounded-lg object-contain shadow-2xl"
+          />
+          <button
+            type="button"
+            onClick={closeModal}
+            aria-label="Schließen"
+            className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-2xl leading-none text-white transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          >
+            &times;
+          </button>
         </div>
       )}
     </div>

@@ -1,13 +1,19 @@
+import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { busConnections } from '@/lib/data';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
+export const metadata: Metadata = {
+  title: 'Anfahrt & Busverbindungen',
+  description: 'Anreise nach Petersthal am Rottachsee: Karte, Bushaltestellen und aktuelle Busfahrpläne.',
+};
+
 export default function AnfahrtPage() {
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="text-center">
-        <h1 className="text-4xl font-bold font-headline">Anfahrt & Busverbindungen</h1>
+        <h1 className="text-3xl md:text-4xl font-bold font-headline text-balance">Anfahrt & Busverbindungen</h1>
         <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
           Finden Sie den besten Weg nach Petersthal. Hier finden Sie Informationen zur Anreise und die aktuellen Busfahrpläne.
         </p>
@@ -15,11 +21,11 @@ export default function AnfahrtPage() {
 
       <section className="mt-12">
         <h2 className="text-2xl font-bold font-headline mb-4">Karte</h2>
-        <div className="flex justify-center">
+        <div className="overflow-hidden rounded-lg border">
           <iframe
+            title="Karte von Petersthal"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.5173735191183!2d10.383165876701055!3d47.635512135980065!2m3!1f0!2f0!3f0!3m2!i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d111d1678b7%3A0xa1e48b04cf72010!2s87466%20Oy-Mittelberg-Petersthal!5e0!3m2!1sde!2sde!4v1758146173184!5m2!1sde!2sde"
-            width="1400"
-            height="400"
+            className="block h-[300px] w-full md:h-[400px]"
             style={{ border: 0 }}
             allowFullScreen={true}
             loading="lazy"
@@ -33,7 +39,7 @@ export default function AnfahrtPage() {
         <Accordion type="single" collapsible className="w-full" defaultValue='item-0'>
           {busConnections.map((connection, index) => (
             <AccordionItem value={`item-${index}`} key={index}>
-              <AccordionTrigger className="text-xl font-semibold">{connection.direction}</AccordionTrigger>
+              <AccordionTrigger className="text-left text-lg md:text-xl font-semibold">{connection.direction}</AccordionTrigger>
               <AccordionContent>
                 <div className="space-y-6">
                   {connection.routes.map((route, routeIndex) => (
@@ -53,7 +59,7 @@ export default function AnfahrtPage() {
                           <TableBody>
                             {route.schedules.map((schedule, scheduleIndex) => (
                               <TableRow key={scheduleIndex}>
-                                <TableCell className="font-medium">{schedule.days}</TableCell>
+                                <TableCell className="font-medium align-top">{schedule.days}</TableCell>
                                 <TableCell>
                                   <div className="flex flex-wrap gap-2">
                                     {schedule.times.map((time) => (
@@ -87,6 +93,8 @@ export default function AnfahrtPage() {
           <div>
             <h3 className="text-lg font-semibold mb-2">Haltestelle Petersthal Ortsmitte</h3>
             <iframe
+              title="Haltestelle Petersthal Ortsmitte"
+              className="block rounded-lg border"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.4986520151565!2d10.387887000000006!3d47.635876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d1116c1d7f5%3A0x2778ffdd5f58de93!2sPetersthal%2C%20Ortsmitte!5e0!3m2!1sde!2sde!4v1758310587219!5m2!1sde!2sde"
               width="100%"
               height="300"
@@ -98,7 +106,9 @@ export default function AnfahrtPage() {
           </div>
           <div>
             <h3 className="text-lg font-semibold mb-2">Haltestelle Petersthal Kirche</h3>
-             <iframe
+            <iframe
+              title="Haltestelle Petersthal Kirche"
+              className="block rounded-lg border"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2687.251078404166!2d10.385418999999994!3d47.634856!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d11851f5a6d%3A0x64984efd1259d5a0!2sParkplatz!5e0!3m2!1sde!2sde!4v1758310642314!5m2!1sde!2sde"
               width="100%"
               height="300"

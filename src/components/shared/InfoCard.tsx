@@ -18,6 +18,7 @@ export function InfoCard({ title, description, imageUrl, imageAlt, imageHint, ch
           src={imageUrl}
           alt={imageAlt}
           fill
+          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
           className="object-cover"
           data-ai-hint={imageHint}
         />

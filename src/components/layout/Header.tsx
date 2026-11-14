@@ -6,7 +6,7 @@ import { ChevronDown, Menu } from 'lucide-react';
 import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import type { NavLink } from '@/lib/types';
 import { buttonVariants } from '@/components/ui/button';
@@ -42,7 +42,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-20 items-center">
+      <div className="container flex h-16 items-center px-4 md:h-20 md:px-8">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-8 flex items-center space-x-2">
             <img src="/images/pthalLogo.png" className="h-14 w-10" alt="Petersthal Logo" />
@@ -109,16 +109,17 @@ export function Header() {
             </DropdownMenu>
           </nav>
         </div>
-        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-          <div className="md:hidden">
+        <div className="flex flex-1 flex-row-reverse items-center justify-between md:hidden">
+          <div>
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" className="h-11 w-11">
                   <Menu className="h-6 w-6" />
                   <span className="sr-only">Menü öffnen</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left">
+              <SheetContent side="right" className="overflow-y-auto">
+                <SheetTitle className="sr-only">Navigation</SheetTitle>
                 <Link href="/" className="mr-6 flex items-center space-x-2 mb-6" onClick={handleLinkClick}>
                   <img src="/images/pthalLogo.png" className="h-14 w-10" alt="Petersthal Logo" />
                   <span className="text-xl font-bold">Petersthal</span>
@@ -174,8 +175,8 @@ export function Header() {
               </SheetContent>
             </Sheet>
           </div>
-          <Link href="/" className="flex items-center space-x-2 md:hidden">
-            <img src="/images/pthalLogo.png" className="h-14 w-10" alt="Petersthal Logo" />
+          <Link href="/" className="flex items-center space-x-2">
+            <img src="/images/pthalLogo.png" className="h-11 w-8" alt="Petersthal Logo" />
             <span className="text-xl font-bold">Petersthal</span>
           </Link>
         </div>

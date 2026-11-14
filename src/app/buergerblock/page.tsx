@@ -1,7 +1,13 @@
+import type { Metadata } from 'next';
 import { candidates } from '@/lib/data';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Bürgerblock Petersthal',
+  description: 'Die Kandidatinnen und Kandidaten des Bürgerblocks Petersthal für die Gemeinderatswahl.',
+};
 
 export default function CandidatePage() {
     return (
@@ -16,6 +22,7 @@ export default function CandidatePage() {
                     <Link
                         href="https://www.buergerblockpetersthal.de/"
                         target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 shadow-md"
                     >
                         Zur offiziellen Webseite
@@ -30,6 +37,7 @@ export default function CandidatePage() {
                         key={candidate.id}
                         href={`https://www.buergerblockpetersthal.de/kandidaten/${candidate.id}`}
                         target="_blank"
+                        rel="noopener noreferrer"
                         className="group block h-full outline-none"
                     >
                         <Card className="h-full overflow-hidden flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border-muted">

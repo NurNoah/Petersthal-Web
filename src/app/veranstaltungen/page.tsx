@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { clubs } from '@/lib/data';
 import type { Event } from '@/lib/types';
-import { format, isPast, isFuture, isToday } from 'date-fns';
+import { format, isPast, isFuture, isToday, parseISO } from 'date-fns';
 import { de } from 'date-fns/locale';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
@@ -23,13 +23,13 @@ import { supabase } from '@/lib/supabaseClient';
 
 
 function EventCard({ event }: { event: Event }) {
-  const eventDate = new Date(event.date);
+  const eventDate = parseISO(event.date);
   const isTodayEvent = isToday(eventDate);
   const hasPassed = isPast(eventDate) && !isTodayEvent;
   const club = clubs.find(c => c.slug === event.organizer_club_slug);
 
   // Format time to HH:mm
-  const formattedTime = event.time ? event.time.substring(0, 5) : 'N/A';
+  const formattedTime = event.time ? event.time.substring(0, 5) : null;
 
   return (
     <Card className={cn(
@@ -37,20 +37,22 @@ function EventCard({ event }: { event: Event }) {
       isTodayEvent ? 'border-green-500 border-2 shadow-[0_0_15px_rgba(34,197,94,0.3)]' : ''
     )}>
       <CardHeader>
-        <div className="flex justify-between items-start gap-4">
-          <div className="flex-1">
+        <div className="flex flex-col-reverse items-start gap-3 sm:flex-row sm:justify-between sm:gap-4">
+          <div className="min-w-0 flex-1">
             <CardTitle className={cn(hasPassed ? 'text-muted-foreground' : '')}>
               {event.title}
             </CardTitle>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-2 text-sm">
+            <div className="flex flex-wrap items-center gap-2 mt-3 text-sm">
               <Badge variant={isTodayEvent ? "default" : "outline"} className={cn("flex items-center gap-2", isTodayEvent ? "bg-green-600 hover:bg-green-700" : "")}>
                 <CalendarIcon className="h-4 w-4" />
-                {format(eventDate, "dd. MMMM yyyy", { locale: de })}
+                {format(eventDate, "EEE, dd. MMMM yyyy", { locale: de })}
               </Badge>
-              <Badge variant="outline" className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                {formattedTime} Uhr
-              </Badge>
+              {formattedTime && (
+                <Badge variant="outline" className="flex items-center gap-2">
+                  <Clock className="h-4 w-4" />
+                  {formattedTime} Uhr
+                </Badge>
+              )}
               <Badge variant="outline" className="flex items-center gap-2">
                 <MapPin className="h-4 w-4" />
                 {event.location}
@@ -101,9 +103,9 @@ export default function VeranstaltungenPage() {
     fetchEvents();
   }, []);
 
-  const eventDates = events.map(event => new Date(event.date).toDateString());
+  const eventDates = events.map(event => parseISO(event.date).toDateString());
   const eventsByDate = events.reduce((acc, event) => {
-    const dateKey = new Date(event.date).toDateString();
+    const dateKey = parseISO(event.date).toDateString();
     if (!acc[dateKey]) {
       acc[dateKey] = [];
     }
@@ -114,14 +116,14 @@ export default function VeranstaltungenPage() {
   const selectedDateString = date?.toDateString();
   const eventsForSelectedDay = selectedDateString ? eventsByDate[selectedDateString] || [] : [];
 
-  const sortedEvents = [...events].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-  const upcomingEvents = sortedEvents.filter(e => isFuture(new Date(e.date)) || new Date(e.date).toDateString() === new Date().toDateString());
-  const pastEvents = sortedEvents.filter(e => isPast(new Date(e.date)) && new Date(e.date).toDateString() !== new Date().toDateString()).reverse();
+  const sortedEvents = [...events].sort((a, b) => parseISO(a.date).getTime() - parseISO(b.date).getTime());
+  const upcomingEvents = sortedEvents.filter(e => isFuture(parseISO(e.date)) || isToday(parseISO(e.date)));
+  const pastEvents = sortedEvents.filter(e => isPast(parseISO(e.date)) && !isToday(parseISO(e.date))).reverse();
 
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold font-headline mb-8 text-center">Veranstaltungen in Petersthal</h1>
+      <h1 className="text-3xl md:text-4xl font-bold font-headline mb-8 text-center text-balance">Veranstaltungen in Petersthal</h1>
 
       <Tabs defaultValue="list" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
@@ -142,7 +144,7 @@ export default function VeranstaltungenPage() {
             <div className="mt-12">
               <Accordion type="single" collapsible>
                 <AccordionItem value="past-events">
-                  <AccordionTrigger className="text-2xl font-bold font-headline">
+                  <AccordionTrigger className="text-xl md:text-2xl font-bold font-headline">
                     Vergangene Veranstaltungen
                   </AccordionTrigger>
                   <AccordionContent>
@@ -196,7 +198,7 @@ export default function VeranstaltungenPage() {
               <Button variant="outline" onClick={() => setDate(new Date())}>Heute</Button>
             </div>
             <div className="md:col-span-2">
-              <h2 className="text-2xl font-bold font-headline">
+              <h2 className="text-xl md:text-2xl font-bold font-headline">
                 Veranstaltungen am {date ? format(date, "d. MMMM yyyy", { locale: de }) : 'ausgewählten Tag'}
               </h2>
               <EventList eventsToShow={eventsForSelectedDay} />

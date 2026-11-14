@@ -11,21 +11,22 @@ interface ClubCardProps {
 
 export function ClubCard({ club }: ClubCardProps) {
   return (
-    <Card className="overflow-hidden h-full flex flex-col text-left">
-      <div className="relative h-48 w-full">
+    <Card className="group overflow-hidden h-full flex flex-col text-left transition-shadow hover:shadow-md">
+      <div className="relative h-48 w-full overflow-hidden">
         <Image
           src={club.imageUrl}
           alt={`Bild von ${club.name}`}
           fill
-          className="object-cover"
+          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 80vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
           data-ai-hint={club.imageHint}
         />
       </div>
-      <CardHeader>
-        <CardTitle>{club.name}</CardTitle>
+      <CardHeader className="pb-3">
+        <CardTitle className="text-xl leading-tight [overflow-wrap:anywhere]">{club.name}</CardTitle>
       </CardHeader>
       <CardContent className="flex-grow flex flex-col">
-        <CardDescription className="flex-grow">{club.description.substring(0, 100)}...</CardDescription>
+        <CardDescription className="flex-grow line-clamp-3">{club.description}</CardDescription>
         <Button asChild className="mt-4 w-full">
             <Link href={`/vereine/${club.slug}`}>
                 Mehr erfahren <ArrowRight className="ml-2 h-4 w-4" />

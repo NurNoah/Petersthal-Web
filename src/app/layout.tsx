@@ -33,12 +33,10 @@ export const metadata: Metadata = {
     description: 'Ihr Dorfportal für Petersthal - Veranstaltungen, Informationen und mehr.',
     url: 'https://www.petersthal.info',
     siteName: 'Petersthal',
-    // Fügen Sie hier ein Bild für Social-Media-Vorschauen hinzu
     images: [
       {
-        url: 'https://www.petersthal.info/images/pLogo.png', // Beispiel-URL
-        width: 1200,
-        height: 630,
+        url: '/images/pthal15.png',
+        alt: 'Panorama von Petersthal am Rottachsee',
       },
     ],
     locale: 'de_DE',
@@ -48,8 +46,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Petersthal',
     description: 'Ihr Dorfportal für Petersthal - Veranstaltungen, Informationen und mehr.',
-    // Fügen Sie hier ein Bild für Twitter-Vorschauen hinzu
-    images: ['https://www.petersthal.info/images/twitter-image.png'], // Beispiel-URL
+    images: ['/images/pthal15.png'],
   },
   robots: {
     index: true,
@@ -77,11 +74,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de" className={inter.variable}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
-      </head>
       <body className="antialiased">
         <SnowEffect />
         <div className="flex min-h-screen flex-col">

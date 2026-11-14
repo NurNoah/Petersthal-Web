@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, Phone, User, Calendar as CalendarIcon, Clock, MapPin, Globe, Building } from 'lucide-react';
 import type { Event } from '@/lib/types';
-import { format, isPast, isFuture, isToday } from 'date-fns';
+import { format, isPast, isFuture, isToday, parseISO } from 'date-fns';
 import { de } from 'date-fns/locale';
 import { Metadata } from 'next';
 import { cn } from '@/lib/utils';
@@ -17,8 +17,15 @@ import {
 import { createClient } from '@supabase/supabase-js';
 import { Badge } from '@/components/ui/badge';
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const club = clubs.find((c) => c.slug === params.slug);
+type ClubPageProps = { params: Promise<{ slug: string }> };
+
+// Re-render hourly so the upcoming/past split follows the current date and
+// deleted events disappear even without an explicit revalidatePath.
+export const revalidate = 3600;
+
+export async function generateMetadata({ params }: ClubPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const club = clubs.find((c) => c.slug === slug);
 
   if (!club) {
     return {
@@ -56,10 +63,10 @@ export async function generateStaticParams() {
 }
 
 function EventCard({ event }: { event: Event }) {
-  const eventDate = new Date(event.date);
+  const eventDate = parseISO(event.date);
   const isTodayEvent = isToday(eventDate);
   const hasPassed = isPast(eventDate) && !isTodayEvent;
-  const formattedTime = event.time ? event.time.substring(0, 5) : 'N/A';
+  const formattedTime = event.time ? event.time.substring(0, 5) : null;
   return (
     <Card className={cn(
       hasPassed ? 'bg-muted/50' : '',
@@ -69,15 +76,17 @@ function EventCard({ event }: { event: Event }) {
         <CardTitle className={cn(hasPassed ? 'text-muted-foreground' : '')}>
           {event.title}
         </CardTitle>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-2 text-sm">
+        <div className="flex flex-wrap items-center gap-2 mt-3 text-sm">
           <Badge variant={isTodayEvent ? "default" : "outline"} className={cn("flex items-center gap-2", isTodayEvent ? "bg-green-600 hover:bg-green-700" : "")}>
             <CalendarIcon className="h-4 w-4" />
             {format(eventDate, "dd. MMMM yyyy", { locale: de })}
           </Badge>
-          <Badge variant="outline" className="flex items-center gap-2">
-            <Clock className="h-4 w-4" />
-            {formattedTime} Uhr
-          </Badge>
+          {formattedTime && (
+            <Badge variant="outline" className="flex items-center gap-2">
+              <Clock className="h-4 w-4" />
+              {formattedTime} Uhr
+            </Badge>
+          )}
           <Badge variant="outline" className="flex items-center gap-2">
             <MapPin className="h-4 w-4" />
             {event.location}
@@ -110,8 +119,9 @@ const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export default async function ClubDetailPage({ params }: { params: { slug: string } }) {
-  const club = clubs.find((c) => c.slug === params.slug);
+export default async function ClubDetailPage({ params }: ClubPageProps) {
+  const { slug } = await params;
+  const club = clubs.find((c) => c.slug === slug);
 
   if (!club) {
     notFound();
@@ -127,31 +137,32 @@ export default async function ClubDetailPage({ params }: { params: { slug: strin
     console.error('Error fetching club events:', error);
   }
 
-  const upcomingEvents = (clubEvents || []).filter(e => isFuture(new Date(e.date)) || new Date(e.date).toDateString() === new Date().toDateString());
-  const pastEvents = (clubEvents || []).filter(e => isPast(new Date(e.date)) && new Date(e.date).toDateString() !== new Date().toDateString()).reverse();
+  const upcomingEvents = (clubEvents || []).filter(e => isFuture(parseISO(e.date)) || isToday(parseISO(e.date)));
+  const pastEvents = (clubEvents || []).filter(e => isPast(parseISO(e.date)) && !isToday(parseISO(e.date))).reverse();
 
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
         <div className="lg:col-span-2">
-          <div className="relative w-full h-96 rounded-lg overflow-hidden mb-8">
+          <div className="relative w-full h-60 sm:h-80 lg:h-96 rounded-lg overflow-hidden mb-8">
             <Image
               src={club.imageUrl}
               alt={`Bild von ${club.name}`}
               fill
+              sizes="(min-width: 1024px) 66vw, 100vw"
               className="object-cover"
               data-ai-hint={club.imageHint}
               priority
             />
           </div>
-          <h1 className="text-4xl font-bold font-headline mb-4">{club.name}</h1>
-          <div className="prose max-w-none text-foreground/80">
+          <h1 className="text-3xl md:text-4xl font-bold font-headline mb-4 text-balance">{club.name}</h1>
+          <div className="max-w-none text-foreground/80 leading-relaxed whitespace-pre-line">
             <p>{club.description}</p>
           </div>
           {clubEvents && clubEvents.length > 0 && (
             <section className="mt-12">
-              <h2 className="text-3xl font-bold font-headline mb-6 flex items-center">
+              <h2 className="text-2xl md:text-3xl font-bold font-headline mb-6 flex items-center">
                 <CalendarIcon className="mr-3 h-6 w-6" /> Veranstaltungen
               </h2>
               {upcomingEvents.length > 0 && (
@@ -184,50 +195,50 @@ export default async function ClubDetailPage({ params }: { params: { slug: strin
 
         </div>
         <div>
-          <Card>
+          <Card className="lg:sticky lg:top-28">
             <CardHeader>
               <CardTitle>Kontakt</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {club.contact.name && (
-                <div className="flex items-center">
-                  <User className="h-4 w-4 mr-3 text-muted-foreground" />
+                <div className="flex items-start">
+                  <User className="h-4 w-4 mr-3 mt-1 shrink-0 text-muted-foreground" />
                   <span>{club.contact.name}</span>
                 </div>
               )}
               {club.contact.address && (
-                <div className="flex items-center">
-                  <Building className="h-4 w-4 mr-3 text-muted-foreground" />
+                <div className="flex items-start">
+                  <Building className="h-4 w-4 mr-3 mt-1 shrink-0 text-muted-foreground" />
                   <span>{club.contact.address}</span>
                 </div>
               )}
               {club.contact.email && (
-                <div className="flex items-center">
-                  <Mail className="h-4 w-4 mr-3 text-muted-foreground" />
+                <div className="flex items-start">
+                  <Mail className="h-4 w-4 mr-3 mt-1 shrink-0 text-muted-foreground" />
                   <a href={`mailto:${club.contact.email}`} className="hover:underline break-all">
                     {club.contact.email}
                   </a>
                 </div>
               )}
               {club.contact.phone && (
-                <div className="flex items-center">
-                  <Phone className="h-4 w-4 mr-3 text-muted-foreground" />
+                <div className="flex items-start">
+                  <Phone className="h-4 w-4 mr-3 mt-1 shrink-0 text-muted-foreground" />
                   <a href={`tel:${club.contact.phone.replace(/\s/g, '')}`} className="hover:underline">
                     {club.contact.phone}
                   </a>
                 </div>
               )}
               {club.contact.website && (
-                <div className="flex items-center">
-                  <Globe className="h-4 w-4 mr-3 text-muted-foreground" />
+                <div className="flex items-start">
+                  <Globe className="h-4 w-4 mr-3 mt-1 shrink-0 text-muted-foreground" />
                   <a href={club.contact.website} target="_blank" rel="noopener noreferrer" className="hover:underline break-all">
                     Webseite besuchen
                   </a>
                 </div>
               )}
               {club.contact.instagram && (
-                <div className="flex items-center">
-                  <InstagramIcon className="h-4 w-4 mr-3 text-muted-foreground" />
+                <div className="flex items-start">
+                  <InstagramIcon className="h-4 w-4 mr-3 mt-1 shrink-0 text-muted-foreground" />
                   <a href={`https://instagram.com/${club.contact.instagram}`} target="_blank" rel="noopener noreferrer" className="hover:underline break-all">
                     @{club.contact.instagram}
                   </a>

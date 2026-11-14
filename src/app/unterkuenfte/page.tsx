@@ -1,14 +1,20 @@
+import type { Metadata } from 'next';
 import { InfoCard } from '@/components/shared/InfoCard';
 import { accommodations } from '@/lib/data';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { BedDouble, Euro, ExternalLink, Sparkles } from 'lucide-react';
 
+export const metadata: Metadata = {
+  title: 'Unterkünfte',
+  description: 'Ferienwohnungen und Unterkünfte in Petersthal am Rottachsee.',
+};
+
 export default function UnterkuenftePage() {
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="text-center">
-        <h1 className="text-4xl font-bold font-headline">Unterkünfte in Petersthal</h1>
+        <h1 className="text-3xl md:text-4xl font-bold font-headline text-balance">Unterkünfte in Petersthal</h1>
         <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
           Finden Sie die perfekte Unterkunft für Ihren Aufenthalt.
         </p>

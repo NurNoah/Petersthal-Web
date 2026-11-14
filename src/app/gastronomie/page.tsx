@@ -19,9 +19,9 @@ export default function GastronomiePage() {
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="text-center">
-        <h1 className="text-4xl font-bold font-headline">Gastro in Petersthal</h1>
+        <h1 className="text-3xl md:text-4xl font-bold font-headline text-balance">Gastro in Petersthal</h1>
         <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
-          🍕🥨🍖
+          🧀🥨🍖
         </p>
       </div>
 
@@ -36,6 +36,7 @@ export default function GastronomiePage() {
                       src={restaurant.imageUrl}
                       alt={`Bild von ${restaurant.name}`}
                       fill
+                      sizes="(min-width: 768px) 50vw, 100vw"
                       className="object-cover"
                       data-ai-hint={restaurant.imageHint}
                     />
@@ -79,6 +80,7 @@ export default function GastronomiePage() {
                             {restaurant.mapEmbed ? (
                               <div className="aspect-video overflow-hidden rounded-md border mt-2">
                                 <iframe
+                                  title={`Karte: ${restaurant.name}`}
                                   src={restaurant.mapEmbed}
                                   width="100%"
                                   height="100%"
