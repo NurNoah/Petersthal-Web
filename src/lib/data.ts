@@ -14,14 +14,13 @@ export const restaurants: Restaurant[] = [
 
   {
     id: '2',
-    name: 'Pizzeria Rosso Pomodoro',
-    description: 'Authentische, herzliche italienische Küche, serviert wie in den charmanten Dörfern Italiens.',
-    notice: 'Hinweis: Die Pizzeria Rosso Pomodoro ist möglicherweise geschlossen.',
+    name: 'Allgäuer Bergstube Petersthal',
+    description: 'Alpine Hüttenküche und Schweizer Klassiker – samstags Weißwurstfrühstück, sonntags Brunch. Eröffnung im Dezember.',
     address: 'Thalstraße 10, 87466 Oy-Mittelberg',
-    imageUrl: '/images/gastro/pizza.png',
-    imageHint: 'modern restaurant',
-    website: 'https://www.rossopomodororestaurant.de/',
-    mapEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.4636397059535!2d10.384571587124736!3d47.636556480249624!2m3!1f0!2f0!3f0!3m2!i1024!2i768!4f13.1!3m3!1m2!1s0x479c7d61a1b9f71f%3A0xd01a1168f00ff6c5!2sRosso%20Pomodoro!5e0!3m2!1sde!2sde!4v1758144783040!5m2!1sde!2sde" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade',
+    imageUrl: '/images/gastro/bergstube.jpg',
+    imageHint: 'alpine restaurant',
+    website: 'https://bergstubepetersthal.de/',
+    mapEmbed: 'https://www.google.com/maps?q=Allg%C3%A4uer%20Bergstube%20Petersthal%2C%20Thalstra%C3%9Fe%2010%2C%2087466%20Oy-Mittelberg&hl=de&z=16&output=embed',
   },
 ];
 
